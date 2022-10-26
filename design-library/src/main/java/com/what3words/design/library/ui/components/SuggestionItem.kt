@@ -12,11 +12,16 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -32,9 +37,9 @@ import com.what3words.design.library.ui.theme.White
 @Composable
 fun SuggestionItem(
     words: String,
-    near: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    near: String? = null,
     isLand: Boolean = true,
     distance: String? = null,
 ) {
@@ -46,7 +51,10 @@ fun SuggestionItem(
     ) {
         val (textSlashes, textWords, textNear, icSea, textDistance) = createRefs()
 
-        Text(
+        val startFontSize = MaterialTheme.typography.h2.fontSize
+        var textSize by remember { mutableStateOf(startFontSize) }
+
+        ResponsiveText(
             text = stringResource(id = R.string.slashes),
             modifier = Modifier
                 .wrapContentWidth()
@@ -54,20 +62,27 @@ fun SuggestionItem(
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                 },
-            style = MaterialTheme.typography.h2,
+            textStyle = MaterialTheme.typography.h2,
+            targetTextSizeHeight = textSize,
             color = Red
         )
 
-        Text(
+        ResponsiveText(
             text = words,
             modifier = Modifier.constrainAs(textWords) {
-                top.linkTo(parent.top)
+                top.linkTo(textSlashes.top)
+                bottom.linkTo(textSlashes.bottom)
                 start.linkTo(textSlashes.end)
                 width = Dimension.fillToConstraints
             },
-            style = MaterialTheme.typography.h2,
+            textStyle = MaterialTheme.typography.h2,
             color = MaterialTheme.colors.primary,
-            textAlign = TextAlign.Start
+            targetTextSizeHeight = textSize,
+            resizeFunc = {
+                textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
+            },
+            textAlign = TextAlign.Start,
+            maxLines = 1
         )
 
         Icon(
@@ -83,15 +98,19 @@ fun SuggestionItem(
         )
 
         Text(
-            text = stringResource(id = R.string.near, near),
+            text = stringResource(id = R.string.near, near.orEmpty()),
             modifier = Modifier.constrainAs(textNear) {
-                top.linkTo(textWords.bottom)
+                top.linkTo(textSlashes.bottom, 4.dp)
                 start.linkTo(icSea.end)
+                end.linkTo(textDistance.start, 6.dp)
                 width = Dimension.fillToConstraints
+                visibility = if (near.isNullOrEmpty()) Visibility.Invisible else Visibility.Visible
             },
+            overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.caption,
             color = if (isSystemInDarkTheme()) Grey40 else Grey70,
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Start,
+            maxLines = 1
         )
 
         if (distance != null) {
@@ -113,15 +132,28 @@ fun SuggestionItem(
 @Composable
 fun SuggestionItemLightLandPreview() {
     W3WTheme {
-        SuggestionItem("index.home.raft", "Bayswater, London", {})
+        SuggestionItem("index.home.raft", {}, near = "Bayswater, London")
     }
 }
 
 @Preview(uiMode = UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
+fun SuggestionItemLightLandBigAddressPreview() {
+    W3WTheme {
+        SuggestionItem(
+            "congratulations.congratulations.congratulations",
+            {},
+            near = "Bayswater, London"
+        )
+    }
+}
+
+
+@Preview(uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
 fun SuggestionItemLightDistanceLandPreview() {
     W3WTheme {
-        SuggestionItem("index.home.raft", "Bayswater, London", {}, distance = "20km")
+        SuggestionItem("index.home.raft", {}, near = "Bayswater, London", distance = "20km")
     }
 }
 
@@ -129,7 +161,7 @@ fun SuggestionItemLightDistanceLandPreview() {
 @Composable
 fun SuggestionItemLightRightToLeftPreview() {
     W3WTheme {
-        SuggestionItem("القطار.مسعف.شخصيات", "لندن, London", {}, distance = "20km")
+        SuggestionItem("القطار.مسعف.شخصيات", {}, near = "لندن, London", distance = "20km")
     }
 }
 
@@ -137,7 +169,7 @@ fun SuggestionItemLightRightToLeftPreview() {
 @Composable
 fun SuggestionItemLightSeaPreview() {
     W3WTheme {
-        SuggestionItem("index.home.raft", "Bayswater, London", {}, isLand = false)
+        SuggestionItem("index.home.raft", {}, near = "Bayswater, London", isLand = false)
     }
 }
 
@@ -145,7 +177,7 @@ fun SuggestionItemLightSeaPreview() {
 @Composable
 fun SuggestionItemNightLandPreview() {
     W3WTheme {
-        SuggestionItem("index.home.raft", "Bayswater, London", {})
+        SuggestionItem("index.home.raft", {}, near = "Bayswater, London")
     }
 }
 
@@ -154,7 +186,7 @@ fun SuggestionItemNightLandPreview() {
 @Composable
 fun SuggestionItemNightDistanceLandPreview() {
     W3WTheme {
-        SuggestionItem("index.home.raft", "Bayswater, London", {}, distance = "20km")
+        SuggestionItem("index.home.raft", {}, near = "Bayswater, London", distance = "20km")
     }
 }
 
@@ -163,6 +195,6 @@ fun SuggestionItemNightDistanceLandPreview() {
 @Composable
 fun SuggestionItemNightSeaPreview() {
     W3WTheme {
-        SuggestionItem("index.home.raft", "Bayswater, London", {}, isLand = false)
+        SuggestionItem("index.home.raft", {}, near = "Bayswater, London", isLand = false)
     }
 }
