@@ -30,10 +30,10 @@ import com.what3words.design.library.ui.theme.W3WTheme
 @Composable
 fun GeolocationItem(
     primaryAddress: String,
-    secondaryAddress: String,
     isGeolocationGroup: Boolean,
+    modifier: Modifier = Modifier,
+    secondaryAddress: String? = null,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
     ConstraintLayout(modifier = modifier
         .fillMaxWidth()
@@ -71,13 +71,15 @@ fun GeolocationItem(
         )
 
         Text(
-            text = secondaryAddress,
+            text = secondaryAddress.orEmpty(),
             modifier = Modifier.constrainAs(textSecondary) {
                 start.linkTo(icGeo.end, 12.dp)
                 top.linkTo(textPrimary.bottom)
                 bottom.linkTo(parent.bottom)
                 end.linkTo(icArrow.start)
                 width = Dimension.fillToConstraints
+                visibility =
+                    if (secondaryAddress.isNullOrEmpty()) Visibility.Gone else Visibility.Visible
             },
             style = MaterialTheme.typography.caption,
             color = if (isSystemInDarkTheme()) Grey50 else Grey50,
@@ -105,7 +107,22 @@ fun GeolocationItem(
 @Composable
 fun GeolocationItemGroupLight() {
     W3WTheme {
-        GeolocationItem("Alfred Road", "London", true, {})
+        GeolocationItem(
+            primaryAddress = "Alfred Road",
+            secondaryAddress = "London",
+            isGeolocationGroup = true,
+            onClick = {})
+    }
+}
+
+@Preview(locale = "en", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+fun GeolocationItemGroupNoSecondaryAddressLight() {
+    W3WTheme {
+        GeolocationItem(
+            primaryAddress = "Alfred Road",
+            isGeolocationGroup = true,
+            onClick = {})
     }
 }
 
@@ -113,7 +130,22 @@ fun GeolocationItemGroupLight() {
 @Composable
 fun GeolocationItemGroupDark() {
     W3WTheme {
-        GeolocationItem("Alfred Road", "London", true, {})
+        GeolocationItem(
+            primaryAddress = "Alfred Road",
+            secondaryAddress = "London",
+            isGeolocationGroup = true,
+            onClick = {})
+    }
+}
+
+@Preview(locale = "en", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Composable
+fun GeolocationItemGroupNoSecondaryDark() {
+    W3WTheme {
+        GeolocationItem(
+            primaryAddress = "Alfred Road",
+            isGeolocationGroup = true,
+            onClick = {})
     }
 }
 
@@ -121,23 +153,59 @@ fun GeolocationItemGroupDark() {
 @Composable
 fun GeolocationItemSingleLight() {
     W3WTheme {
-        GeolocationItem("What3words, 65 Alfred Road", "London, W2 5EU", false, {})
+        GeolocationItem(
+            primaryAddress = "What3words, 65 Alfred Road",
+            secondaryAddress = "London, W2 5EU",
+            isGeolocationGroup = false,
+            onClick = {})
     }
 }
+
+@Preview(locale = "en", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+fun GeolocationItemSingleNoSecondaryLight() {
+    W3WTheme {
+        GeolocationItem(
+            primaryAddress = "What3words, 65 Alfred Road",
+            isGeolocationGroup = false,
+            onClick = {})
+    }
+}
+
 
 @Preview(locale = "en", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun GeolocationItemSingleDark() {
     W3WTheme {
-        GeolocationItem("What3words, 65 Alfred Road", "London, W2 5EU", false, {})
+        GeolocationItem(
+            primaryAddress = "What3words, 65 Alfred Road",
+            secondaryAddress = "London, W2 5EU",
+            isGeolocationGroup = false,
+            onClick = {})
     }
 }
+
+@Preview(locale = "en", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Composable
+fun GeolocationItemSingleNoSecondaryDark() {
+    W3WTheme {
+        GeolocationItem(
+            primaryAddress = "What3words, 65 Alfred Road",
+            isGeolocationGroup = false,
+            onClick = {})
+    }
+}
+
 
 @Preview(locale = "ar", showBackground = true)
 @Composable
 fun GeolocationItemSingleRightToLeft() {
     W3WTheme {
-        GeolocationItem("ابو فيوض لادوات الصيد", "المحمودية، سنابادة، مركز المحمودية،، البحيرة 5872461", false, {})
+        GeolocationItem(
+            primaryAddress = "ابو فيوض لادوات الصيد",
+            secondaryAddress = "المحمودية، سنابادة، مركز المحمودية،، البحيرة 5872461",
+            isGeolocationGroup = false,
+            onClick = {})
     }
 }
 
@@ -145,7 +213,11 @@ fun GeolocationItemSingleRightToLeft() {
 @Composable
 fun GeolocationItemGroupRightToLeft() {
     W3WTheme {
-        GeolocationItem("ابو فيوض لادوات الصيد", "المحمودية، سنابادة، مركز المحمودية،، البحيرة 5872461", true, {})
+        GeolocationItem(
+            primaryAddress = "ابو فيوض لادوات الصيد",
+            secondaryAddress = "المحمودية، سنابادة، مركز المحمودية،، البحيرة 5872461",
+            isGeolocationGroup = true,
+            onClick = {})
     }
 }
 

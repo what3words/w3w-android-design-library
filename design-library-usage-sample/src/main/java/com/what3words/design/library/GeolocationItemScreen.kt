@@ -31,9 +31,21 @@ fun GeolocationItemScreen(navController: NavController) {
             )
 
             GeolocationItemExample(
+                title = "No secondary Address Group GeolocationItem",
+                primaryAddress = "Alfred Road",
+                isGeolocationGroup = true
+            )
+
+            GeolocationItemExample(
                 title = "Normal Single GeolocationItem",
                 primaryAddress = "what3words Ltd., 65 Alfred Road",
                 secondaryAddress = "London, W2 5EU",
+                isGeolocationGroup = false
+            )
+
+            GeolocationItemExample(
+                title = "No secondary Single GeolocationItem",
+                primaryAddress = "what3words Ltd., 65 Alfred Road",
                 isGeolocationGroup = false
             )
 
@@ -69,7 +81,12 @@ fun GeolocationItemScreen(navController: NavController) {
 }
 
 @Composable
-fun GeolocationItemExampleRtl(title: String, primaryAddress: String, secondaryAddress: String, isGeolocationGroup: Boolean){
+fun GeolocationItemExampleRtl(
+    title: String,
+    primaryAddress: String,
+    secondaryAddress: String,
+    isGeolocationGroup: Boolean
+) {
     Text(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
@@ -88,7 +105,12 @@ fun GeolocationItemExampleRtl(title: String, primaryAddress: String, secondaryAd
 }
 
 @Composable
-fun GeolocationItemExample(title: String, primaryAddress: String, secondaryAddress: String, isGeolocationGroup: Boolean) {
+fun GeolocationItemExample(
+    title: String,
+    primaryAddress: String,
+    isGeolocationGroup: Boolean,
+    secondaryAddress: String? = null
+) {
     Text(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
