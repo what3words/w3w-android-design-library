@@ -4,11 +4,13 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,11 +46,20 @@ fun SuggestionWhat3words(
     nearTextStyle: TextStyle = W3WTheme.typography.footnote,
     nearTextColor: Color = W3WTheme.colors.textFootnote,
     distanceTextStyle: TextStyle = W3WTheme.typography.caption1,
-    distanceTextColor: Color = W3WTheme.colors.textSecondary
+    distanceTextColor: Color = W3WTheme.colors.textSecondary,
+    rippleColor: Color = W3WTheme.colors.backgroundRipple
 ) {
     ConstraintLayout(modifier = modifier
         .fillMaxWidth()
-        .clickable { onClick?.invoke() }
+        .clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = rememberRipple(
+                color = rippleColor
+            ),
+            onClick = {
+                onClick?.invoke()
+            }
+        )
         .background(background)
         .padding(W3WTheme.dimensions.paddingMedium)
     ) {

@@ -3,11 +3,14 @@ package com.what3words.design.library.ui.components
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -37,11 +40,20 @@ fun SuggestionGeolocation(
     primaryAddressTextColor: Color = W3WTheme.colors.textPrimary,
     secondaryAddressTextStyle: TextStyle = W3WTheme.typography.caption2,
     secondaryAddressTextColor: Color = W3WTheme.colors.textSecondary,
+    rippleColor: Color = W3WTheme.colors.backgroundRipple,
     iconTint: Color = W3WTheme.colors.primary
 ) {
     ConstraintLayout(modifier = modifier
         .fillMaxWidth()
-        .clickable { onClick?.invoke() }
+        .clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = rememberRipple(
+                color = rippleColor
+            ),
+            onClick = {
+                onClick?.invoke()
+            }
+        )
         .background(background)
         .padding(W3WTheme.dimensions.paddingMedium)
     ) {

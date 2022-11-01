@@ -1,6 +1,8 @@
 package com.what3words.design.library.sample
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -23,7 +25,12 @@ fun SuggestionWhat3wordsScreen(navController: NavController) {
         title = "SuggestionWhat3words",
         navController = navController
     ) {
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(W3WTheme.colors.background)
+        ) {
             SuggestionWhat3wordsExample(
                 title = "Normal SuggestionWhat3words",
                 words = "index.home.raft",
