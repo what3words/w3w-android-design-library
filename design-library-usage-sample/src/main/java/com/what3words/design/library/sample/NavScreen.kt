@@ -1,4 +1,4 @@
-package com.what3words.design.library
+package com.what3words.design.library.sample
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -7,8 +7,8 @@ import androidx.navigation.compose.rememberNavController
 
 sealed class NavScreen(val route: String) {
     object Home : NavScreen("Home")
-    object SuggestionItemScreen : NavScreen("SuggestionItemScreen")
-    object GeolocationItemScreen : NavScreen("GeolocationItemScreen")
+    object SuggestionWhat3wordsScreen : NavScreen("SuggestionWhat3wordsScreen")
+    object SuggestionGeolocationScreen : NavScreen("SuggestionGeolocationScreen")
 }
 
 @Composable
@@ -18,11 +18,11 @@ fun MainScreen() {
         composable(NavScreen.Home.route) {
             HomeScreen(navController)
         }
-        composable(NavScreen.SuggestionItemScreen.route) {
-            SuggestionItemScreen(navController)
+        composable(NavScreen.SuggestionWhat3wordsScreen.route) {
+            SuggestionWhat3wordsScreen(navController)
         }
-        composable(NavScreen.GeolocationItemScreen.route) {
-            GeolocationItemScreen(navController)
+        composable(NavScreen.SuggestionGeolocationScreen.route) {
+            SuggestionGeolocationScreen(navController)
         }
     }
 }

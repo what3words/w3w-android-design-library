@@ -1,4 +1,4 @@
-package com.what3words.design.library
+package com.what3words.design.library.sample
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

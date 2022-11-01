@@ -3,18 +3,17 @@ package com.what3words.design.library.ui.components
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,22 +23,27 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
 import com.what3words.design.library.R
-import com.what3words.design.library.ui.theme.Grey50
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
-fun GeolocationItem(
+fun SuggestionGeolocation(
     primaryAddress: String,
     isGeolocationGroup: Boolean,
     modifier: Modifier = Modifier,
     secondaryAddress: String? = null,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
+    background: Color = W3WTheme.colors.background,
+    primaryAddressTextStyle: TextStyle = W3WTheme.typography.headline,
+    primaryAddressTextColor: Color = W3WTheme.colors.textPrimary,
+    secondaryAddressTextStyle: TextStyle = W3WTheme.typography.caption2,
+    secondaryAddressTextColor: Color = W3WTheme.colors.textSecondary,
+    iconTint: Color = W3WTheme.colors.primary
 ) {
     ConstraintLayout(modifier = modifier
         .fillMaxWidth()
-        .clickable { onClick() }
-        .background(MaterialTheme.colors.background)
-        .padding(dimensionResource(id = R.dimen.normal_100))
+        .clickable { onClick?.invoke() }
+        .background(background)
+        .padding(W3WTheme.dimensions.paddingMedium)
     ) {
         val (icGeo, textPrimary, textSecondary, icArrow) = createRefs()
 
@@ -51,7 +55,7 @@ fun GeolocationItem(
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
             },
-            tint = MaterialTheme.colors.primary
+            tint = iconTint
         )
 
         Text(
@@ -63,8 +67,8 @@ fun GeolocationItem(
                 end.linkTo(icArrow.start)
                 width = Dimension.fillToConstraints
             },
-            style = MaterialTheme.typography.h2,
-            color = MaterialTheme.colors.primary,
+            style = primaryAddressTextStyle,
+            color = primaryAddressTextColor,
             textAlign = TextAlign.Start,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -81,8 +85,8 @@ fun GeolocationItem(
                 visibility =
                     if (secondaryAddress.isNullOrEmpty()) Visibility.Gone else Visibility.Visible
             },
-            style = MaterialTheme.typography.caption,
-            color = if (isSystemInDarkTheme()) Grey50 else Grey50,
+            style = secondaryAddressTextStyle,
+            color = secondaryAddressTextColor,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
@@ -98,7 +102,7 @@ fun GeolocationItem(
                 bottom.linkTo(parent.bottom)
                 visibility = if (isGeolocationGroup) Visibility.Visible else Visibility.Gone
             },
-            tint = MaterialTheme.colors.primary
+            tint = iconTint
         )
     }
 }
@@ -107,7 +111,7 @@ fun GeolocationItem(
 @Composable
 fun GeolocationItemGroupLight() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "Alfred Road",
             secondaryAddress = "London",
             isGeolocationGroup = true,
@@ -119,7 +123,7 @@ fun GeolocationItemGroupLight() {
 @Composable
 fun GeolocationItemGroupNoSecondaryAddressLight() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "Alfred Road",
             isGeolocationGroup = true,
             onClick = {})
@@ -130,7 +134,7 @@ fun GeolocationItemGroupNoSecondaryAddressLight() {
 @Composable
 fun GeolocationItemGroupDark() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "Alfred Road",
             secondaryAddress = "London",
             isGeolocationGroup = true,
@@ -142,7 +146,7 @@ fun GeolocationItemGroupDark() {
 @Composable
 fun GeolocationItemGroupNoSecondaryDark() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "Alfred Road",
             isGeolocationGroup = true,
             onClick = {})
@@ -153,7 +157,7 @@ fun GeolocationItemGroupNoSecondaryDark() {
 @Composable
 fun GeolocationItemSingleLight() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "What3words, 65 Alfred Road",
             secondaryAddress = "London, W2 5EU",
             isGeolocationGroup = false,
@@ -165,7 +169,7 @@ fun GeolocationItemSingleLight() {
 @Composable
 fun GeolocationItemSingleNoSecondaryLight() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "What3words, 65 Alfred Road",
             isGeolocationGroup = false,
             onClick = {})
@@ -177,7 +181,7 @@ fun GeolocationItemSingleNoSecondaryLight() {
 @Composable
 fun GeolocationItemSingleDark() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "What3words, 65 Alfred Road",
             secondaryAddress = "London, W2 5EU",
             isGeolocationGroup = false,
@@ -189,7 +193,7 @@ fun GeolocationItemSingleDark() {
 @Composable
 fun GeolocationItemSingleNoSecondaryDark() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "What3words, 65 Alfred Road",
             isGeolocationGroup = false,
             onClick = {})
@@ -201,7 +205,7 @@ fun GeolocationItemSingleNoSecondaryDark() {
 @Composable
 fun GeolocationItemSingleRightToLeft() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "ابو فيوض لادوات الصيد",
             secondaryAddress = "المحمودية، سنابادة، مركز المحمودية،، البحيرة 5872461",
             isGeolocationGroup = false,
@@ -213,7 +217,7 @@ fun GeolocationItemSingleRightToLeft() {
 @Composable
 fun GeolocationItemGroupRightToLeft() {
     W3WTheme {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = "ابو فيوض لادوات الصيد",
             secondaryAddress = "المحمودية، سنابادة، مركز المحمودية،، البحيرة 5872461",
             isGeolocationGroup = true,

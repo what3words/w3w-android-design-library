@@ -1,47 +1,48 @@
 package com.what3words.design.library.ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    //Android Title
-    h1 = TextStyle(
+data class W3WTypography(
+    val title: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 22.sp
+        fontSize = 22.sp,
+        letterSpacing = 0.sp
     ),
-    //Android Headline
-    h2 = TextStyle(
+    val headline: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 17.sp
+        fontSize = 17.sp,
+        letterSpacing = 0.sp
     ),
-    //Android Body
-    body1 = TextStyle(
+    val body: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 17.sp
+        fontSize = 17.sp,
+        letterSpacing = 0.sp
     ),
-    //Android Caption-1
-    subtitle1 = TextStyle(
+    val caption1: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp
+        fontSize = 14.sp,
+        letterSpacing = 0.sp
     ),
-    //Android Caption-2
-    subtitle2 = TextStyle(
+    val caption2: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 14.sp,
+        letterSpacing = 0.sp
     ),
-    //Android Footnote
-    caption = TextStyle(
+    val footnote: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 12.sp,
+        letterSpacing = 0.sp
     )
 )
+
+internal val LocalTypography = staticCompositionLocalOf { W3WTypography() }

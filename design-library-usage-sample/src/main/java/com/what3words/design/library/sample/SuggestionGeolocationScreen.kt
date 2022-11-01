@@ -1,11 +1,10 @@
-package com.what3words.design.library
+package com.what3words.design.library.sample
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,13 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.what3words.design.library.ui.components.GeolocationItem
+import com.what3words.design.library.ui.components.SuggestionGeolocation
 import com.what3words.design.library.ui.theme.Grey40
+import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
-fun GeolocationItemScreen(navController: NavController) {
+fun SuggestionGeolocationScreen(navController: NavController) {
     NavigationScaffold(
-        title = "Suggestion Item Component",
+        title = "SuggestionGeolocation",
         navController = navController
     ) {
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -90,12 +90,12 @@ fun GeolocationItemExampleRtl(
     Text(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
-        style = MaterialTheme.typography.caption,
-        color = MaterialTheme.colors.primary
+        style = W3WTheme.typography.footnote,
+        color = W3WTheme.colors.textFootnote
     )
     Divider(color = Grey40)
     CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
-        GeolocationItem(
+        SuggestionGeolocation(
             primaryAddress = primaryAddress,
             secondaryAddress = secondaryAddress,
             isGeolocationGroup = isGeolocationGroup,
@@ -109,19 +109,23 @@ fun GeolocationItemExample(
     title: String,
     primaryAddress: String,
     isGeolocationGroup: Boolean,
-    secondaryAddress: String? = null
+    secondaryAddress: String? = null,
+    onClick: (() -> Unit)? = null
 ) {
-    Text(
-        text = title,
-        modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
-        style = MaterialTheme.typography.caption,
-        color = MaterialTheme.colors.primary
-    )
+    if (title.isNotEmpty()) {
+        Text(
+            text = title,
+            modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
+            style = W3WTheme.typography.footnote,
+            color = W3WTheme.colors.textFootnote
+        )
+    }
     Divider(color = Grey40)
-    GeolocationItem(
+    SuggestionGeolocation(
         primaryAddress = primaryAddress,
         secondaryAddress = secondaryAddress,
         isGeolocationGroup = isGeolocationGroup,
-        onClick = {})
+        onClick = onClick
+    )
     Divider(color = Grey40)
 }

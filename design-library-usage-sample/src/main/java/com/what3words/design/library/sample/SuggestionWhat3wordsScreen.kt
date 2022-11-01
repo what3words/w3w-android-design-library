@@ -1,11 +1,10 @@
-package com.what3words.design.library
+package com.what3words.design.library.sample
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,27 +12,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.what3words.design.library.ui.components.SuggestionItem
+import com.what3words.design.library.ui.components.SuggestionWhat3words
 import com.what3words.design.library.ui.theme.Grey40
+import com.what3words.design.library.ui.theme.W3WTheme
 import java.util.Locale
 
 @Composable
-fun SuggestionItemScreen(navController: NavController) {
+fun SuggestionWhat3wordsScreen(navController: NavController) {
     NavigationScaffold(
-        title = "Suggestion Item Component",
+        title = "SuggestionWhat3words",
         navController = navController
     ) {
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            SuggestionItemExample(
-                title = "Normal SuggestionItem",
+            SuggestionWhat3wordsExample(
+                title = "Normal SuggestionWhat3words",
                 words = "index.home.raft",
                 country = "GB",
                 near = "Bayswater, London",
                 distance = 30
             )
 
-            SuggestionItemExample(
-                title = "Normal SuggestionItem with large what3words address",
+            SuggestionWhat3wordsExample(
+                title = "Highlighted SuggestionWhat3words",
+                words = "index.home.raft",
+                country = "GB",
+                near = "Bayswater, London",
+                distance = 30,
+                isHighlighted = true
+            )
+
+            SuggestionWhat3wordsExample(
+                title = "Normal SuggestionWhat3words with large address",
                 words = "congratulations.congratulations.congratulations",
                 country = "NZ",
                 near = "Taumatawhakatangihangakoauauo, Porangahau sdsdsds",
@@ -41,16 +50,16 @@ fun SuggestionItemScreen(navController: NavController) {
             )
 
 
-            SuggestionItemExample(
-                title = "Water SuggestionItem",
+            SuggestionWhat3wordsExample(
+                title = "Water SuggestionWhat3words",
                 words = "shivers.endangers.whence",
                 country = "ZZ",
                 near = "St Agnes, Isles of Scilly",
                 distance = 300
             )
 
-            SuggestionItemExample(
-                title = "Water SuggestionItem without near",
+            SuggestionWhat3wordsExample(
+                title = "Water SuggestionWhat3words without near",
                 words = "cheerfulness.miming.thereby",
                 country = "ZZ",
                 near = null,
@@ -58,7 +67,7 @@ fun SuggestionItemScreen(navController: NavController) {
             )
 
             SuggestionItemExampleRtl(
-                title = "Arabic right-to-left SuggestionItem",
+                title = "Arabic right-to-left SuggestionWhat3words",
                 words = "القطار.مسعف.شخصيات",
                 country = "UK",
                 distance = 20,
@@ -79,12 +88,12 @@ fun SuggestionItemExampleRtl(
     Text(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
-        style = MaterialTheme.typography.caption,
-        color = MaterialTheme.colors.primary
+        style = W3WTheme.typography.footnote,
+        color = W3WTheme.colors.textFootnote
     )
     Divider(color = Grey40)
     CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
-        SuggestionItem(
+        SuggestionWhat3words(
             words = words,
             near = near,
             distance = "${distance}km",
@@ -95,25 +104,31 @@ fun SuggestionItemExampleRtl(
 }
 
 @Composable
-fun SuggestionItemExample(
+fun SuggestionWhat3wordsExample(
     title: String,
     words: String,
     country: String,
+    isHighlighted: Boolean = false,
     near: String? = null,
-    distance: Int? = null
+    distance: Int? = null,
+    onClick: (() -> Unit)? = null
 ) {
-    Text(
-        text = title,
-        modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
-        style = MaterialTheme.typography.caption,
-        color = MaterialTheme.colors.primary
-    )
+    if (title.isNotEmpty()) {
+        Text(
+            text = title,
+            modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
+            style = W3WTheme.typography.footnote,
+            color = W3WTheme.colors.textFootnote
+        )
+    }
     Divider(color = Grey40)
-    SuggestionItem(
+    SuggestionWhat3words(
         words = words,
         near = near,
         distance = "${distance}km",
         isLand = country.lowercase(Locale.getDefault()) != "zz",
-        onClick = {})
+        onClick = onClick,
+        isHighlighted = isHighlighted
+    )
     Divider(color = Grey40)
 }
