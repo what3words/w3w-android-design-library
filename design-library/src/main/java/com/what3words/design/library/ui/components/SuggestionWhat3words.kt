@@ -40,27 +40,28 @@ fun SuggestionWhat3words(
     isLand: Boolean = true,
     distance: String? = null,
     isHighlighted: Boolean = false,
-    background: Color = if (isHighlighted) W3WTheme.colors.backgroundHighlighted else W3WTheme.colors.background,
+    background: Color = W3WTheme.colors.background,
+    backgroundHighlighted: Color = W3WTheme.colors.backgroundHighlighted,
+    backgroundRippleColor: Color = W3WTheme.colors.backgroundRipple,
     addressTextStyle: TextStyle = W3WTheme.typography.headline,
     addressTextColor: Color = W3WTheme.colors.textPrimary,
     nearTextStyle: TextStyle = W3WTheme.typography.footnote,
     nearTextColor: Color = W3WTheme.colors.textFootnote,
     distanceTextStyle: TextStyle = W3WTheme.typography.caption1,
     distanceTextColor: Color = W3WTheme.colors.textSecondary,
-    rippleColor: Color = W3WTheme.colors.backgroundRipple
 ) {
     ConstraintLayout(modifier = modifier
         .fillMaxWidth()
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(
-                color = rippleColor
+                color = backgroundRippleColor
             ),
             onClick = {
                 onClick?.invoke()
             }
         )
-        .background(background)
+        .background(if (isHighlighted) backgroundHighlighted else background)
         .padding(W3WTheme.dimensions.paddingMedium)
     ) {
         val (textSlashes, textWords, textNear, icSea, textDistance) = createRefs()
