@@ -60,8 +60,13 @@ fun NavigationScaffold(
     Scaffold(
         topBar = {
             TopAppBar(
+                backgroundColor = W3WTheme.colors.background,
                 title = {
-                    Text(text = title.orEmpty())
+                    Text(
+                        text = title.orEmpty(),
+                        color = W3WTheme.colors.textPrimary,
+                        style = W3WTheme.typography.headline
+                    )
                 },
                 navigationIcon = navigationIcon,
             )
