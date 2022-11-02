@@ -1,11 +1,14 @@
 package com.what3words.design.library.ui.theme
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-val Shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp)
+data class W3WDimensions(
+    val paddingTiny: Dp = 4.dp,
+    val paddingSmall: Dp = 8.dp,
+    val paddingMedium: Dp = 12.dp,
+    val paddingLarge: Dp = 16.dp
 )
+
+internal val LocalDimensions = staticCompositionLocalOf { W3WDimensions() }

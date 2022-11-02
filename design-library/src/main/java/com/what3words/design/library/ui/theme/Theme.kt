@@ -1,41 +1,39 @@
 package com.what3words.design.library.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.remember
 
-private val W3WDarkColorPalette = darkColors(
-    primary = White,
-    primaryVariant = Red,
-    secondary = BlueWhale,
-    background = Blue90
-)
-
-private val W3WLightColorPalette = lightColors(
-    primary = BlueWhale,
-    primaryVariant = Red,
-    secondary = BluePowder,
-    background = White
-)
+object W3WTheme {
+    val colors: W3WColors
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalColors.current
+    val typography: W3WTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalTypography.current
+    val dimensions: W3WDimensions
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalDimensions.current
+}
 
 @Composable
 fun W3WTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    colors: W3WColors = if (isSystemInDarkTheme()) darkColors() else lightColors(),
+    typography: W3WTypography = W3WTheme.typography,
+    dimensions: W3WDimensions = W3WTheme.dimensions,
     content: @Composable () -> Unit
 ) {
-
-    val colors = if (darkTheme) {
-        W3WDarkColorPalette
-    } else {
-        W3WLightColorPalette
+    val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
+    CompositionLocalProvider(
+        LocalColors provides rememberedColors,
+        LocalDimensions provides dimensions,
+        LocalTypography provides typography
+    ) {
+        content()
     }
-
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
 }
