@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -62,7 +63,7 @@ fun ListItemActionScreen(navController: NavController) {
             Divider(color = Grey40)
             ListItemAction(
                 title = "Checkbox",
-                leftIcon = Icons.Outlined.Check,
+                leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Check),
                 actionListItemType = ActionListItemType.Checkbox,
                 isSelected = checkbox2,
                 onClick = { isChecked -> checkbox2 = isChecked })
@@ -89,7 +90,7 @@ fun ListItemActionScreen(navController: NavController) {
             Divider(color = Grey40)
             ListItemAction(
                 title = "Toggle",
-                leftIcon = Icons.Outlined.Star,
+                leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Star),
                 actionListItemType = ActionListItemType.Toggle,
                 isSelected = toggle2,
                 onClick = { isOn ->
@@ -137,7 +138,7 @@ fun ListItemActionScreen(navController: NavController) {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 ListItemAction(
                     title = "خانة اختيار",
-                    leftIcon = Icons.Outlined.Check,
+                    leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Check),
                     actionListItemType = ActionListItemType.Checkbox,
                     isSelected = checkbox3,
                     onClick = { isChecked -> checkbox3 = isChecked })
