@@ -113,7 +113,7 @@ private fun GeolocationItemExampleRtl(
 }
 
 @Composable
-private fun GeolocationItemExample(
+internal fun GeolocationItemExample(
     title: String,
     primaryAddress: String,
     isGeolocationGroup: Boolean,

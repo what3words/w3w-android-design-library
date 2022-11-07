@@ -12,13 +12,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.what3words.design.library.sample.components.NavigationScaffold
@@ -223,7 +224,8 @@ fun HomeScreen(navController: NavController) {
             )
             Divider(color = Grey40)
             ListItemNavigation(
-                title = "Contacts", leftIcon = Icons.Filled.Phone
+                title = "Contacts",
+                leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Phone)
             ) {
                 navController.navigate("ListItemNavigationScreen")
             }

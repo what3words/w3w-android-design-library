@@ -13,7 +13,8 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,11 @@ fun ListItemNavigationScreen(navController: NavController) {
                 .background(W3WTheme.colors.background)
         ) {
             ListItemNavigationExample("Simple ListItemNavigation", "Navigation Item")
-            ListItemNavigationExample("Icon ListItemNavigation", "Navigation Item", Icons.Outlined.Star)
+            ListItemNavigationExample(
+                "Icon ListItemNavigation", "Navigation Item", rememberVectorPainter(
+                    image = Icons.Outlined.Star
+                )
+            )
             ListItemNavigationExampleRtl("ListItemNavigation right-to-left", "عنصر الملاحة")
         }
     }
@@ -46,7 +51,7 @@ fun ListItemNavigationScreen(navController: NavController) {
 private fun ListItemNavigationExampleRtl(
     title: String,
     navigationTitle: String,
-    icon: ImageVector? = null,
+    iconPainter: Painter? = null,
     onClick: (() -> Unit)? = null
 ) {
     Text(
@@ -59,8 +64,9 @@ private fun ListItemNavigationExampleRtl(
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ListItemNavigation(
             title = navigationTitle,
-            leftIcon = icon,
-            onClick = onClick)
+            leftIconPainter = iconPainter,
+            onClick = onClick
+        )
     }
     Divider(color = Grey40)
 }
@@ -69,7 +75,7 @@ private fun ListItemNavigationExampleRtl(
 private fun ListItemNavigationExample(
     title: String,
     navigationTitle: String,
-    icon: ImageVector? = null,
+    iconPainter: Painter? = null,
     onClick: (() -> Unit)? = null
 ) {
     Text(
@@ -79,9 +85,10 @@ private fun ListItemNavigationExample(
         color = W3WTheme.colors.textFootnote
     )
     Divider(color = Grey40)
-        ListItemNavigation(
-            title = navigationTitle,
-            leftIcon = icon,
-            onClick = onClick)
+    ListItemNavigation(
+        title = navigationTitle,
+        leftIconPainter = iconPainter,
+        onClick = onClick
+    )
     Divider(color = Grey40)
 }

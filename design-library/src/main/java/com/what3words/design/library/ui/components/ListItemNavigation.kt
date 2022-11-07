@@ -16,7 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,7 +36,7 @@ import com.what3words.design.library.ui.theme.W3WTheme
 fun ListItemNavigation(
     title: String,
     modifier: Modifier = Modifier,
-    leftIcon: ImageVector? = null,
+    leftIconPainter: Painter? = null,
     iconTint: Color = W3WTheme.colors.primary,
     background: Color = W3WTheme.colors.background,
     titleTextStyle: TextStyle = W3WTheme.typography.headline,
@@ -57,14 +58,14 @@ fun ListItemNavigation(
         .padding(W3WTheme.dimensions.paddingSmall)
     ) {
         val (icLeft, textTitle, icType) = createRefs()
-        if (leftIcon != null) {
+        if (leftIconPainter != null) {
             Icon(
-                imageVector = leftIcon,
+                painter = leftIconPainter,
                 contentDescription = null,
                 modifier = Modifier.constrainAs(icLeft) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
+                    start.linkTo(parent.start, 4.dp)
                 },
                 tint = iconTint
             )
@@ -73,7 +74,7 @@ fun ListItemNavigation(
             text = title,
             modifier = Modifier.constrainAs(textTitle) {
                 start.linkTo(
-                    if (leftIcon != null) icLeft.end else parent.start, 8.dp
+                    if (leftIconPainter != null) icLeft.end else parent.start, 8.dp
                 )
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
@@ -117,7 +118,7 @@ fun NavigationListItemWithIconLight() {
     W3WTheme {
         ListItemNavigation(
             title = "Contacts",
-            leftIcon = Icons.Filled.Call,
+            leftIconPainter = rememberVectorPainter(image = Icons.Filled.Call),
             onClick = {})
     }
 }
@@ -128,7 +129,7 @@ fun NavigationListItemWithIconRtlLight() {
     W3WTheme {
         ListItemNavigation(
             title = "جهات الاتصال",
-            leftIcon = Icons.Filled.Call,
+            leftIconPainter = rememberVectorPainter(image = Icons.Filled.Call),
             onClick = {})
     }
 }

@@ -65,7 +65,7 @@ fun SuggestionGeolocation(
             modifier = Modifier.constrainAs(icGeo) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
+                start.linkTo(parent.start, 4.dp)
             },
             tint = iconTint
         )
@@ -73,7 +73,7 @@ fun SuggestionGeolocation(
         Text(
             text = primaryAddress,
             modifier = Modifier.constrainAs(textPrimary) {
-                start.linkTo(icGeo.end, 12.dp)
+                start.linkTo(icGeo.end, 8.dp)
                 top.linkTo(parent.top)
                 bottom.linkTo(textSecondary.top)
                 end.linkTo(icArrow.start)
@@ -89,7 +89,7 @@ fun SuggestionGeolocation(
         Text(
             text = secondaryAddress.orEmpty(),
             modifier = Modifier.constrainAs(textSecondary) {
-                start.linkTo(icGeo.end, 12.dp)
+                start.linkTo(icGeo.end, 8.dp)
                 top.linkTo(textPrimary.bottom)
                 bottom.linkTo(parent.bottom)
                 end.linkTo(icArrow.start)
