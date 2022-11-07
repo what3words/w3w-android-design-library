@@ -1,6 +1,9 @@
 package com.what3words.design.library.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.ripple.LocalRippleTheme
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -21,6 +24,22 @@ object W3WTheme {
         get() = LocalDimensions.current
 }
 
+object RippleCustomTheme: RippleTheme {
+    @Composable
+    override fun defaultColor() =
+        RippleTheme.defaultRippleColor(
+            W3WTheme.colors.backgroundRipple,
+            lightTheme = !isSystemInDarkTheme()
+        )
+
+    @Composable
+    override fun rippleAlpha(): RippleAlpha =
+        RippleTheme.defaultRippleAlpha(
+            W3WTheme.colors.backgroundRipple,
+            lightTheme = !isSystemInDarkTheme()
+        )
+}
+
 @Composable
 fun W3WTheme(
     colors: W3WColors = if (isSystemInDarkTheme()) darkColors() else lightColors(),
@@ -32,7 +51,8 @@ fun W3WTheme(
     CompositionLocalProvider(
         LocalColors provides rememberedColors,
         LocalDimensions provides dimensions,
-        LocalTypography provides typography
+        LocalTypography provides typography,
+        LocalRippleTheme provides RippleCustomTheme
     ) {
         content()
     }

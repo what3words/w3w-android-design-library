@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.what3words.design.library.sample.components.NavigationScaffold
 import com.what3words.design.library.ui.components.SuggestionWhat3words
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -40,7 +41,6 @@ fun SuggestionGeolocation(
     primaryAddressTextColor: Color = W3WTheme.colors.textPrimary,
     secondaryAddressTextStyle: TextStyle = W3WTheme.typography.caption2,
     secondaryAddressTextColor: Color = W3WTheme.colors.textSecondary,
-    rippleColor: Color = W3WTheme.colors.backgroundRipple,
     iconTint: Color = W3WTheme.colors.primary
 ) {
     ConstraintLayout(modifier = modifier
@@ -48,14 +48,14 @@ fun SuggestionGeolocation(
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(
-                color = rippleColor
+                color = LocalRippleTheme.current.defaultColor()
             ),
             onClick = {
                 onClick?.invoke()
             }
         )
         .background(background)
-        .padding(W3WTheme.dimensions.paddingMedium)
+        .padding(W3WTheme.dimensions.paddingSmall)
     ) {
         val (icGeo, textPrimary, textSecondary, icArrow) = createRefs()
 

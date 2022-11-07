@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.what3words.design.library.sample.components.NavigationScaffold
 import com.what3words.design.library.ui.components.SuggestionGeolocation
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
@@ -88,7 +89,7 @@ fun SuggestionGeolocationScreen(navController: NavController) {
 }
 
 @Composable
-fun GeolocationItemExampleRtl(
+private fun GeolocationItemExampleRtl(
     title: String,
     primaryAddress: String,
     secondaryAddress: String,
@@ -112,7 +113,7 @@ fun GeolocationItemExampleRtl(
 }
 
 @Composable
-fun GeolocationItemExample(
+private fun GeolocationItemExample(
     title: String,
     primaryAddress: String,
     isGeolocationGroup: Boolean,
