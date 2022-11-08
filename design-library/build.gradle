@@ -1,7 +1,13 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.dokka' version '1.5.0'
+    id 'maven-publish'
+    id 'signing'
 }
+
+apply from: 'maven-push.gradle'
+apply from: '../jacoco.gradle'
 
 android {
     compileSdk 33

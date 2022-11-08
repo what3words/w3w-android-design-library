@@ -1,0 +1,27 @@
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "what3words-android-design-library"
+
+        property "sonar.projectKey", "what3words_w3w-android-design-library"
+        property "sonar.organization", "what3words"
+        property "sonar.host.url", "https://sonarcloud.io"
+
+        property "sonar.modules", ":lib"
+        property "sonar.sourceEncoding", "UTF-8"
+
+        property "sonar.exclusions", "**/design-library-usage-sample/src/**"
+
+
+        property "sonar.junit.reportPaths", "**/test-results/**/*.xml"
+        property ":lib.sonar.coverage.jacoco.xmlReportPaths", "**/jacocoTestReport/jacocoTestReport.xml"
+        property ":lib.sonar.sources", "src/main/java"
+        property ":lib.sonar.java.coveragePlugin", "jacoco"
+
+
+        property ":testing.sonar.coverage.jacoco.xmlReportPaths", "build/reports/coverage/androidTest/debug/report.xml"
+        property ":testing.sonar.sources", "src/main/java"
+        property ":testing.sonar.java.coveragePlugin", "jacoco"
+    }
+}
