@@ -49,9 +49,9 @@ jobs:
       - run:
           name: Run Tests
           command: ./gradlew design-library:testDebugUnitTest design-library:jacocoTestReport
-      - run:
-          name: Upload Coverage Report to SonarCloud
-          command: ./gradlew sonarqube
+#      - run:
+#          name: Upload Coverage Report to SonarCloud
+#          command: ./gradlew sonarqube
       - run:
           name: Assemble sample release build
           command: ./gradlew design-library-usage-sample:assembleRelease
