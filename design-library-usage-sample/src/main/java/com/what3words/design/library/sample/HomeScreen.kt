@@ -1,87 +1,40 @@
 package com.what3words.design.library.sample
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.what3words.design.library.sample.components.NavigationScaffold
+import com.what3words.design.library.sample.extensions.ColorSystemItem
+import com.what3words.design.library.sample.extensions.toHexCode
+import com.what3words.design.library.ui.components.ActionListItemType
+import com.what3words.design.library.ui.components.ListItemAction
+import com.what3words.design.library.ui.components.ListItemNavigation
+import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun NavigationScaffold(
-    title: String? = null,
-    navController: NavController? = null,
-    bodyContent: @Composable (PaddingValues) -> Unit
-) {
-    val navigationIcon: (@Composable () -> Unit)? =
-        if (navController?.previousBackStackEntry != null) {
-            {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                }) {
-                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
-                }
-            }
-        } else {
-            // this can be null or another component
-            // If null, the navigationIcon won't be rendered at all
-            null
-        }
-
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                backgroundColor = W3WTheme.colors.background,
-                title = {
-                    Text(
-                        text = title.orEmpty(),
-                        color = W3WTheme.colors.textPrimary,
-                        style = W3WTheme.typography.headline
-                    )
-                },
-                navigationIcon = navigationIcon,
-            )
-        }
-    ) {
-        bodyContent(it)
-    }
-}
-
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavController) {
     NavigationScaffold(
-        title = "What3words Android Design Library",
-        navController = navController
+        title = "What3words Android Design Library", navController = navController
     ) {
         val context = LocalContext.current
         Column(
@@ -96,8 +49,7 @@ fun HomeScreen(navController: NavController) {
         ) {
             Text(
                 text = "Colours",
-                modifier = Modifier
-                    .padding(W3WTheme.dimensions.paddingSmall),
+                modifier = Modifier.padding(W3WTheme.dimensions.paddingSmall),
                 style = W3WTheme.typography.headline,
                 color = W3WTheme.colors.textPrimary
             )
@@ -107,10 +59,7 @@ fun HomeScreen(navController: NavController) {
                     .horizontalScroll(rememberScrollState())
             ) {
                 ColorSystemItem(
-                    context,
-                    W3WTheme.colors.primary,
-                    "primary",
-                    W3WTheme.colors.primary.toHexCode()
+                    context, W3WTheme.colors.primary, "primary", W3WTheme.colors.primary.toHexCode()
                 )
                 ColorSystemItem(
                     context,
@@ -162,16 +111,14 @@ fun HomeScreen(navController: NavController) {
                 )
             }
             Divider(
-                color = W3WTheme.colors.primary,
-                modifier = Modifier.padding(
+                color = W3WTheme.colors.primary, modifier = Modifier.padding(
                     top = W3WTheme.dimensions.paddingMedium,
                     bottom = W3WTheme.dimensions.paddingMedium
                 )
             )
             Text(
                 text = "Typography",
-                modifier = Modifier
-                    .padding(W3WTheme.dimensions.paddingSmall),
+                modifier = Modifier.padding(W3WTheme.dimensions.paddingSmall),
                 style = W3WTheme.typography.headline,
                 color = W3WTheme.colors.textPrimary
             )
@@ -213,8 +160,7 @@ fun HomeScreen(navController: NavController) {
             )
 
             Divider(
-                color = W3WTheme.colors.primary,
-                modifier = Modifier.padding(
+                color = W3WTheme.colors.primary, modifier = Modifier.padding(
                     top = W3WTheme.dimensions.paddingMedium,
                     bottom = W3WTheme.dimensions.paddingMedium
                 )
@@ -229,17 +175,14 @@ fun HomeScreen(navController: NavController) {
                 style = W3WTheme.typography.headline,
                 color = W3WTheme.colors.textPrimary,
             )
-            SuggestionWhat3wordsExample(
-                title = "",
+            SuggestionWhat3wordsExample(title = "",
                 words = "index.home.raft",
                 country = "GB",
                 near = "Bayswater, London",
                 distance = 30,
-                onClick = { navController.navigate("SuggestionWhat3wordsScreen") }
-            )
+                onClick = { navController.navigate("SuggestionWhat3wordsScreen") })
             Divider(
-                color = W3WTheme.colors.primary,
-                modifier = Modifier.padding(
+                color = W3WTheme.colors.primary, modifier = Modifier.padding(
                     top = W3WTheme.dimensions.paddingMedium,
                     bottom = W3WTheme.dimensions.paddingMedium
                 )
@@ -262,34 +205,57 @@ fun HomeScreen(navController: NavController) {
             ) {
                 navController.navigate("SuggestionGeolocationScreen")
             }
+
+            Divider(
+                color = W3WTheme.colors.primary, modifier = Modifier.padding(
+                    top = W3WTheme.dimensions.paddingMedium,
+                    bottom = W3WTheme.dimensions.paddingMedium
+                )
+            )
+            Text(
+                text = "ListItemNavigation >",
+                modifier = Modifier
+                    .padding(W3WTheme.dimensions.paddingSmall)
+                    .clickable {
+                        navController.navigate("ListItemNavigationScreen")
+                    },
+                style = W3WTheme.typography.headline,
+                color = W3WTheme.colors.textPrimary,
+            )
+            Divider(color = Grey40)
+            ListItemNavigation(
+                title = "Contacts",
+                leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Phone)
+            ) {
+                navController.navigate("ListItemNavigationScreen")
+            }
+            Divider(color = Grey40)
+            Divider(
+                color = W3WTheme.colors.primary, modifier = Modifier.padding(
+                    top = W3WTheme.dimensions.paddingMedium,
+                    bottom = W3WTheme.dimensions.paddingMedium
+                )
+            )
+            Text(
+                text = "ListItemAction >",
+                modifier = Modifier
+                    .padding(W3WTheme.dimensions.paddingSmall)
+                    .clickable {
+                        navController.navigate("ListItemActionScreen")
+                    },
+                style = W3WTheme.typography.headline,
+                color = W3WTheme.colors.textPrimary,
+            )
+
+            var isChecked by remember { mutableStateOf(value = true) }
+            Divider(color = Grey40)
+            ListItemAction(title = "Contacts",
+                isSelected = isChecked,
+                actionListItemType = ActionListItemType.Checkbox,
+                onClick = { b ->
+                    isChecked = b
+                })
+            Divider(color = Grey40)
         }
     }
-}
-
-@Composable
-fun ColorSystemItem(context: Context, color: Color, colorName: String, hex: String) {
-    Box(
-        modifier = Modifier
-            .padding(W3WTheme.dimensions.paddingTiny)
-            .size(32.dp)
-            .clip(CircleShape)
-            .background(color)
-            .border(1.dp, Color.Gray, CircleShape)
-            .clickable {
-                Toast
-                    .makeText(
-                        context,
-                        "$colorName: $hex",
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
-            }
-    )
-}
-
-private fun Color.toHexCode(): String {
-    val red = this.red * 255
-    val green = this.green * 255
-    val blue = this.blue * 255
-    return String.format("#%02x%02x%02x", red.toInt(), green.toInt(), blue.toInt())
 }

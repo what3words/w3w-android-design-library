@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +43,6 @@ fun SuggestionWhat3words(
     isHighlighted: Boolean = false,
     background: Color = W3WTheme.colors.background,
     backgroundHighlighted: Color = W3WTheme.colors.backgroundHighlighted,
-    backgroundRippleColor: Color = W3WTheme.colors.backgroundRipple,
     addressTextStyle: TextStyle = W3WTheme.typography.headline,
     addressTextColor: Color = W3WTheme.colors.textPrimary,
     nearTextStyle: TextStyle = W3WTheme.typography.footnote,
@@ -55,7 +55,7 @@ fun SuggestionWhat3words(
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(
-                color = backgroundRippleColor
+                color = LocalRippleTheme.current.defaultColor()
             ),
             onClick = {
                 onClick?.invoke()

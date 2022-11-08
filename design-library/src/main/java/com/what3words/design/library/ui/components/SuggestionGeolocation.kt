@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -40,7 +41,6 @@ fun SuggestionGeolocation(
     primaryAddressTextColor: Color = W3WTheme.colors.textPrimary,
     secondaryAddressTextStyle: TextStyle = W3WTheme.typography.caption2,
     secondaryAddressTextColor: Color = W3WTheme.colors.textSecondary,
-    rippleColor: Color = W3WTheme.colors.backgroundRipple,
     iconTint: Color = W3WTheme.colors.primary
 ) {
     ConstraintLayout(modifier = modifier
@@ -48,14 +48,14 @@ fun SuggestionGeolocation(
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(
-                color = rippleColor
+                color = LocalRippleTheme.current.defaultColor()
             ),
             onClick = {
                 onClick?.invoke()
             }
         )
         .background(background)
-        .padding(W3WTheme.dimensions.paddingMedium)
+        .padding(W3WTheme.dimensions.paddingSmall)
     ) {
         val (icGeo, textPrimary, textSecondary, icArrow) = createRefs()
 
@@ -65,7 +65,7 @@ fun SuggestionGeolocation(
             modifier = Modifier.constrainAs(icGeo) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
+                start.linkTo(parent.start, 4.dp)
             },
             tint = iconTint
         )
@@ -73,7 +73,7 @@ fun SuggestionGeolocation(
         Text(
             text = primaryAddress,
             modifier = Modifier.constrainAs(textPrimary) {
-                start.linkTo(icGeo.end, 12.dp)
+                start.linkTo(icGeo.end, 8.dp)
                 top.linkTo(parent.top)
                 bottom.linkTo(textSecondary.top)
                 end.linkTo(icArrow.start)
@@ -89,7 +89,7 @@ fun SuggestionGeolocation(
         Text(
             text = secondaryAddress.orEmpty(),
             modifier = Modifier.constrainAs(textSecondary) {
-                start.linkTo(icGeo.end, 12.dp)
+                start.linkTo(icGeo.end, 8.dp)
                 top.linkTo(textPrimary.bottom)
                 bottom.linkTo(parent.bottom)
                 end.linkTo(icArrow.start)
