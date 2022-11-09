@@ -11,9 +11,11 @@ val Grey80 = Color(0xFF32373C)
 val Grey70 = Color(0xFF525252)
 val Grey60 = Color(0xFF616161)
 val Grey50 = Color(0xFF999999)
+val Grey45 = Color(0xFFA3A3A3)
 val Grey40 = Color(0xFFBFBFBF)
+val Grey30 = Color(0xFFD6D6D6)
 val Grey20 = Color(0xFFEBEBEB)
-val Grey10 = Color(0xFFEBEBEB)
+val Grey10 = Color(0xFFF2F4F5)
 val White = Color(0xFFFFFFFF)
 val Rust = Color(0xFFB24000)
 val Red = Color(0xFFE11F26)
@@ -27,6 +29,7 @@ class W3WColors(
     primary: Color,
     background: Color,
     backgroundHighlighted: Color,
+    backgroundDisabled: Color,
     backgroundRipple: Color,
     textPrimary: Color,
     textSecondary: Color,
@@ -41,6 +44,8 @@ class W3WColors(
     var background by mutableStateOf(background)
         private set
     var backgroundHighlighted by mutableStateOf(backgroundHighlighted)
+        private set
+    var backgroundDisabled by mutableStateOf(backgroundDisabled)
         private set
     var backgroundRipple by mutableStateOf(backgroundRipple)
         private set
@@ -63,6 +68,7 @@ class W3WColors(
         primary: Color = this.primary,
         background: Color = this.background,
         backgroundHighlighted: Color = this.backgroundHighlighted,
+        backgroundDisabled: Color = this.backgroundDisabled,
         backgroundRipple: Color = this.backgroundRipple,
         textPrimary: Color = this.textPrimary,
         textSecondary: Color = this.textSecondary,
@@ -75,6 +81,7 @@ class W3WColors(
         primary,
         background,
         backgroundHighlighted,
+        backgroundDisabled,
         backgroundRipple,
         textPrimary,
         textSecondary,
@@ -103,6 +110,7 @@ fun lightColors(
     primary: Color = BlueWhale,
     background: Color = White,
     backgroundHighlighted: Color = BluePowder,
+    backgroundDisabled: Color = Grey20,
     backgroundRipple: Color = Grey80,
     textPrimary: Color = BlueWhale,
     textSecondary: Color = Grey70,
@@ -114,6 +122,7 @@ fun lightColors(
     primary = primary,
     background = background,
     backgroundHighlighted = backgroundHighlighted,
+    backgroundDisabled = backgroundDisabled,
     backgroundRipple = backgroundRipple,
     textPrimary = textPrimary,
     textSecondary = textSecondary,
@@ -128,6 +137,7 @@ fun darkColors(
     primary: Color = White,
     background: Color = Blue90,
     backgroundHighlighted: Color = BlueWhale,
+    backgroundDisabled: Color = Blue90,
     backgroundRipple: Color = Grey10,
     textPrimary: Color = White,
     textSecondary: Color = White,
@@ -139,6 +149,7 @@ fun darkColors(
     primary = primary,
     background = background,
     backgroundHighlighted = backgroundHighlighted,
+    backgroundDisabled = backgroundDisabled,
     backgroundRipple = backgroundRipple,
     textPrimary = textPrimary,
     textSecondary = textSecondary,

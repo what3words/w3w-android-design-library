@@ -11,6 +11,7 @@ sealed class NavScreen(val route: String) {
     object SuggestionGeolocationScreen : NavScreen("SuggestionGeolocationScreen")
     object ListItemNavigationScreen : NavScreen("ListItemNavigationScreen")
     object ListItemActionScreen : NavScreen("ListItemActionScreen")
+    object FormFieldsScreen : NavScreen("FormFieldsScreen")
 }
 
 @Composable
@@ -31,6 +32,9 @@ fun MainScreen() {
         }
         composable(NavScreen.ListItemActionScreen.route) {
             ListItemActionScreen(navController)
+        }
+        composable(NavScreen.FormFieldsScreen.route) {
+            FormFieldsScreen(navController)
         }
     }
 }
