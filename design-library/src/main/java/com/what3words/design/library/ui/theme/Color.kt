@@ -27,6 +27,7 @@ val SilverTree = Color(0xFF65D698)
 
 class W3WColors(
     primary: Color,
+    accent: Color,
     background: Color,
     backgroundHighlighted: Color,
     backgroundDisabled: Color,
@@ -34,12 +35,13 @@ class W3WColors(
     textPrimary: Color,
     textSecondary: Color,
     textFootnote: Color,
-    textAccent: Color,
     backgroundError: Color,
     textError: Color,
     isLight: Boolean
 ) {
     var primary by mutableStateOf(primary)
+        private set
+    var accent by mutableStateOf(accent)
         private set
     var background by mutableStateOf(background)
         private set
@@ -55,8 +57,6 @@ class W3WColors(
         private set
     var textFootnote by mutableStateOf(textFootnote)
         private set
-    var textAccent by mutableStateOf(textAccent)
-        private set
     var backgroundError by mutableStateOf(backgroundError)
         private set
     var textError by mutableStateOf(textError)
@@ -66,6 +66,7 @@ class W3WColors(
 
     fun copy(
         primary: Color = this.primary,
+        accent: Color = this.accent,
         background: Color = this.background,
         backgroundHighlighted: Color = this.backgroundHighlighted,
         backgroundDisabled: Color = this.backgroundDisabled,
@@ -73,12 +74,12 @@ class W3WColors(
         textPrimary: Color = this.textPrimary,
         textSecondary: Color = this.textSecondary,
         textFootnote: Color = this.textFootnote,
-        textAccent: Color = this.textAccent,
         backgroundError: Color = this.backgroundError,
         textError: Color = this.textError,
         isLight: Boolean = this.isLight
     ): W3WColors = W3WColors(
         primary,
+        accent,
         background,
         backgroundHighlighted,
         backgroundDisabled,
@@ -86,7 +87,6 @@ class W3WColors(
         textPrimary,
         textSecondary,
         textFootnote,
-        textAccent,
         backgroundError,
         textError,
         isLight
@@ -94,13 +94,13 @@ class W3WColors(
 
     fun updateColorsFrom(other: W3WColors) {
         primary = other.primary
+        accent = other.accent
         background = other.background
         backgroundHighlighted = other.backgroundHighlighted
         backgroundRipple = other.backgroundRipple
         textPrimary = other.textPrimary
         textSecondary = other.textSecondary
         textFootnote = other.textFootnote
-        textAccent = other.textAccent
         backgroundError = other.backgroundError
         textError = other.textError
     }
@@ -108,18 +108,19 @@ class W3WColors(
 
 fun lightColors(
     primary: Color = BlueWhale,
+    accent: Color = Red,
     background: Color = White,
     backgroundHighlighted: Color = BluePowder,
     backgroundDisabled: Color = Grey20,
     backgroundRipple: Color = Grey80,
-    textPrimary: Color = BlueWhale,
+    textPrimary: Color = Grey80,
     textSecondary: Color = Grey70,
     textFootnote: Color = Grey70,
-    textAccent: Color = Red,
     backgroundError: Color = White,
     textError: Color = Rust
 ): W3WColors = W3WColors(
     primary = primary,
+    accent = accent,
     background = background,
     backgroundHighlighted = backgroundHighlighted,
     backgroundDisabled = backgroundDisabled,
@@ -127,7 +128,6 @@ fun lightColors(
     textPrimary = textPrimary,
     textSecondary = textSecondary,
     textFootnote = textFootnote,
-    textAccent = textAccent,
     backgroundError = backgroundError,
     textError = textError,
     isLight = true
@@ -135,6 +135,7 @@ fun lightColors(
 
 fun darkColors(
     primary: Color = White,
+    accent: Color = Red,
     background: Color = Blue90,
     backgroundHighlighted: Color = BlueWhale,
     backgroundDisabled: Color = Blue90,
@@ -142,11 +143,11 @@ fun darkColors(
     textPrimary: Color = White,
     textSecondary: Color = White,
     textFootnote: Color = Grey40,
-    textAccent: Color = Red,
     backgroundError: Color = BurntSienna,
     textError: Color = Blue90
 ): W3WColors = W3WColors(
     primary = primary,
+    accent = accent,
     background = background,
     backgroundHighlighted = backgroundHighlighted,
     backgroundDisabled = backgroundDisabled,
@@ -154,7 +155,6 @@ fun darkColors(
     textPrimary = textPrimary,
     textSecondary = textSecondary,
     textFootnote = textFootnote,
-    textAccent = textAccent,
     backgroundError = backgroundError,
     textError = textError,
     isLight = true

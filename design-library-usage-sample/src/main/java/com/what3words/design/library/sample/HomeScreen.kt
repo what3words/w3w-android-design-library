@@ -64,6 +64,12 @@ fun HomeScreen(navController: NavController) {
                 )
                 ColorSystemItem(
                     context,
+                    W3WTheme.colors.accent,
+                    "Accent",
+                    W3WTheme.colors.accent.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
                     W3WTheme.colors.background,
                     "background",
                     W3WTheme.colors.background.toHexCode()
@@ -85,12 +91,6 @@ fun HomeScreen(navController: NavController) {
                     W3WTheme.colors.textSecondary,
                     "textSecondary",
                     W3WTheme.colors.textSecondary.toHexCode()
-                )
-                ColorSystemItem(
-                    context,
-                    W3WTheme.colors.textAccent,
-                    "textAccent",
-                    W3WTheme.colors.textAccent.toHexCode()
                 )
                 ColorSystemItem(
                     context,

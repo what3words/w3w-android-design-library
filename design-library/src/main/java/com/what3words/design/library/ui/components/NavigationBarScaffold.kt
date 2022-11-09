@@ -21,7 +21,7 @@ fun NavigationBarScaffold(
             title = {
                 Text(
                     text = title.orEmpty(),
-                    color = W3WTheme.colors.textPrimary,
+                    color = W3WTheme.colors.textSecondary,
                     style = W3WTheme.typography.headline
                 )
             },
