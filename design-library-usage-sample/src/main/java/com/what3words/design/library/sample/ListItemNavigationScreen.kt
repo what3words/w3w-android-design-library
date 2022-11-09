@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.ListItemNavigation
-import com.what3words.design.library.ui.components.NavigationBar
+import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
@@ -42,7 +42,7 @@ fun ListItemNavigationScreen(navController: NavController) {
             null
         }
 
-    NavigationBar(
+    NavigationBarScaffold(
         title = "ListItemNavigation",
         navigationIcon = navigationIcon
     ) {

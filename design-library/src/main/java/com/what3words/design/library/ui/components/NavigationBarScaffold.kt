@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
-fun NavigationBar(
+fun NavigationBarScaffold(
     title: String? = null,
     navigationIcon: (@Composable () -> Unit)? = null,
     bodyContent: @Composable (PaddingValues) -> Unit,

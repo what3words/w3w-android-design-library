@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.what3words.design.library.ui.components.NavigationBar
+import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.components.SuggestionGeolocation
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
@@ -37,7 +37,7 @@ fun SuggestionGeolocationScreen(navController: NavController) {
         } else {
             null
         }
-    NavigationBar(
+    NavigationBarScaffold(
         title = "SuggestionGeolocation",
         navigationIcon = navigationIcon
     ) {

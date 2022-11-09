@@ -28,13 +28,13 @@ import com.what3words.design.library.ui.components.ActionListItemType
 import com.what3words.design.library.ui.components.FormField
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.ListItemNavigation
-import com.what3words.design.library.ui.components.NavigationBar
+import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    NavigationBar(
+    NavigationBarScaffold(
         title = "What3words Android Design Library"
     ) {
         val context = LocalContext.current

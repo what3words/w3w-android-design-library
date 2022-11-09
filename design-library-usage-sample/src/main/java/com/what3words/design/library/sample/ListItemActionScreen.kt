@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.ActionListItemType
 import com.what3words.design.library.ui.components.ListItemAction
-import com.what3words.design.library.ui.components.NavigationBar
+import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
@@ -47,7 +47,7 @@ fun ListItemActionScreen(navController: NavController) {
             null
         }
 
-    NavigationBar(
+    NavigationBarScaffold(
         title = "ListItemActionScreen",
         navigationIcon = navigationIcon
     ) {

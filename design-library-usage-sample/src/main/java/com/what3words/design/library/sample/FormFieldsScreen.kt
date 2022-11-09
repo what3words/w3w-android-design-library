@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.FormField
-import com.what3words.design.library.ui.components.NavigationBar
+import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
@@ -43,7 +43,7 @@ fun FormFieldsScreen(navController: NavController) {
             null
         }
 
-    NavigationBar(
+    NavigationBarScaffold(
         title = "FormFields",
         navigationIcon = navigationIcon
     ) {
