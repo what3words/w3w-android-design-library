@@ -1,6 +1,7 @@
 package com.what3words.design.library.ui.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -13,7 +14,9 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.theme.Grey30
@@ -28,35 +31,43 @@ fun FormField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     placeholder: String? = null,
+    labelTextStyle: TextStyle = W3WTheme.typography.caption1,
+    labelTextColor: Color = W3WTheme.colors.textPrimary,
+    valueTextStyle: TextStyle = W3WTheme.typography.body,
+    valueTextColor: Color = W3WTheme.colors.textSecondary,
+    placeHolderTextColor: Color = Grey45,
+    valueEnabledBackgroundColor: Color = W3WTheme.colors.background,
+    valueDisabledBackgroundColor: Color = W3WTheme.colors.backgroundDisabled,
+    valueBorderStroke: BorderStroke = BorderStroke(1.dp, Grey30),
 ) {
     BasicTextField(
         modifier = modifier.fillMaxWidth(),
         value = value,
-        textStyle = W3WTheme.typography.body.copy(color = W3WTheme.colors.textSecondary),
+        textStyle = valueTextStyle.copy(color = valueTextColor),
         onValueChange = onValueChange,
         enabled = enabled,
         maxLines = 1,
         singleLine = true,
-        cursorBrush = SolidColor(W3WTheme.colors.textSecondary),
+        cursorBrush = SolidColor(valueTextColor),
         decorationBox = { innerTextField ->
             Column {
                 Text(
                     text = label,
-                    style = W3WTheme.typography.caption1,
-                    color = W3WTheme.colors.textPrimary,
+                    style = labelTextStyle,
+                    color = labelTextColor,
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(if (enabled) W3WTheme.colors.background else W3WTheme.colors.backgroundDisabled)
-                        .border(1.dp, Grey30)
+                        .background(if (enabled) valueEnabledBackgroundColor else valueDisabledBackgroundColor)
+                        .border(valueBorderStroke)
                         .padding(W3WTheme.dimensions.paddingMedium)
                 ) {
                     if (value.isEmpty() && placeholder != null) {
                         Text(
                             text = placeholder,
-                            style = W3WTheme.typography.body.copy(color = Grey45)
+                            style = valueTextStyle.copy(color = placeHolderTextColor)
                         )
                     }
                     innerTextField()

@@ -16,18 +16,28 @@ fun NavigationBarScaffold(
     bodyContent: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(modifier = modifier, topBar = {
-        TopAppBar(
-            backgroundColor = W3WTheme.colors.background,
-            title = {
-                Text(
-                    text = title.orEmpty(),
-                    color = W3WTheme.colors.textSecondary,
-                    style = W3WTheme.typography.headline
-                )
-            },
-            navigationIcon = navigationIcon,
-        )
+        NavigationBar(modifier = Modifier, title, navigationIcon)
     }) {
         bodyContent(it)
     }
+}
+
+@Composable
+fun NavigationBar(
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    navigationIcon: (@Composable () -> Unit)? = null
+) {
+    TopAppBar(
+        modifier = modifier,
+        backgroundColor = W3WTheme.colors.background,
+        title = {
+            Text(
+                text = title.orEmpty(),
+                color = W3WTheme.colors.textSecondary,
+                style = W3WTheme.typography.headline
+            )
+        },
+        navigationIcon = navigationIcon,
+    )
 }
