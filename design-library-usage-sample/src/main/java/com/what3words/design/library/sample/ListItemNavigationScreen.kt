@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -19,16 +22,29 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.what3words.design.library.sample.components.NavigationScaffold
 import com.what3words.design.library.ui.components.ListItemNavigation
+import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
 fun ListItemNavigationScreen(navController: NavController) {
-    NavigationScaffold(
+    val navigationIcon: (@Composable () -> Unit)? =
+        if (navController.previousBackStackEntry != null) {
+            {
+                IconButton(onClick = {
+                    navController.popBackStack()
+                }) {
+                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null, tint = W3WTheme.colors.primary)
+                }
+            }
+        } else {
+            null
+        }
+
+    NavigationBarScaffold(
         title = "ListItemNavigation",
-        navController = navController
+        navigationIcon = navigationIcon
     ) {
         Column(
             modifier = Modifier

@@ -22,19 +22,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.what3words.design.library.sample.components.NavigationScaffold
 import com.what3words.design.library.sample.extensions.ColorSystemItem
 import com.what3words.design.library.sample.extensions.toHexCode
 import com.what3words.design.library.ui.components.ActionListItemType
+import com.what3words.design.library.ui.components.FormField
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.ListItemNavigation
+import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    NavigationScaffold(
-        title = "What3words Android Design Library", navController = navController
+    NavigationBarScaffold(
+        title = "What3words Android Design Library"
     ) {
         val context = LocalContext.current
         Column(
@@ -63,6 +64,12 @@ fun HomeScreen(navController: NavController) {
                 )
                 ColorSystemItem(
                     context,
+                    W3WTheme.colors.accent,
+                    "Accent",
+                    W3WTheme.colors.accent.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
                     W3WTheme.colors.background,
                     "background",
                     W3WTheme.colors.background.toHexCode()
@@ -84,12 +91,6 @@ fun HomeScreen(navController: NavController) {
                     W3WTheme.colors.textSecondary,
                     "textSecondary",
                     W3WTheme.colors.textSecondary.toHexCode()
-                )
-                ColorSystemItem(
-                    context,
-                    W3WTheme.colors.textAccent,
-                    "textAccent",
-                    W3WTheme.colors.textAccent.toHexCode()
                 )
                 ColorSystemItem(
                     context,
@@ -255,6 +256,26 @@ fun HomeScreen(navController: NavController) {
                 onClick = { b ->
                     isChecked = b
                 })
+            Divider(color = Grey40)
+
+            Text(
+                text = "Form Fields >",
+                modifier = Modifier
+                    .padding(W3WTheme.dimensions.paddingSmall)
+                    .clickable {
+                        navController.navigate("FormFieldsScreen")
+                    },
+                style = W3WTheme.typography.headline,
+                color = W3WTheme.colors.textPrimary,
+            )
+
+            var text by remember { mutableStateOf(value = "Text") }
+            FormField(
+                modifier = Modifier.padding(W3WTheme.dimensions.paddingSmall),
+                label = "Label",
+                value = text,
+                onValueChange = { text = it }
+            )
             Divider(color = Grey40)
         }
     }

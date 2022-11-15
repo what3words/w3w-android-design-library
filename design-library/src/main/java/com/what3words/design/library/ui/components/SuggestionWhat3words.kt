@@ -44,7 +44,7 @@ fun SuggestionWhat3words(
     background: Color = W3WTheme.colors.background,
     backgroundHighlighted: Color = W3WTheme.colors.backgroundHighlighted,
     addressTextStyle: TextStyle = W3WTheme.typography.headline,
-    addressTextColor: Color = W3WTheme.colors.textPrimary,
+    addressTextColor: Color = W3WTheme.colors.primary,
     nearTextStyle: TextStyle = W3WTheme.typography.footnote,
     nearTextColor: Color = W3WTheme.colors.textFootnote,
     distanceTextStyle: TextStyle = W3WTheme.typography.caption1,
@@ -79,7 +79,7 @@ fun SuggestionWhat3words(
                 },
             textStyle = addressTextStyle,
             targetTextSizeHeight = textSize,
-            color = W3WTheme.colors.textAccent
+            color = W3WTheme.colors.accent
         )
 
         ResponsiveText(
