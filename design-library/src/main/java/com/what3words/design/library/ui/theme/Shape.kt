@@ -8,7 +8,9 @@ data class W3WDimensions(
     val paddingTiny: Dp = 4.dp,
     val paddingSmall: Dp = 8.dp,
     val paddingMedium: Dp = 12.dp,
-    val paddingLarge: Dp = 16.dp
+    val paddingLarge: Dp = 16.dp,
+    val paddingXLarge: Dp = 20.dp,
+    val paddingXXLarge: Dp = 24.dp
 )
 
 internal val LocalDimensions = staticCompositionLocalOf { W3WDimensions() }

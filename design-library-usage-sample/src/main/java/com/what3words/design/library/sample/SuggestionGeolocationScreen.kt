@@ -1,6 +1,5 @@
 package com.what3words.design.library.sample
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -45,7 +44,6 @@ fun SuggestionGeolocationScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .background(W3WTheme.colors.background)
         ) {
             GeolocationItemExample(
                 title = "Normal Group GeolocationItem",
