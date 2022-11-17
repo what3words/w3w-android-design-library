@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -73,6 +75,7 @@ fun FormFieldsScreen(navController: NavController) {
                 value = text1,
                 enabled = true,
                 placeholder = "Placeholder example and no label",
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 onValueChange = { text1 = it })
             var text2 by remember { mutableStateOf(value = "Text") }
             FormField(modifier = Modifier.constrainAs(formField2) {
@@ -83,6 +86,7 @@ fun FormFieldsScreen(navController: NavController) {
                 label = "Enabled with text",
                 value = text2,
                 enabled = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 placeholder = "Placeholder text removed",
                 onValueChange = { text2 = it })
 
@@ -94,6 +98,7 @@ fun FormFieldsScreen(navController: NavController) {
                 label = "Disabled with text",
                 value = "This is disabled",
                 enabled = false,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 onValueChange = {})
 
             var text3 by remember { mutableStateOf(value = "حقل النموذج ممكّ") }
@@ -106,6 +111,7 @@ fun FormFieldsScreen(navController: NavController) {
                     label = "ممكن مع الن",
                     value = text3,
                     enabled = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     onValueChange = { text3 = it })
             }
 
@@ -120,6 +126,7 @@ fun FormFieldsScreen(navController: NavController) {
                 value = text4,
                 enabled = true,
                 onValueChange = { text4 = it },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 action = {
                     IconButton(onClick = {
                         errorVisible = !errorVisible
