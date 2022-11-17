@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.ListItemNavigation
 import com.what3words.design.library.ui.components.NavigationBarScaffold
-import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
@@ -74,9 +73,9 @@ private fun ListItemNavigationExampleRtl(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
         style = W3WTheme.typography.footnote,
-        color = W3WTheme.colors.textFootnote
+        color = W3WTheme.colors.textPrimary
     )
-    Divider(color = Grey40)
+    Divider(color = W3WTheme.colors.divider)
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ListItemNavigation(
             title = navigationTitle,
@@ -84,7 +83,6 @@ private fun ListItemNavigationExampleRtl(
             onClick = onClick
         )
     }
-    Divider(color = Grey40)
 }
 
 @Composable
@@ -98,13 +96,12 @@ private fun ListItemNavigationExample(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
         style = W3WTheme.typography.footnote,
-        color = W3WTheme.colors.textFootnote
+        color = W3WTheme.colors.textPrimary
     )
-    Divider(color = Grey40)
+    Divider(color = W3WTheme.colors.divider)
     ListItemNavigation(
         title = navigationTitle,
         leftIconPainter = iconPainter,
         onClick = onClick
     )
-    Divider(color = Grey40)
 }

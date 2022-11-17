@@ -1,5 +1,6 @@
 package com.what3words.design.library.sample
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.components.SuggestionGeolocation
-import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
@@ -43,6 +43,7 @@ fun SuggestionGeolocationScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(W3WTheme.colors.background)
                 .verticalScroll(rememberScrollState())
         ) {
             GeolocationItemExample(
@@ -113,17 +114,15 @@ private fun GeolocationItemExampleRtl(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
         style = W3WTheme.typography.footnote,
-        color = W3WTheme.colors.textFootnote
+        color = W3WTheme.colors.textPrimary
     )
-    Divider(color = Grey40)
+    Divider(color = W3WTheme.colors.divider)
     CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
         SuggestionGeolocation(
             primaryAddress = primaryAddress,
             secondaryAddress = secondaryAddress,
-            isGeolocationGroup = isGeolocationGroup,
-            onClick = {})
+            isGeolocationGroup = isGeolocationGroup)
     }
-    Divider(color = Grey40)
 }
 
 @Composable
@@ -139,15 +138,14 @@ internal fun GeolocationItemExample(
             text = title,
             modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
             style = W3WTheme.typography.footnote,
-            color = W3WTheme.colors.textFootnote
+            color = W3WTheme.colors.textPrimary
         )
     }
-    Divider(color = Grey40)
+    Divider(color = W3WTheme.colors.divider)
     SuggestionGeolocation(
         primaryAddress = primaryAddress,
         secondaryAddress = secondaryAddress,
         isGeolocationGroup = isGeolocationGroup,
         onClick = onClick
     )
-    Divider(color = Grey40)
 }

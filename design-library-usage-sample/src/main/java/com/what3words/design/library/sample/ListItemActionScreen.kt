@@ -29,7 +29,6 @@ import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.ActionListItemType
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.NavigationBarScaffold
-import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
@@ -40,7 +39,11 @@ fun ListItemActionScreen(navController: NavController) {
                 IconButton(onClick = {
                     navController.popBackStack()
                 }) {
-                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null, tint = W3WTheme.colors.primary)
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = null,
+                        tint = W3WTheme.colors.primary
+                    )
                 }
             }
         } else {
@@ -63,47 +66,50 @@ fun ListItemActionScreen(navController: NavController) {
             var toggle1 by remember { mutableStateOf(value = false) }
             var toggle2 by remember { mutableStateOf(value = false) }
             var radio by remember { mutableStateOf(value = 1) }
-            ListItemActionExample(
-                descriptionTitle = "ListItemAction using Checkbox",
-                itemTitle = "Checkbox",
-                type = ActionListItemType.Checkbox,
-                stateValue = checkbox1,
-                onClick = { isChecked -> checkbox1 = isChecked }
+            Text(
+                text = "ListItemAction using Checkbox",
+                modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
+                style = W3WTheme.typography.footnote,
+                color = W3WTheme.colors.textPrimary
             )
+            Divider(color = W3WTheme.colors.divider)
+            ListItemAction(
+                title = "Checkbox",
+                actionListItemType = ActionListItemType.Checkbox,
+                isSelected = checkbox1,
+                onClick = { isChecked -> checkbox1 = isChecked })
             Text(
                 text = "ListItemAction using Checkbox with left Icon",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
                 style = W3WTheme.typography.footnote,
-                color = W3WTheme.colors.textFootnote
+                color = W3WTheme.colors.textPrimary
             )
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Checkbox",
                 leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Check),
                 actionListItemType = ActionListItemType.Checkbox,
                 isSelected = checkbox2,
                 onClick = { isChecked -> checkbox2 = isChecked })
-            Divider(color = Grey40)
             Text(
                 text = "ListItemAction using Toggle",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
                 style = W3WTheme.typography.footnote,
-                color = W3WTheme.colors.textFootnote
+                color = W3WTheme.colors.textPrimary
             )
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Toggle",
                 actionListItemType = ActionListItemType.Toggle,
                 isSelected = toggle1,
                 onClick = { isOn -> toggle1 = isOn })
-            Divider(color = Grey40)
             Text(
                 text = "ListItemAction using Toggle with left Icon",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
                 style = W3WTheme.typography.footnote,
-                color = W3WTheme.colors.textFootnote
+                color = W3WTheme.colors.textPrimary
             )
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Toggle",
                 leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Star),
@@ -112,14 +118,13 @@ fun ListItemActionScreen(navController: NavController) {
                 onClick = { isOn ->
                     toggle2 = isOn
                 })
-            Divider(color = Grey40)
             Text(
                 text = "ListItemAction using multiple RadioGroup",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
                 style = W3WTheme.typography.footnote,
-                color = W3WTheme.colors.textFootnote
+                color = W3WTheme.colors.textPrimary
             )
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Radio 1",
                 actionListItemType = ActionListItemType.RadioGroup,
@@ -127,7 +132,6 @@ fun ListItemActionScreen(navController: NavController) {
                 onClick = { isOn ->
                     if (isOn) radio = 1
                 })
-            Divider(color = Grey40)
             ListItemAction(
                 title = "Radio 2",
                 actionListItemType = ActionListItemType.RadioGroup,
@@ -135,7 +139,6 @@ fun ListItemActionScreen(navController: NavController) {
                 onClick = { isOn ->
                     if (isOn) radio = 2
                 })
-            Divider(color = Grey40)
             ListItemAction(
                 title = "Radio 3",
                 actionListItemType = ActionListItemType.RadioGroup,
@@ -143,14 +146,13 @@ fun ListItemActionScreen(navController: NavController) {
                 onClick = { isOn ->
                     if (isOn) radio = 3
                 })
-            Divider(color = Grey40)
             Text(
                 text = "ListItemAction using Checkbox with Icon on right-to-left locale",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
                 style = W3WTheme.typography.footnote,
-                color = W3WTheme.colors.textFootnote
+                color = W3WTheme.colors.textPrimary
             )
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 ListItemAction(
                     title = "خانة اختيار",
@@ -159,31 +161,6 @@ fun ListItemActionScreen(navController: NavController) {
                     isSelected = checkbox3,
                     onClick = { isChecked -> checkbox3 = isChecked })
             }
-            Divider(color = Grey40)
         }
     }
-}
-
-@Composable
-private fun ListItemActionExample(
-    descriptionTitle: String,
-    itemTitle: String,
-    type: ActionListItemType,
-    stateValue: Boolean,
-    onClick: (Boolean) -> Unit
-) {
-    Text(
-        text = descriptionTitle,
-        modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
-        style = W3WTheme.typography.footnote,
-        color = W3WTheme.colors.textFootnote
-    )
-    Divider(color = Grey40)
-    ListItemAction(
-        title = itemTitle,
-        actionListItemType = type,
-        isSelected = stateValue,
-        onClick = onClick
-    )
-    Divider(color = Grey40)
 }

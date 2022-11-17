@@ -4,8 +4,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.LocalRippleTheme
@@ -35,87 +37,98 @@ fun SuggestionGeolocation(
     isGeolocationGroup: Boolean,
     modifier: Modifier = Modifier,
     secondaryAddress: String? = null,
-    onClick: (() -> Unit)? = null,
     background: Color = W3WTheme.colors.background,
     primaryAddressTextStyle: TextStyle = W3WTheme.typography.headline,
-    primaryAddressTextColor: Color = W3WTheme.colors.textPrimary,
+    primaryAddressTextColor: Color = W3WTheme.colors.primary,
     secondaryAddressTextStyle: TextStyle = W3WTheme.typography.caption2,
-    secondaryAddressTextColor: Color = W3WTheme.colors.textSecondary,
-    iconTint: Color = W3WTheme.colors.primary
+    secondaryAddressTextColor: Color = W3WTheme.colors.textPrimary,
+    iconTint: Color = W3WTheme.colors.primary,
+    showDivider: Boolean = true,
+    dividerColor: Color = W3WTheme.colors.divider,
+    onClick: (() -> Unit)? = null
 ) {
-    ConstraintLayout(modifier = modifier
-        .fillMaxWidth()
-        .clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = rememberRipple(
-                color = LocalRippleTheme.current.defaultColor()
-            ),
-            onClick = {
-                onClick?.invoke()
-            }
-        )
-        .background(background)
-        .padding(W3WTheme.dimensions.paddingSmall)
-    ) {
-        val (icGeo, textPrimary, textSecondary, icArrow) = createRefs()
+    Column(modifier = modifier.fillMaxWidth()) {
+        ConstraintLayout(modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(
+                    color = LocalRippleTheme.current.defaultColor()
+                ),
+                onClick = {
+                    onClick?.invoke()
+                }
+            )
+            .background(background)
+            .padding(W3WTheme.dimensions.paddingSmall)
+        ) {
+            val (icGeo, textPrimary, textSecondary, icArrow) = createRefs()
 
-        Icon(
-            painter = painterResource(id = if (isGeolocationGroup) R.drawable.ic_geolocation_group else R.drawable.ic_geolocation_single),
-            contentDescription = stringResource(id = if (isGeolocationGroup) R.string.cd_ic_geolocation_group else R.string.cd_ic_geolocation_single),
-            modifier = Modifier.constrainAs(icGeo) {
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start, 4.dp)
-            },
-            tint = iconTint
-        )
+            Icon(
+                painter = painterResource(id = if (isGeolocationGroup) R.drawable.ic_geolocation_group else R.drawable.ic_geolocation_single),
+                contentDescription = stringResource(id = if (isGeolocationGroup) R.string.cd_ic_geolocation_group else R.string.cd_ic_geolocation_single),
+                modifier = Modifier.constrainAs(icGeo) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start, 4.dp)
+                },
+                tint = iconTint
+            )
 
-        Text(
-            text = primaryAddress,
-            modifier = Modifier.constrainAs(textPrimary) {
-                start.linkTo(icGeo.end, 8.dp)
-                top.linkTo(parent.top)
-                bottom.linkTo(textSecondary.top)
-                end.linkTo(icArrow.start)
-                width = Dimension.fillToConstraints
-            },
-            style = primaryAddressTextStyle,
-            color = primaryAddressTextColor,
-            textAlign = TextAlign.Start,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+            Text(
+                text = primaryAddress,
+                modifier = Modifier.constrainAs(textPrimary) {
+                    start.linkTo(icGeo.end, 8.dp)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(textSecondary.top)
+                    end.linkTo(icArrow.start)
+                    width = Dimension.fillToConstraints
+                },
+                style = primaryAddressTextStyle,
+                color = primaryAddressTextColor,
+                textAlign = TextAlign.Start,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
 
-        Text(
-            text = secondaryAddress.orEmpty(),
-            modifier = Modifier.constrainAs(textSecondary) {
-                start.linkTo(icGeo.end, 8.dp)
-                top.linkTo(textPrimary.bottom)
-                bottom.linkTo(parent.bottom)
-                end.linkTo(icArrow.start)
-                width = Dimension.fillToConstraints
-                visibility =
-                    if (secondaryAddress.isNullOrEmpty()) Visibility.Gone else Visibility.Visible
-            },
-            style = secondaryAddressTextStyle,
-            color = secondaryAddressTextColor,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+            Text(
+                text = secondaryAddress.orEmpty(),
+                modifier = Modifier.constrainAs(textSecondary) {
+                    start.linkTo(icGeo.end, 8.dp)
+                    top.linkTo(textPrimary.bottom)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(icArrow.start)
+                    width = Dimension.fillToConstraints
+                    visibility =
+                        if (secondaryAddress.isNullOrEmpty()) Visibility.Gone else Visibility.Visible
+                },
+                style = secondaryAddressTextStyle,
+                color = secondaryAddressTextColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
 
-        Icon(
-            painter = painterResource(id = if (LocalLayoutDirection.current == LayoutDirection.Rtl) R.drawable.ic_arrow_left else R.drawable.ic_arrow_right),
-            contentDescription = stringResource(
-                id = R.string.cd_ic_arrow
-            ),
-            modifier = Modifier.constrainAs(icArrow) {
-                end.linkTo(parent.end)
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                visibility = if (isGeolocationGroup) Visibility.Visible else Visibility.Gone
-            },
-            tint = iconTint
-        )
+            Icon(
+                painter = painterResource(id = if (LocalLayoutDirection.current == LayoutDirection.Rtl) R.drawable.ic_arrow_left else R.drawable.ic_arrow_right),
+                contentDescription = stringResource(
+                    id = R.string.cd_ic_arrow
+                ),
+                modifier = Modifier.constrainAs(icArrow) {
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    visibility = if (isGeolocationGroup) Visibility.Visible else Visibility.Gone
+                },
+                tint = iconTint
+            )
+        }
+        if (showDivider) {
+            Divider(
+                modifier = Modifier.fillMaxWidth(),
+                color = dividerColor,
+                thickness = W3WTheme.dimensions.divider
+            )
+        }
     }
 }
 

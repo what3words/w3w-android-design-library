@@ -22,14 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.what3words.design.library.sample.extensions.ColorSystemItem
+import com.what3words.design.library.sample.components.ColorSystemItem
 import com.what3words.design.library.sample.extensions.toHexCode
 import com.what3words.design.library.ui.components.ActionListItemType
 import com.what3words.design.library.ui.components.FormField
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.ListItemNavigation
 import com.what3words.design.library.ui.components.NavigationBarScaffold
-import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
@@ -52,11 +51,14 @@ fun HomeScreen(navController: NavController) {
                 text = "Colours",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingSmall),
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
             Row(
                 Modifier
-                    .padding(W3WTheme.dimensions.paddingMedium)
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        bottom = W3WTheme.dimensions.paddingMedium
+                    )
                     .horizontalScroll(rememberScrollState())
             ) {
                 ColorSystemItem(
@@ -65,7 +67,7 @@ fun HomeScreen(navController: NavController) {
                 ColorSystemItem(
                     context,
                     W3WTheme.colors.accent,
-                    "Accent",
+                    "accent",
                     W3WTheme.colors.accent.toHexCode()
                 )
                 ColorSystemItem(
@@ -76,27 +78,21 @@ fun HomeScreen(navController: NavController) {
                 )
                 ColorSystemItem(
                     context,
+                    W3WTheme.colors.backgroundSecondary,
+                    "backgroundSecondary",
+                    W3WTheme.colors.backgroundSecondary.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
                     W3WTheme.colors.backgroundHighlighted,
                     "highlightedBackground",
                     W3WTheme.colors.backgroundHighlighted.toHexCode()
                 )
                 ColorSystemItem(
                     context,
-                    W3WTheme.colors.textPrimary,
-                    "textPrimary",
-                    W3WTheme.colors.textPrimary.toHexCode()
-                )
-                ColorSystemItem(
-                    context,
-                    W3WTheme.colors.textSecondary,
-                    "textSecondary",
-                    W3WTheme.colors.textSecondary.toHexCode()
-                )
-                ColorSystemItem(
-                    context,
-                    W3WTheme.colors.textFootnote,
-                    "textFootnote",
-                    W3WTheme.colors.textFootnote.toHexCode()
+                    W3WTheme.colors.backgroundDisabled,
+                    "backgroundDisabled",
+                    W3WTheme.colors.backgroundDisabled.toHexCode()
                 )
                 ColorSystemItem(
                     context,
@@ -106,13 +102,31 @@ fun HomeScreen(navController: NavController) {
                 )
                 ColorSystemItem(
                     context,
-                    W3WTheme.colors.textError,
-                    "textError",
-                    W3WTheme.colors.textError.toHexCode()
+                    W3WTheme.colors.textPrimary,
+                    "textPrimary",
+                    W3WTheme.colors.textPrimary.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
+                    W3WTheme.colors.textPlaceholder,
+                    "textPlaceholder",
+                    W3WTheme.colors.textPlaceholder.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
+                    W3WTheme.colors.divider,
+                    "divider",
+                    W3WTheme.colors.divider.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
+                    W3WTheme.colors.border,
+                    "border",
+                    W3WTheme.colors.border.toHexCode()
                 )
             }
             Divider(
-                color = W3WTheme.colors.primary, modifier = Modifier.padding(
+                color = W3WTheme.colors.divider, modifier = Modifier.padding(
                     top = W3WTheme.dimensions.paddingMedium,
                     bottom = W3WTheme.dimensions.paddingMedium
                 )
@@ -121,47 +135,47 @@ fun HomeScreen(navController: NavController) {
                 text = "Typography",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingSmall),
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
             Text(
                 text = "- This text is using typography: title",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingMedium),
                 style = W3WTheme.typography.title,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
             Text(
                 text = "- This text is using typography: headline",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingMedium),
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
             Text(
                 text = "- This text is using typography: body",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingMedium),
                 style = W3WTheme.typography.body,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
             Text(
                 text = "- This text is using typography: caption1",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingMedium),
                 style = W3WTheme.typography.caption1,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
             Text(
                 text = "- This text is using typography: caption2",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingMedium),
                 style = W3WTheme.typography.caption2,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
             Text(
                 text = "- This text is using typography: footnote",
                 modifier = Modifier.padding(W3WTheme.dimensions.paddingMedium),
                 style = W3WTheme.typography.footnote,
-                color = W3WTheme.colors.textPrimary
+                color = W3WTheme.colors.primary
             )
 
             Divider(
-                color = W3WTheme.colors.primary, modifier = Modifier.padding(
+                color = W3WTheme.colors.divider, modifier = Modifier.padding(
                     top = W3WTheme.dimensions.paddingMedium,
                     bottom = W3WTheme.dimensions.paddingMedium
                 )
@@ -174,7 +188,7 @@ fun HomeScreen(navController: NavController) {
                         navController.navigate("SuggestionWhat3wordsScreen")
                     },
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary,
+                color = W3WTheme.colors.primary,
             )
             SuggestionWhat3wordsExample(title = "",
                 words = "index.home.raft",
@@ -182,21 +196,20 @@ fun HomeScreen(navController: NavController) {
                 near = "Bayswater, London",
                 distance = 30,
                 onClick = { navController.navigate("SuggestionWhat3wordsScreen") })
-            Divider(
-                color = W3WTheme.colors.primary, modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
-                )
-            )
             Text(
                 text = "SuggestionGeolocation >",
                 modifier = Modifier
-                    .padding(W3WTheme.dimensions.paddingSmall)
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        start = W3WTheme.dimensions.paddingSmall,
+                        end = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall
+                    )
                     .clickable {
                         navController.navigate("SuggestionGeolocationScreen")
                     },
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary,
+                color = W3WTheme.colors.primary,
             )
             GeolocationItemExample(
                 title = "",
@@ -206,67 +219,67 @@ fun HomeScreen(navController: NavController) {
             ) {
                 navController.navigate("SuggestionGeolocationScreen")
             }
-
-            Divider(
-                color = W3WTheme.colors.primary, modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
-                )
-            )
             Text(
                 text = "ListItemNavigation >",
                 modifier = Modifier
-                    .padding(W3WTheme.dimensions.paddingSmall)
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        start = W3WTheme.dimensions.paddingSmall,
+                        end = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall
+                    )
                     .clickable {
                         navController.navigate("ListItemNavigationScreen")
                     },
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary,
+                color = W3WTheme.colors.primary,
             )
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
             ListItemNavigation(
                 title = "Contacts",
                 leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Phone)
             ) {
                 navController.navigate("ListItemNavigationScreen")
             }
-            Divider(color = Grey40)
-            Divider(
-                color = W3WTheme.colors.primary, modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
-                )
-            )
             Text(
                 text = "ListItemAction >",
                 modifier = Modifier
-                    .padding(W3WTheme.dimensions.paddingSmall)
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        start = W3WTheme.dimensions.paddingSmall,
+                        end = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall
+                    )
                     .clickable {
                         navController.navigate("ListItemActionScreen")
                     },
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary,
+                color = W3WTheme.colors.primary,
             )
 
             var isChecked by remember { mutableStateOf(value = true) }
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
             ListItemAction(title = "Contacts",
                 isSelected = isChecked,
                 actionListItemType = ActionListItemType.Checkbox,
                 onClick = { b ->
                     isChecked = b
                 })
-            Divider(color = Grey40)
 
             Text(
                 text = "Form Fields >",
                 modifier = Modifier
-                    .padding(W3WTheme.dimensions.paddingSmall)
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        start = W3WTheme.dimensions.paddingSmall,
+                        end = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall
+                    )
                     .clickable {
                         navController.navigate("FormFieldsScreen")
                     },
                 style = W3WTheme.typography.headline,
-                color = W3WTheme.colors.textPrimary,
+                color = W3WTheme.colors.primary,
             )
 
             var text by remember { mutableStateOf(value = "Text") }
@@ -276,7 +289,7 @@ fun HomeScreen(navController: NavController) {
                 value = text,
                 onValueChange = { text = it }
             )
-            Divider(color = Grey40)
+            Divider(color = W3WTheme.colors.divider)
         }
     }
 }
