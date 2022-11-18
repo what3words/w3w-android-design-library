@@ -7,6 +7,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 val Black = Color(0xFF000000)
+val Grey90 = Color(0xFF1A1A1A)
 val Grey80 = Color(0xFF32373C)
 val Grey70 = Color(0xFF525252)
 val Grey60 = Color(0xFF616161)
@@ -23,20 +24,23 @@ val BurntSienna = Color(0xFFF26C50)
 val Blue90 = Color(0xFF001526)
 val BlueWhale = Color(0xFF0A3049)
 val BluePowder = Color(0xFFDBEFFA)
-val SilverTree = Color(0xFF65D698)
+val PastelGreen = Color(0xFF65D698)
+val RipeLemon = Color(0xFFF6D31F)
 
 class W3WColors(
     primary: Color,
     accent: Color,
     background: Color,
+    backgroundSecondary: Color,
     backgroundHighlighted: Color,
     backgroundDisabled: Color,
     backgroundRipple: Color,
-    textPrimary: Color,
-    textSecondary: Color,
-    textFootnote: Color,
     backgroundError: Color,
+    textPrimary: Color,
+    textPlaceholder: Color,
     textError: Color,
+    divider: Color,
+    border: Color,
     isLight: Boolean
 ) {
     var primary by mutableStateOf(primary)
@@ -45,21 +49,25 @@ class W3WColors(
         private set
     var background by mutableStateOf(background)
         private set
+    var backgroundSecondary by mutableStateOf(backgroundSecondary)
+        private set
     var backgroundHighlighted by mutableStateOf(backgroundHighlighted)
         private set
     var backgroundDisabled by mutableStateOf(backgroundDisabled)
         private set
     var backgroundRipple by mutableStateOf(backgroundRipple)
         private set
-    var textPrimary by mutableStateOf(textPrimary)
-        private set
-    var textSecondary by mutableStateOf(textSecondary)
-        private set
-    var textFootnote by mutableStateOf(textFootnote)
-        private set
     var backgroundError by mutableStateOf(backgroundError)
         private set
+    var textPrimary by mutableStateOf(textPrimary)
+        private set
+    var textPlaceholder by mutableStateOf(textPlaceholder)
+        private set
     var textError by mutableStateOf(textError)
+        private set
+    var divider by mutableStateOf(divider)
+        private set
+    var border by mutableStateOf(border)
         private set
     var isLight by mutableStateOf(isLight)
         internal set
@@ -68,27 +76,31 @@ class W3WColors(
         primary: Color = this.primary,
         accent: Color = this.accent,
         background: Color = this.background,
+        backgroundSecondary: Color = this.backgroundSecondary,
         backgroundHighlighted: Color = this.backgroundHighlighted,
         backgroundDisabled: Color = this.backgroundDisabled,
         backgroundRipple: Color = this.backgroundRipple,
-        textPrimary: Color = this.textPrimary,
-        textSecondary: Color = this.textSecondary,
-        textFootnote: Color = this.textFootnote,
         backgroundError: Color = this.backgroundError,
+        textPrimary: Color = this.textPrimary,
+        textPlaceholder: Color = this.textPlaceholder,
         textError: Color = this.textError,
+        divider: Color = this.divider,
+        border: Color = this.border,
         isLight: Boolean = this.isLight
     ): W3WColors = W3WColors(
         primary,
         accent,
         background,
+        backgroundSecondary,
         backgroundHighlighted,
         backgroundDisabled,
         backgroundRipple,
-        textPrimary,
-        textSecondary,
-        textFootnote,
         backgroundError,
+        textPrimary,
+        textPlaceholder,
         textError,
+        divider,
+        border,
         isLight
     )
 
@@ -96,13 +108,15 @@ class W3WColors(
         primary = other.primary
         accent = other.accent
         background = other.background
+        backgroundSecondary = other.backgroundSecondary
         backgroundHighlighted = other.backgroundHighlighted
         backgroundRipple = other.backgroundRipple
-        textPrimary = other.textPrimary
-        textSecondary = other.textSecondary
-        textFootnote = other.textFootnote
         backgroundError = other.backgroundError
+        textPrimary = other.textPrimary
+        textPlaceholder = other.textPlaceholder
         textError = other.textError
+        divider = other.divider
+        border = other.border
     }
 }
 
@@ -110,54 +124,62 @@ fun lightColors(
     primary: Color = BlueWhale,
     accent: Color = Red,
     background: Color = White,
+    backgroundSecondary: Color = Grey40,
     backgroundHighlighted: Color = BluePowder,
     backgroundDisabled: Color = Grey20,
     backgroundRipple: Color = Grey80,
-    textPrimary: Color = Grey80,
-    textSecondary: Color = Grey70,
-    textFootnote: Color = Grey70,
-    backgroundError: Color = White,
-    textError: Color = Rust
+    backgroundError: Color = BurntSienna,
+    textPrimary: Color = Grey70,
+    textPlaceholder: Color = Grey50,
+    textError: Color = BlueWhale,
+    divider: Color = Grey30,
+    border: Color = Grey40
 ): W3WColors = W3WColors(
     primary = primary,
     accent = accent,
     background = background,
+    backgroundSecondary = backgroundSecondary,
     backgroundHighlighted = backgroundHighlighted,
     backgroundDisabled = backgroundDisabled,
     backgroundRipple = backgroundRipple,
-    textPrimary = textPrimary,
-    textSecondary = textSecondary,
-    textFootnote = textFootnote,
     backgroundError = backgroundError,
+    textPrimary = textPrimary,
+    textPlaceholder = textPlaceholder,
     textError = textError,
+    divider = divider,
+    border = border,
     isLight = true
 )
 
 fun darkColors(
     primary: Color = White,
     accent: Color = Red,
-    background: Color = Blue90,
+    background: Color = Grey90,
+    backgroundSecondary: Color = Black,
     backgroundHighlighted: Color = BlueWhale,
-    backgroundDisabled: Color = Blue90,
-    backgroundRipple: Color = Grey10,
-    textPrimary: Color = White,
-    textSecondary: Color = White,
-    textFootnote: Color = Grey40,
+    backgroundDisabled: Color = Black,
+    backgroundRipple: Color = White,
     backgroundError: Color = BurntSienna,
-    textError: Color = Blue90
+    textPrimary: Color = Grey40,
+    textPlaceholder: Color = Grey50,
+    textError: Color = BlueWhale,
+    divider: Color = Grey80,
+    border: Color = Grey70
 ): W3WColors = W3WColors(
     primary = primary,
     accent = accent,
     background = background,
+    backgroundSecondary = backgroundSecondary,
     backgroundHighlighted = backgroundHighlighted,
     backgroundDisabled = backgroundDisabled,
     backgroundRipple = backgroundRipple,
-    textPrimary = textPrimary,
-    textSecondary = textSecondary,
-    textFootnote = textFootnote,
     backgroundError = backgroundError,
+    textPrimary = textPrimary,
+    textPlaceholder = textPlaceholder,
     textError = textError,
-    isLight = true
+    divider = divider,
+    border = border,
+    isLight = false
 )
 
 internal val LocalColors = staticCompositionLocalOf { lightColors() }

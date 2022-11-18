@@ -1,4 +1,4 @@
-package com.what3words.design.library.sample.extensions
+package com.what3words.design.library.sample.components
 
 import android.content.Context
 import android.widget.Toast

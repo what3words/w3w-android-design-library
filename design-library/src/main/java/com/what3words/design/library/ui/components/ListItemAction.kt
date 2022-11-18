@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Text
@@ -38,71 +40,82 @@ fun ListItemAction(
     title: String,
     actionListItemType: ActionListItemType,
     isSelected: Boolean,
-    onClick: ((Boolean) -> Unit),
     modifier: Modifier = Modifier,
     leftIconPainter: Painter? = null,
     iconTint: Color = W3WTheme.colors.primary,
     background: Color = W3WTheme.colors.background,
     titleTextStyle: TextStyle = W3WTheme.typography.headline,
-    titleTextColor: Color = W3WTheme.colors.textPrimary,
+    titleTextColor: Color = W3WTheme.colors.primary,
+    showDivider: Boolean = true,
+    dividerColor: Color = W3WTheme.colors.divider,
+    onClick: ((Boolean) -> Unit)
 ) {
-    ConstraintLayout(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(
-                    color = LocalRippleTheme.current.defaultColor()
-                ),
-                onClick = {
-                    onClick.invoke(!isSelected)
-                })
-            .background(background)
-            .padding(W3WTheme.dimensions.paddingSmall)
-    ) {
-        val (icLeft, textTitle, icType) = createRefs()
-        if (leftIconPainter != null) {
-            Icon(
-                painter = leftIconPainter,
-                contentDescription = null,
-                modifier = Modifier.constrainAs(icLeft) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start, 4.dp)
-                },
-                tint = iconTint
-            )
-        }
-        Text(
-            text = title,
-            modifier = Modifier.constrainAs(textTitle) {
-                start.linkTo(
-                    if (leftIconPainter != null) icLeft.end else parent.start, 8.dp
-                )
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                end.linkTo(parent.end)
-                width = Dimension.fillToConstraints
-            },
-            style = titleTextStyle,
-            color = titleTextColor,
-            textAlign = TextAlign.Start,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        IconToggleButton(checked = isSelected,
-            onCheckedChange = { onClick.invoke(!isSelected) },
-            modifier = Modifier
-                .constrainAs(icType) {
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }
+    Column(modifier = modifier.fillMaxWidth()) {
+        ConstraintLayout(
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable(interactionSource = remember { MutableInteractionSource() },
+                    indication = rememberRipple(
+                        color = LocalRippleTheme.current.defaultColor()
+                    ),
+                    onClick = {
+                        onClick.invoke(!isSelected)
+                    })
+                .background(background)
+                .padding(W3WTheme.dimensions.paddingSmall)
         ) {
-            when (actionListItemType) {
-                ActionListItemType.Checkbox -> CheckboxItem(isSelected)
-                ActionListItemType.RadioGroup -> RadioItem(isSelected)
-                ActionListItemType.Toggle -> ToggleItem(isSelected)
+            val (icLeft, textTitle, icType) = createRefs()
+            if (leftIconPainter != null) {
+                Icon(
+                    painter = leftIconPainter,
+                    contentDescription = null,
+                    modifier = Modifier.constrainAs(icLeft) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start, 4.dp)
+                    },
+                    tint = iconTint
+                )
             }
+            Text(
+                text = title,
+                modifier = Modifier.constrainAs(textTitle) {
+                    start.linkTo(
+                        if (leftIconPainter != null) icLeft.end else parent.start, 8.dp
+                    )
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                },
+                style = titleTextStyle,
+                color = titleTextColor,
+                textAlign = TextAlign.Start,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            IconToggleButton(checked = isSelected,
+                onCheckedChange = { onClick.invoke(!isSelected) },
+                modifier = Modifier
+                    .constrainAs(icType) {
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                    }
+            ) {
+                when (actionListItemType) {
+                    ActionListItemType.Checkbox -> CheckboxItem(isSelected)
+                    ActionListItemType.RadioGroup -> RadioItem(isSelected)
+                    ActionListItemType.Toggle -> ToggleItem(isSelected)
+                }
+            }
+        }
+        if (showDivider) {
+            Divider(
+                modifier = Modifier.fillMaxWidth(),
+                color = dividerColor,
+                thickness = W3WTheme.dimensions.divider
+            )
         }
     }
 }

@@ -5,9 +5,11 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.LocalRippleTheme
@@ -36,7 +38,6 @@ import com.what3words.design.library.ui.theme.W3WTheme
 fun SuggestionWhat3words(
     words: String,
     modifier: Modifier = Modifier,
-    onClick: (() -> Unit)? = null,
     near: String? = null,
     isLand: Boolean = true,
     distance: String? = null,
@@ -46,99 +47,112 @@ fun SuggestionWhat3words(
     addressTextStyle: TextStyle = W3WTheme.typography.headline,
     addressTextColor: Color = W3WTheme.colors.primary,
     nearTextStyle: TextStyle = W3WTheme.typography.footnote,
-    nearTextColor: Color = W3WTheme.colors.textFootnote,
+    nearTextColor: Color = W3WTheme.colors.textPrimary,
     distanceTextStyle: TextStyle = W3WTheme.typography.caption1,
-    distanceTextColor: Color = W3WTheme.colors.textSecondary,
+    distanceTextColor: Color = W3WTheme.colors.textPrimary,
+    showDivider: Boolean = true,
+    dividerColor: Color = W3WTheme.colors.divider,
+    onClick: (() -> Unit)? = null
 ) {
-    ConstraintLayout(modifier = modifier
-        .fillMaxWidth()
-        .clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = rememberRipple(
-                color = LocalRippleTheme.current.defaultColor()
-            ),
-            onClick = {
-                onClick?.invoke()
-            }
-        )
-        .background(if (isHighlighted) backgroundHighlighted else background)
-        .padding(W3WTheme.dimensions.paddingMedium)
-    ) {
-        val (textSlashes, textWords, textNear, icSea, textDistance) = createRefs()
+    Column(modifier = modifier.fillMaxWidth()) {
+        ConstraintLayout(modifier = modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(
+                    color = LocalRippleTheme.current.defaultColor()
+                ),
+                onClick = {
+                    onClick?.invoke()
+                }
+            )
+            .background(if (isHighlighted) backgroundHighlighted else background)
+            .padding(W3WTheme.dimensions.paddingMedium)
+        ) {
+            val (textSlashes, textWords, textNear, icSea, textDistance, divider) = createRefs()
 
-        val startFontSize = addressTextStyle.fontSize
-        var textSize by remember { mutableStateOf(startFontSize) }
+            val startFontSize = addressTextStyle.fontSize
+            var textSize by remember { mutableStateOf(startFontSize) }
 
-        ResponsiveText(
-            text = stringResource(id = R.string.slashes),
-            modifier = Modifier
-                .wrapContentWidth()
-                .constrainAs(textSlashes) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                },
-            textStyle = addressTextStyle,
-            targetTextSizeHeight = textSize,
-            color = W3WTheme.colors.accent
-        )
+            ResponsiveText(
+                text = stringResource(id = R.string.slashes),
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .constrainAs(textSlashes) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                    },
+                textStyle = addressTextStyle,
+                targetTextSizeHeight = textSize,
+                color = W3WTheme.colors.accent
+            )
 
-        ResponsiveText(
-            text = words,
-            modifier = Modifier.constrainAs(textWords) {
-                top.linkTo(textSlashes.top)
-                bottom.linkTo(textSlashes.bottom)
-                start.linkTo(textSlashes.end)
-                end.linkTo(parent.end)
-                width = Dimension.fillToConstraints
-            },
-            textStyle = addressTextStyle,
-            color = addressTextColor,
-            targetTextSizeHeight = textSize,
-            resizeFunc = {
-                textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
-            },
-            textAlign = TextAlign.Start,
-            maxLines = 1
-        )
-
-        Icon(
-            painter = painterResource(id = R.drawable.ic_sea),
-            contentDescription = stringResource(id = R.string.cd_ic_sea),
-            modifier = Modifier.constrainAs(icSea) {
-                top.linkTo(textNear.top)
-                bottom.linkTo(textNear.bottom)
-                start.linkTo(textWords.start)
-                visibility = if (isLand) Visibility.Gone else Visibility.Visible
-            },
-            tint = W3WTheme.colors.textPrimary
-        )
-
-        Text(
-            text = stringResource(id = R.string.near, near.orEmpty()),
-            modifier = Modifier.constrainAs(textNear) {
-                top.linkTo(textSlashes.bottom, 4.dp)
-                start.linkTo(icSea.end)
-                end.linkTo(textDistance.start, 6.dp)
-                width = Dimension.fillToConstraints
-                visibility = if (near.isNullOrEmpty()) Visibility.Invisible else Visibility.Visible
-            },
-            overflow = TextOverflow.Ellipsis,
-            style = nearTextStyle,
-            color = nearTextColor,
-            textAlign = TextAlign.Start,
-            maxLines = 1
-        )
-
-        if (distance != null) {
-            Text(
-                text = distance,
-                modifier = Modifier.constrainAs(textDistance) {
-                    bottom.linkTo(parent.bottom)
+            ResponsiveText(
+                text = words,
+                modifier = Modifier.constrainAs(textWords) {
+                    top.linkTo(textSlashes.top)
+                    bottom.linkTo(textSlashes.bottom)
+                    start.linkTo(textSlashes.end)
                     end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
                 },
-                style = distanceTextStyle,
-                color = distanceTextColor,
-                textAlign = TextAlign.Start
+                textStyle = addressTextStyle,
+                color = addressTextColor,
+                targetTextSizeHeight = textSize,
+                resizeFunc = {
+                    textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
+                },
+                textAlign = TextAlign.Start,
+                maxLines = 1
+            )
+
+            Icon(
+                painter = painterResource(id = R.drawable.ic_sea),
+                contentDescription = stringResource(id = R.string.cd_ic_sea),
+                modifier = Modifier.constrainAs(icSea) {
+                    top.linkTo(textNear.top)
+                    bottom.linkTo(textNear.bottom)
+                    start.linkTo(textWords.start)
+                    visibility = if (isLand) Visibility.Gone else Visibility.Visible
+                },
+                tint = W3WTheme.colors.textPrimary
+            )
+
+            Text(
+                text = stringResource(id = R.string.near, near.orEmpty()),
+                modifier = Modifier.constrainAs(textNear) {
+                    top.linkTo(textSlashes.bottom, 4.dp)
+                    start.linkTo(icSea.end)
+                    end.linkTo(textDistance.start, 6.dp)
+                    width = Dimension.fillToConstraints
+                    visibility =
+                        if (near.isNullOrEmpty()) Visibility.Invisible else Visibility.Visible
+                },
+                overflow = TextOverflow.Ellipsis,
+                style = nearTextStyle,
+                color = nearTextColor,
+                textAlign = TextAlign.Start,
+                maxLines = 1
+            )
+
+            if (distance != null) {
+                Text(
+                    text = distance,
+                    modifier = Modifier.constrainAs(textDistance) {
+                        bottom.linkTo(parent.bottom)
+                        end.linkTo(parent.end)
+                    },
+                    style = distanceTextStyle,
+                    color = distanceTextColor,
+                    textAlign = TextAlign.Start
+                )
+            }
+        }
+        if (showDivider) {
+            Divider(
+                modifier = Modifier.fillMaxWidth(),
+                color = dividerColor,
+                thickness = W3WTheme.dimensions.divider
             )
         }
     }

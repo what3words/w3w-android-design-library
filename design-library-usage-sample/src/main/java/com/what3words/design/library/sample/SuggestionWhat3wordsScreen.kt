@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.components.SuggestionWhat3words
-import com.what3words.design.library.ui.theme.Grey40
 import com.what3words.design.library.ui.theme.W3WTheme
 import java.util.Locale
 
@@ -114,9 +113,9 @@ fun SuggestionItemExampleRtl(
         text = title,
         modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
         style = W3WTheme.typography.footnote,
-        color = W3WTheme.colors.textFootnote
+        color = W3WTheme.colors.textPrimary
     )
-    Divider(color = Grey40)
+    Divider(color = W3WTheme.colors.divider)
     CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
         SuggestionWhat3words(
             words = words,
@@ -125,7 +124,6 @@ fun SuggestionItemExampleRtl(
             isLand = country.lowercase(Locale.getDefault()) != "zz",
             onClick = {})
     }
-    Divider(color = Grey40)
 }
 
 @Composable
@@ -143,10 +141,10 @@ fun SuggestionWhat3wordsExample(
             text = title,
             modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
             style = W3WTheme.typography.footnote,
-            color = W3WTheme.colors.textFootnote
+            color = W3WTheme.colors.textPrimary
         )
     }
-    Divider(color = Grey40)
+    Divider(color = W3WTheme.colors.divider)
     SuggestionWhat3words(
         words = words,
         near = near,
@@ -155,5 +153,4 @@ fun SuggestionWhat3wordsExample(
         onClick = onClick,
         isHighlighted = isHighlighted
     )
-    Divider(color = Grey40)
 }
