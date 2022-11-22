@@ -29,6 +29,8 @@ import com.what3words.design.library.ui.components.FormField
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.ListItemNavigation
 import com.what3words.design.library.ui.components.NavigationBarScaffold
+import com.what3words.design.library.ui.components.Notification
+import com.what3words.design.library.ui.components.NotificationType
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
@@ -43,8 +45,7 @@ fun HomeScreen(navController: NavController) {
                 .background(W3WTheme.colors.background)
                 .verticalScroll(rememberScrollState())
                 .padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
+                    vertical = W3WTheme.dimensions.paddingMedium
                 )
         ) {
             Text(
@@ -56,8 +57,7 @@ fun HomeScreen(navController: NavController) {
             Row(
                 Modifier
                     .padding(
-                        top = W3WTheme.dimensions.paddingMedium,
-                        bottom = W3WTheme.dimensions.paddingMedium
+                        vertical = W3WTheme.dimensions.paddingMedium
                     )
                     .horizontalScroll(rememberScrollState())
             ) {
@@ -102,6 +102,24 @@ fun HomeScreen(navController: NavController) {
                 )
                 ColorSystemItem(
                     context,
+                    W3WTheme.colors.backgroundWarning,
+                    "backgroundWarning",
+                    W3WTheme.colors.backgroundWarning.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
+                    W3WTheme.colors.backgroundConfirmation,
+                    "backgroundConfirmation",
+                    W3WTheme.colors.backgroundConfirmation.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
+                    W3WTheme.colors.backgroundInformation,
+                    "backgroundInformation",
+                    W3WTheme.colors.backgroundInformation.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
                     W3WTheme.colors.textPrimary,
                     "textPrimary",
                     W3WTheme.colors.textPrimary.toHexCode()
@@ -111,6 +129,12 @@ fun HomeScreen(navController: NavController) {
                     W3WTheme.colors.textPlaceholder,
                     "textPlaceholder",
                     W3WTheme.colors.textPlaceholder.toHexCode()
+                )
+                ColorSystemItem(
+                    context,
+                    W3WTheme.colors.textNotification,
+                    "textNotification",
+                    W3WTheme.colors.textNotification.toHexCode()
                 )
                 ColorSystemItem(
                     context,
@@ -127,8 +151,7 @@ fun HomeScreen(navController: NavController) {
             }
             Divider(
                 color = W3WTheme.colors.divider, modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
+                    vertical = W3WTheme.dimensions.paddingMedium
                 )
             )
             Text(
@@ -176,8 +199,7 @@ fun HomeScreen(navController: NavController) {
 
             Divider(
                 color = W3WTheme.colors.divider, modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
+                    vertical = W3WTheme.dimensions.paddingMedium
                 )
             )
             Text(
@@ -290,6 +312,27 @@ fun HomeScreen(navController: NavController) {
                 onValueChange = { text = it }
             )
             Divider(color = W3WTheme.colors.divider)
+
+            Text(
+                text = "Notifications >",
+                modifier = Modifier
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        start = W3WTheme.dimensions.paddingSmall,
+                        end = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall
+                    )
+                    .clickable {
+                        navController.navigate("NotificationScreen")
+                    },
+                style = W3WTheme.typography.headline,
+                color = W3WTheme.colors.primary,
+            )
+
+            Notification(
+                text = "Notification sample text",
+                type = NotificationType.Error
+            )
         }
     }
 }
