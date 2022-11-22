@@ -45,8 +45,7 @@ fun HomeScreen(navController: NavController) {
                 .background(W3WTheme.colors.background)
                 .verticalScroll(rememberScrollState())
                 .padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
+                    vertical = W3WTheme.dimensions.paddingMedium
                 )
         ) {
             Text(
@@ -58,8 +57,7 @@ fun HomeScreen(navController: NavController) {
             Row(
                 Modifier
                     .padding(
-                        top = W3WTheme.dimensions.paddingMedium,
-                        bottom = W3WTheme.dimensions.paddingMedium
+                        vertical = W3WTheme.dimensions.paddingMedium
                     )
                     .horizontalScroll(rememberScrollState())
             ) {
@@ -153,8 +151,7 @@ fun HomeScreen(navController: NavController) {
             }
             Divider(
                 color = W3WTheme.colors.divider, modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
+                    vertical = W3WTheme.dimensions.paddingMedium
                 )
             )
             Text(
@@ -202,8 +199,7 @@ fun HomeScreen(navController: NavController) {
 
             Divider(
                 color = W3WTheme.colors.divider, modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingMedium,
-                    bottom = W3WTheme.dimensions.paddingMedium
+                    vertical = W3WTheme.dimensions.paddingMedium
                 )
             )
             Text(

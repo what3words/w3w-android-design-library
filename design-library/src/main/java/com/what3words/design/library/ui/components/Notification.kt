@@ -80,10 +80,8 @@ fun Notification(
             Text(
                 text = text,
                 modifier = Modifier.padding(
-                    top = W3WTheme.dimensions.paddingSmall,
-                    bottom = W3WTheme.dimensions.paddingSmall,
-                    start = W3WTheme.dimensions.paddingMedium,
-                    end = W3WTheme.dimensions.paddingMedium
+                    vertical = W3WTheme.dimensions.paddingSmall,
+                    horizontal = W3WTheme.dimensions.paddingMedium
                 ),
                 style = W3WTheme.typography.caption2,
                 color = textColor
