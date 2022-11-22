@@ -26,6 +26,7 @@ val BlueWhale = Color(0xFF0A3049)
 val BluePowder = Color(0xFFDBEFFA)
 val PastelGreen = Color(0xFF65D698)
 val RipeLemon = Color(0xFFF6D31F)
+val RegentStBlue = Color(0xFF98D5E5)
 
 class W3WColors(
     primary: Color,
@@ -36,9 +37,12 @@ class W3WColors(
     backgroundDisabled: Color,
     backgroundRipple: Color,
     backgroundError: Color,
+    backgroundWarning: Color,
+    backgroundConfirmation: Color,
+    backgroundInformation: Color,
     textPrimary: Color,
     textPlaceholder: Color,
-    textError: Color,
+    textNotification: Color,
     divider: Color,
     border: Color,
     isLight: Boolean
@@ -59,11 +63,17 @@ class W3WColors(
         private set
     var backgroundError by mutableStateOf(backgroundError)
         private set
+    var backgroundWarning by mutableStateOf(backgroundWarning)
+        private set
+    var backgroundConfirmation by mutableStateOf(backgroundConfirmation)
+        private set
+    var backgroundInformation by mutableStateOf(backgroundInformation)
+        private set
     var textPrimary by mutableStateOf(textPrimary)
         private set
     var textPlaceholder by mutableStateOf(textPlaceholder)
         private set
-    var textError by mutableStateOf(textError)
+    var textNotification by mutableStateOf(textNotification)
         private set
     var divider by mutableStateOf(divider)
         private set
@@ -81,9 +91,12 @@ class W3WColors(
         backgroundDisabled: Color = this.backgroundDisabled,
         backgroundRipple: Color = this.backgroundRipple,
         backgroundError: Color = this.backgroundError,
+        backgroundWarning: Color = this.backgroundWarning,
+        backgroundConfirmation: Color = this.backgroundConfirmation,
+        backgroundInformation: Color = this.backgroundInformation,
         textPrimary: Color = this.textPrimary,
         textPlaceholder: Color = this.textPlaceholder,
-        textError: Color = this.textError,
+        textNotification: Color = this.textNotification,
         divider: Color = this.divider,
         border: Color = this.border,
         isLight: Boolean = this.isLight
@@ -96,9 +109,12 @@ class W3WColors(
         backgroundDisabled,
         backgroundRipple,
         backgroundError,
+        backgroundWarning,
+        backgroundConfirmation,
+        backgroundInformation,
         textPrimary,
         textPlaceholder,
-        textError,
+        textNotification,
         divider,
         border,
         isLight
@@ -112,9 +128,12 @@ class W3WColors(
         backgroundHighlighted = other.backgroundHighlighted
         backgroundRipple = other.backgroundRipple
         backgroundError = other.backgroundError
+        backgroundWarning = other.backgroundWarning
+        backgroundConfirmation = other.backgroundConfirmation
+        backgroundInformation = other.backgroundInformation
         textPrimary = other.textPrimary
         textPlaceholder = other.textPlaceholder
-        textError = other.textError
+        textNotification = other.textNotification
         divider = other.divider
         border = other.border
     }
@@ -129,9 +148,12 @@ fun lightColors(
     backgroundDisabled: Color = Grey20,
     backgroundRipple: Color = Grey80,
     backgroundError: Color = BurntSienna,
+    backgroundWarning: Color = RipeLemon,
+    backgroundConfirmation: Color = PastelGreen,
+    backgroundInformation: Color = RegentStBlue,
     textPrimary: Color = Grey70,
     textPlaceholder: Color = Grey50,
-    textError: Color = BlueWhale,
+    textNotification: Color = BlueWhale,
     divider: Color = Grey30,
     border: Color = Grey40
 ): W3WColors = W3WColors(
@@ -143,9 +165,12 @@ fun lightColors(
     backgroundDisabled = backgroundDisabled,
     backgroundRipple = backgroundRipple,
     backgroundError = backgroundError,
+    backgroundWarning = backgroundWarning,
+    backgroundConfirmation = backgroundConfirmation,
+    backgroundInformation = backgroundInformation,
     textPrimary = textPrimary,
     textPlaceholder = textPlaceholder,
-    textError = textError,
+    textNotification = textNotification,
     divider = divider,
     border = border,
     isLight = true
@@ -160,9 +185,12 @@ fun darkColors(
     backgroundDisabled: Color = Black,
     backgroundRipple: Color = White,
     backgroundError: Color = BurntSienna,
+    backgroundWarning: Color = RipeLemon,
+    backgroundConfirmation: Color = PastelGreen,
+    backgroundInformation: Color = RegentStBlue,
     textPrimary: Color = Grey40,
     textPlaceholder: Color = Grey50,
-    textError: Color = BlueWhale,
+    textNotification: Color = BlueWhale,
     divider: Color = Grey80,
     border: Color = Grey70
 ): W3WColors = W3WColors(
@@ -174,9 +202,12 @@ fun darkColors(
     backgroundDisabled = backgroundDisabled,
     backgroundRipple = backgroundRipple,
     backgroundError = backgroundError,
+    backgroundWarning = backgroundWarning,
+    backgroundConfirmation = backgroundConfirmation,
+    backgroundInformation = backgroundInformation,
     textPrimary = textPrimary,
     textPlaceholder = textPlaceholder,
-    textError = textError,
+    textNotification = textNotification,
     divider = divider,
     border = border,
     isLight = false

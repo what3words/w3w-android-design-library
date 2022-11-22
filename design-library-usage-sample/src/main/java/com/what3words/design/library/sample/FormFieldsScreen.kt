@@ -154,8 +154,8 @@ fun FormFieldsScreen(navController: NavController) {
                         start.linkTo(formField5.start)
                         end.linkTo(formField5.end)
                     },
-                notificationText = "error message example",
-                notificationType = NotificationType.Error,
+                text = "error message example",
+                type = NotificationType.Error,
                 visible = errorVisible
             )
             Text(

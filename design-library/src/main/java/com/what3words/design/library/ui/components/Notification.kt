@@ -9,24 +9,34 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.zIndex
+import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
 
 enum class NotificationType {
-    Success,
+    Confirmation,
+    Information,
     Warning,
     Error
 }
 
 @Composable
 fun Notification(
-    notificationText: String,
-    notificationType: NotificationType,
+    text: String,
+    type: NotificationType,
     modifier: Modifier = Modifier,
     visible: Boolean = true,
+    withIcon: Boolean = true,
+    textColor: Color = W3WTheme.colors.textNotification,
+    iconTint: Color = W3WTheme.colors.textNotification
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -45,10 +55,30 @@ fun Notification(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .background(W3WTheme.colors.backgroundError)
+                .background(
+                    when (type) {
+                        NotificationType.Confirmation -> W3WTheme.colors.backgroundConfirmation
+                        NotificationType.Information -> W3WTheme.colors.backgroundInformation
+                        NotificationType.Warning -> W3WTheme.colors.backgroundWarning
+                        NotificationType.Error -> W3WTheme.colors.backgroundError
+                    }
+                ),
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            if (withIcon) {
+                Icon(
+                    modifier = Modifier.padding(
+                        top = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall,
+                        start = W3WTheme.dimensions.paddingMedium
+                    ),
+                    painter = painterResource(id = R.drawable.ic_notification),
+                    contentDescription = null,
+                    tint = iconTint
+                )
+            }
             Text(
-                text = notificationText,
+                text = text,
                 modifier = Modifier.padding(
                     top = W3WTheme.dimensions.paddingSmall,
                     bottom = W3WTheme.dimensions.paddingSmall,
@@ -56,8 +86,113 @@ fun Notification(
                     end = W3WTheme.dimensions.paddingMedium
                 ),
                 style = W3WTheme.typography.caption2,
-                color = W3WTheme.colors.textError
+                color = textColor
             )
         }
+    }
+}
+
+@Preview(locale = "en")
+@Composable
+fun NotificationErrorWithIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Error
+        )
+    }
+}
+
+@Preview(locale = "en")
+@Composable
+fun NotificationErrorWithoutIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Error,
+            withIcon = false
+        )
+    }
+}
+
+@Preview(locale = "en")
+@Composable
+fun NotificationWarningWithIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Warning
+        )
+    }
+}
+
+@Preview(locale = "en")
+@Composable
+fun NotificationWarningWithoutIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Warning,
+            withIcon = false
+        )
+    }
+}
+
+@Preview(locale = "en")
+@Composable
+fun NotificationConfirmationWithIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Confirmation
+        )
+    }
+}
+
+@Preview(locale = "en")
+@Composable
+fun NotificationConfirmationWithoutIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Confirmation,
+            withIcon = false
+        )
+    }
+}
+
+
+@Preview(locale = "en")
+@Composable
+fun NotificationInformationWithIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Information
+        )
+    }
+}
+
+@Preview(locale = "en")
+@Composable
+fun NotificationInformationWithoutIcon() {
+    W3WTheme {
+        Notification(
+            text = "Notification sample text",
+            type = NotificationType.Information,
+            withIcon = false
+        )
+    }
+}
+
+@Preview(locale = "ar", showBackground = true)
+@Composable
+fun NotificationInformationWithIconRtl() {
+    W3WTheme {
+        Notification(
+            text = "نص نموذج للإخطار",
+            type = NotificationType.Information,
+            withIcon = true
+        )
     }
 }
