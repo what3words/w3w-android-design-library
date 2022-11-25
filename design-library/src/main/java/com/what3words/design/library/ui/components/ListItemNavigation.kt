@@ -60,7 +60,7 @@ fun ListItemNavigation(
                 }
             )
             .background(background)
-            .padding(horizontal = W3WTheme.dimensions.paddingSmall, vertical = W3WTheme.dimensions.paddingMedium)
+            .padding(W3WTheme.dimensions.paddingSmall)
         ) {
             val (icLeft, textTitle, icType) = createRefs()
             if (leftIconPainter != null) {
