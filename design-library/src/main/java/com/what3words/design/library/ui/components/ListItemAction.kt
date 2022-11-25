@@ -62,7 +62,7 @@ fun ListItemAction(
                         onClick.invoke(!isSelected)
                     })
                 .background(background)
-                .padding(W3WTheme.dimensions.paddingSmall)
+                .padding(start = W3WTheme.dimensions.paddingSmall, top = W3WTheme.dimensions.paddingTiny, bottom = W3WTheme.dimensions.paddingTiny, end = W3WTheme.dimensions.paddingTiny)
         ) {
             val (icLeft, textTitle, icType) = createRefs()
             if (leftIconPainter != null) {
