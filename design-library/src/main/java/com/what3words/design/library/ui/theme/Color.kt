@@ -20,6 +20,7 @@ val Grey10 = Color(0xFFF2F4F5)
 val White = Color(0xFFFFFFFF)
 val Rust = Color(0xFFB24000)
 val Red = Color(0xFFE11F26)
+val Tamarillo = Color(0xFFAB181D)
 val BurntSienna = Color(0xFFF26C50)
 val Blue90 = Color(0xFF001526)
 val BlueWhale = Color(0xFF0A3049)
@@ -45,6 +46,18 @@ class W3WColors(
     textNotification: Color,
     divider: Color,
     border: Color,
+//    buttonPrimary: Color,
+//    buttonPrimaryVariant: Color,
+//    onButtonPrimary: Color,
+//    buttonSecondary: Color,
+//    buttonSecondaryVariant: Color,
+//    onButtonSecondary: Color,
+//    buttonTertiary: Color,
+//    buttonTertiaryVariant: Color,
+//    onButtonTertiary: Color,
+//    buttonText: Color,
+//    buttonTextVariant: Color,
+//    onButtonText: Color,
     isLight: Boolean
 ) {
     var primary by mutableStateOf(primary)
@@ -155,7 +168,7 @@ fun lightColors(
     textPlaceholder: Color = Grey50,
     textNotification: Color = BlueWhale,
     divider: Color = Grey30,
-    border: Color = Grey40
+    border: Color = Grey40,
 ): W3WColors = W3WColors(
     primary = primary,
     accent = accent,
@@ -181,7 +194,7 @@ fun darkColors(
     accent: Color = Red,
     background: Color = Grey90,
     backgroundSecondary: Color = Black,
-    backgroundHighlighted: Color = BlueWhale,
+    backgroundHighlighted: Color = Grey80,
     backgroundDisabled: Color = Black,
     backgroundRipple: Color = White,
     backgroundError: Color = BurntSienna,
@@ -192,7 +205,7 @@ fun darkColors(
     textPlaceholder: Color = Grey50,
     textNotification: Color = BlueWhale,
     divider: Color = Grey80,
-    border: Color = Grey70
+    border: Color = Grey70,
 ): W3WColors = W3WColors(
     primary = primary,
     accent = accent,
