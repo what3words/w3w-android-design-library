@@ -23,6 +23,7 @@ val Red = Color(0xFFE11F26)
 val Tamarillo = Color(0xFFAB181D)
 val BurntSienna = Color(0xFFF26C50)
 val BlueWhale = Color(0xFF0A3049)
+val BlueWhaleOp16 = Color(0x690A3049)
 val BluePowder = Color(0xFFDBEFFA)
 val BlueOrient = Color(0xFF005379)
 val BlueOrientOp16 = Color(0x69005379)
@@ -61,6 +62,11 @@ class W3WColors(
     buttonText: Color,
     buttonTextVariant: Color,
     onButtonText: Color,
+    buttonOutline: Color,
+    buttonOutlineVariant: Color,
+    buttonOutlineBorder: Color,
+    buttonOutlineBorderVariant: Color,
+    onButtonOutline: Color,
     isLight: Boolean
 ) {
     var primary by mutableStateOf(primary)
@@ -129,6 +135,18 @@ class W3WColors(
     var onButtonText by mutableStateOf(onButtonText)
         private set
 
+    //buttonOutline
+    var buttonOutline by mutableStateOf(buttonOutline)
+        private set
+    var buttonOutlineVariant by mutableStateOf(buttonOutlineVariant)
+        private set
+    var buttonOutlineBorder by mutableStateOf(buttonOutlineBorder)
+        private set
+    var buttonOutlineBorderVariant by mutableStateOf(buttonOutlineBorderVariant)
+        private set
+    var onButtonOutline by mutableStateOf(onButtonOutline)
+        private set
+
     var isLight by mutableStateOf(isLight)
         internal set
 
@@ -161,6 +179,11 @@ class W3WColors(
         buttonText: Color = this.buttonText,
         buttonTextVariant: Color = this.buttonTextVariant,
         onButtonText: Color = this.buttonTextVariant,
+        buttonOutline: Color = this.buttonOutline,
+        buttonOutlineVariant: Color = this.buttonTextVariant,
+        buttonOutlineBorder: Color = this.buttonOutlineBorder,
+        buttonOutlineBorderVariant: Color = this.buttonOutlineBorderVariant,
+        onButtonOutline: Color = this.onButtonOutline,
         isLight: Boolean = this.isLight
     ): W3WColors = W3WColors(
         primary,
@@ -191,6 +214,11 @@ class W3WColors(
         buttonText,
         buttonTextVariant,
         onButtonText,
+        buttonOutline,
+        buttonOutlineVariant,
+        buttonOutlineBorder,
+        buttonOutlineBorderVariant,
+        onButtonOutline,
         isLight
     )
 
@@ -221,6 +249,11 @@ class W3WColors(
         buttonText = other.buttonText
         buttonTextVariant = other.buttonTextVariant
         onButtonText = other.onButtonText
+        buttonOutline = other.buttonOutline
+        buttonOutlineVariant = other.buttonOutlineVariant
+        buttonOutlineBorder = other.buttonOutlineBorder
+        buttonOutlineBorderVariant = other.buttonOutlineBorderVariant
+        onButtonOutline = other.onButtonOutline
     }
 }
 
@@ -252,7 +285,12 @@ fun lightColors(
     onButtonTertiary: Color = White,
     buttonText: Color = Color.Transparent,
     buttonTextVariant: Color = BlueOrientOp16,
-    onButtonText: Color = BlueWhale
+    onButtonText: Color = BlueWhale,
+    buttonOutline: Color = White,
+    buttonOutlineVariant: Color = BlueWhaleOp16,
+    buttonOutlineBorder: Color = Grey30,
+    buttonOutlineBorderVariant: Color = BlueWhale,
+    onButtonOutline: Color = BlueWhale
 ): W3WColors = W3WColors(
     primary = primary,
     accent = accent,
@@ -282,6 +320,11 @@ fun lightColors(
     buttonText = buttonText,
     buttonTextVariant = buttonTextVariant,
     onButtonText = onButtonText,
+    buttonOutline = buttonOutline,
+    buttonOutlineVariant = buttonOutlineVariant,
+    buttonOutlineBorder = buttonOutlineBorder,
+    buttonOutlineBorderVariant = buttonOutlineBorderVariant,
+    onButtonOutline = onButtonOutline,
     isLight = true
 )
 
@@ -313,7 +356,12 @@ fun darkColors(
     onButtonTertiary: Color = White,
     buttonText: Color = Color.Transparent,
     buttonTextVariant: Color = WhiteOp16,
-    onButtonText: Color = White
+    onButtonText: Color = White,
+    buttonOutline: Color = Black,
+    buttonOutlineVariant: Color = Black,
+    buttonOutlineBorder: Color = Grey30,
+    buttonOutlineBorderVariant: Color = White,
+    onButtonOutline: Color = White
 ): W3WColors = W3WColors(
     primary = primary,
     accent = accent,
@@ -343,6 +391,11 @@ fun darkColors(
     buttonText = buttonText,
     buttonTextVariant = buttonTextVariant,
     onButtonText = onButtonText,
+    buttonOutline = buttonOutline,
+    buttonOutlineVariant = buttonOutlineVariant,
+    buttonOutlineBorder = buttonOutlineBorder,
+    buttonOutlineBorderVariant = buttonOutlineBorderVariant,
+    onButtonOutline = onButtonOutline,
     isLight = false
 )
 

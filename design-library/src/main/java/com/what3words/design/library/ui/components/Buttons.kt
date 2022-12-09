@@ -1,7 +1,9 @@
 package com.what3words.design.library.ui.components
 
 import android.view.MotionEvent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -78,7 +80,7 @@ fun PrimaryButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        borderRadius = borderRadius
+        buttonRadius = borderRadius
     )
 
 @Composable
@@ -101,7 +103,7 @@ fun SecondaryButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        borderRadius = borderRadius
+        buttonRadius = borderRadius
     )
 
 @Composable
@@ -124,7 +126,7 @@ fun TertiaryButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        borderRadius = borderRadius
+        buttonRadius = borderRadius
     )
 
 @Composable
@@ -147,7 +149,36 @@ fun TextButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        borderRadius = borderRadius
+        buttonRadius = borderRadius
+    )
+
+@Composable
+fun OutlineButton(
+    text: String,
+    buttonSize: ButtonSize,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    icon: Painter? = null,
+    buttonRadius: Dp = W3WTheme.dimensions.borderRadius,
+    borderColor: Color = W3WTheme.colors.buttonOutlineBorder,
+    borderVariantColor: Color = W3WTheme.colors.buttonOutlineBorderVariant,
+    borderThickness: Dp = W3WTheme.dimensions.borderThickness
+) =
+    Button(
+        text = text,
+        backgroundColor = W3WTheme.colors.buttonOutline,
+        backgroundRipple = W3WTheme.colors.buttonOutlineVariant,
+        textColor = W3WTheme.colors.onButtonOutline,
+        buttonSize = buttonSize,
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        icon = icon,
+        buttonRadius = buttonRadius,
+        borderColor = borderColor,
+        borderVariantColor = borderVariantColor,
+        borderThickness = borderThickness
     )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -162,13 +193,22 @@ private fun Button(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     icon: Painter? = null,
-    borderRadius: Dp
+    buttonRadius: Dp = W3WTheme.dimensions.borderRadius,
+    borderColor: Color = Color.Transparent,
+    borderVariantColor: Color = Color.Transparent,
+    borderThickness: Dp = 0.dp
 ) {
-    var color by remember { mutableStateOf(backgroundColor) }
+    var backgroundColorState by remember { mutableStateOf(backgroundColor) }
+    var borderColorState by remember { mutableStateOf(borderColor) }
+
     ConstraintLayout(
         modifier = modifier
-            .clip(RoundedCornerShape(borderRadius))
-            .background(color)
+            .border(
+                BorderStroke(borderThickness, borderColorState),
+                RoundedCornerShape(buttonRadius)
+            )
+            .clip(RoundedCornerShape(buttonRadius))
+            .background(backgroundColorState)
             .padding(
                 vertical = buttonSize.toPaddingVertical(),
                 horizontal = buttonSize.toPaddingHorizontal()
@@ -176,14 +216,17 @@ private fun Button(
             .pointerInteropFilter {
                 when (it.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        color = backgroundRipple
+                        backgroundColorState = backgroundRipple
+                        borderColorState = borderVariantColor
                     }
                     MotionEvent.ACTION_UP -> {
-                        color = backgroundColor
+                        backgroundColorState = backgroundColor
+                        borderColorState = borderColor
                         if (enabled) onClick.invoke()
                     }
                     MotionEvent.AXIS_SIZE -> {
-                        color = backgroundColor
+                        backgroundColorState = backgroundColor
+                        borderColorState = borderColor
                     }
                 }
                 true

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.ButtonSize
 import com.what3words.design.library.ui.components.NavigationBarScaffold
+import com.what3words.design.library.ui.components.OutlineButton
 import com.what3words.design.library.ui.components.PrimaryButton
 import com.what3words.design.library.ui.components.SecondaryButton
 import com.what3words.design.library.ui.components.TertiaryButton
@@ -233,6 +234,52 @@ fun ButtonScreen(navController: NavController) {
             )
             TextButton(
                 text = "medium text button with fillMaxWidth",
+                buttonSize = ButtonSize.Medium,
+                onClick = { },
+                modifier = Modifier
+                    .padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingSmall
+                    )
+                    .fillMaxWidth()
+            )
+
+            Text(
+                text = "OutlineButton",
+                modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
+                style = W3WTheme.typography.footnote,
+                color = W3WTheme.colors.textPrimary
+            )
+            OutlineButton(
+                text = "small outline button",
+                buttonSize = ButtonSize.Small,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                )
+            )
+            OutlineButton(
+                text = "medium outline button with icon",
+                buttonSize = ButtonSize.Medium,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                ),
+                icon = rememberVectorPainter(image = Icons.Default.Info)
+            )
+            OutlineButton(
+                text = "large outline button",
+                buttonSize = ButtonSize.Large,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                )
+            )
+            OutlineButton(
+                text = "medium outline button with fillMaxWidth",
                 buttonSize = ButtonSize.Medium,
                 onClick = { },
                 modifier = Modifier
