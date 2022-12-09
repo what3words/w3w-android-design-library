@@ -4,6 +4,7 @@ import android.view.MotionEvent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -13,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -196,71 +198,76 @@ private fun Button(
     buttonRadius: Dp = W3WTheme.dimensions.borderRadius,
     borderColor: Color = Color.Transparent,
     borderVariantColor: Color = Color.Transparent,
-    borderThickness: Dp = 0.dp
+    borderThickness: Dp? = null
 ) {
     var backgroundColorState by remember { mutableStateOf(backgroundColor) }
     var borderColorState by remember { mutableStateOf(borderColor) }
 
-    ConstraintLayout(
-        modifier = modifier
-            .border(
-                BorderStroke(borderThickness, borderColorState),
-                RoundedCornerShape(buttonRadius)
-            )
-            .clip(RoundedCornerShape(buttonRadius))
-            .background(backgroundColorState)
-            .padding(
-                vertical = buttonSize.toPaddingVertical(),
-                horizontal = buttonSize.toPaddingHorizontal()
-            )
-            .pointerInteropFilter {
-                when (it.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        backgroundColorState = backgroundRipple
-                        borderColorState = borderVariantColor
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        backgroundColorState = backgroundColor
-                        borderColorState = borderColor
-                        if (enabled) onClick.invoke()
-                    }
-                    MotionEvent.AXIS_SIZE -> {
-                        backgroundColorState = backgroundColor
-                        borderColorState = borderColor
-                    }
+    Box(modifier = modifier
+        .then(
+            if (borderThickness != null)
+                Modifier.border(
+                    BorderStroke(borderThickness, borderColorState),
+                    RoundedCornerShape(buttonRadius)
+                )
+            else Modifier
+        )
+        .clip(RoundedCornerShape(buttonRadius))
+        .background(backgroundColorState)
+        .pointerInteropFilter {
+            when (it.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    backgroundColorState = backgroundRipple
+                    borderColorState = borderVariantColor
                 }
-                true
+                MotionEvent.ACTION_UP -> {
+                    backgroundColorState = backgroundColor
+                    borderColorState = borderColor
+                    if (enabled) onClick.invoke()
+                }
+                MotionEvent.AXIS_SIZE -> {
+                    backgroundColorState = backgroundColor
+                    borderColorState = borderColor
+                }
             }
-    ) {
-        val (iconRef, textRef) = createRefs()
-        if (icon != null) {
-            Icon(
-                painter = icon,
-                contentDescription = null,
-                modifier = Modifier.constrainAs(iconRef) {
+            true
+        }
+        .padding(
+            vertical = buttonSize.toPaddingVertical(),
+            horizontal = buttonSize.toPaddingHorizontal()
+        ),
+        contentAlignment = Alignment.Center) {
+        ConstraintLayout {
+            val (iconRef, textRef) = createRefs()
+            if (icon != null) {
+                Icon(
+                    painter = icon,
+                    contentDescription = null,
+                    modifier = Modifier.constrainAs(iconRef) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                    },
+                    tint = textColor
+                )
+            }
+            Text(
+                text = text,
+                modifier = Modifier.constrainAs(textRef) {
+                    start.linkTo(
+                        if (icon != null) iconRef.end else parent.start,
+                        if (icon != null) 8.dp else 0.dp
+                    )
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
                 },
-                tint = textColor
+                style = buttonSize.toTextStyle(),
+                color = textColor,
+                textAlign = TextAlign.Start,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
-        Text(
-            text = text,
-            modifier = Modifier.constrainAs(textRef) {
-                start.linkTo(
-                    if (icon != null) iconRef.end else parent.start,
-                    if (icon != null) 8.dp else 0.dp
-                )
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                end.linkTo(parent.end)
-            },
-            style = buttonSize.toTextStyle(),
-            color = textColor,
-            textAlign = TextAlign.Start,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
     }
 }
