@@ -25,12 +25,14 @@ import androidx.navigation.NavController
 import com.what3words.design.library.sample.components.ColorSystemItem
 import com.what3words.design.library.sample.extensions.toHexCode
 import com.what3words.design.library.ui.components.ActionListItemType
+import com.what3words.design.library.ui.components.ButtonSize
 import com.what3words.design.library.ui.components.FormField
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.ListItemNavigation
 import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.components.Notification
 import com.what3words.design.library.ui.components.NotificationType
+import com.what3words.design.library.ui.components.PrimaryButton
 import com.what3words.design.library.ui.theme.W3WTheme
 
 @Composable
@@ -319,8 +321,7 @@ fun HomeScreen(navController: NavController) {
                     .padding(
                         top = W3WTheme.dimensions.paddingMedium,
                         start = W3WTheme.dimensions.paddingSmall,
-                        end = W3WTheme.dimensions.paddingSmall,
-                        bottom = W3WTheme.dimensions.paddingSmall
+                        end = W3WTheme.dimensions.paddingSmall
                     )
                     .clickable {
                         navController.navigate("NotificationScreen")
@@ -331,7 +332,33 @@ fun HomeScreen(navController: NavController) {
 
             Notification(
                 text = "Notification sample text",
-                type = NotificationType.Error
+                type = NotificationType.Error,
+                modifier = Modifier.padding(vertical = W3WTheme.dimensions.paddingSmall)
+            )
+
+            Divider(color = W3WTheme.colors.divider)
+
+            Text(
+                text = "Buttons >",
+                modifier = Modifier
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        start = W3WTheme.dimensions.paddingSmall,
+                        end = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall
+                    )
+                    .clickable {
+                        navController.navigate("ButtonScreen")
+                    },
+                style = W3WTheme.typography.headline,
+                color = W3WTheme.colors.primary,
+            )
+
+            PrimaryButton(
+                text = "click here to see all button types and sizes",
+                buttonSize = ButtonSize.Medium,
+                onClick = { navController.navigate("ButtonScreen") },
+                modifier = Modifier.padding(start = W3WTheme.dimensions.paddingMedium)
             )
         }
     }
