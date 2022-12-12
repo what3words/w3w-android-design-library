@@ -178,9 +178,8 @@ fun OutlineButton(
         enabled = enabled,
         icon = icon,
         buttonRadius = buttonRadius,
-        borderColor = borderColor,
-        borderVariantColor = borderVariantColor,
-        borderThickness = borderThickness
+        borderStroke = BorderStroke(borderThickness, borderColor),
+        borderStrokeVariant = BorderStroke(borderThickness, borderVariantColor)
     )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -196,18 +195,17 @@ private fun Button(
     enabled: Boolean = true,
     icon: Painter? = null,
     buttonRadius: Dp = W3WTheme.dimensions.borderRadius,
-    borderColor: Color = Color.Transparent,
-    borderVariantColor: Color = Color.Transparent,
-    borderThickness: Dp? = null
+    borderStroke: BorderStroke? = null,
+    borderStrokeVariant: BorderStroke? = null
 ) {
     var backgroundColorState by remember { mutableStateOf(backgroundColor) }
-    var borderColorState by remember { mutableStateOf(borderColor) }
+    var borderStrokeState by remember { mutableStateOf(borderStroke) }
 
     Box(modifier = modifier
         .then(
-            if (borderThickness != null)
+            if (borderStrokeState != null)
                 Modifier.border(
-                    BorderStroke(borderThickness, borderColorState),
+                    borderStrokeState!!,
                     RoundedCornerShape(buttonRadius)
                 )
             else Modifier
@@ -218,16 +216,16 @@ private fun Button(
             when (it.action) {
                 MotionEvent.ACTION_DOWN -> {
                     backgroundColorState = backgroundRipple
-                    borderColorState = borderVariantColor
+                    if (borderStrokeState != null) borderStrokeState = borderStrokeVariant
                 }
                 MotionEvent.ACTION_UP -> {
                     backgroundColorState = backgroundColor
-                    borderColorState = borderColor
+                    if (borderStrokeState != null) borderStrokeState = borderStroke
                     if (enabled) onClick.invoke()
                 }
                 MotionEvent.AXIS_SIZE -> {
                     backgroundColorState = backgroundColor
-                    borderColorState = borderColor
+                    if (borderStrokeState != null) borderStrokeState = borderStroke
                 }
             }
             true
