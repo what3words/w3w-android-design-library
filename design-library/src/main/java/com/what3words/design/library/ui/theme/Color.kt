@@ -7,6 +7,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 val Black = Color(0xFF000000)
+val BlackOp16 = Color(0x69000000)
 val Grey90 = Color(0xFF1A1A1A)
 val Grey80 = Color(0xFF32373C)
 val Grey70 = Color(0xFF525252)
@@ -358,7 +359,7 @@ fun darkColors(
     buttonTextVariant: Color = WhiteOp16,
     onButtonText: Color = White,
     buttonOutline: Color = Black,
-    buttonOutlineVariant: Color = Black,
+    buttonOutlineVariant: Color = BlackOp16,
     buttonOutlineBorder: Color = Grey30,
     buttonOutlineBorderVariant: Color = White,
     onButtonOutline: Color = White
