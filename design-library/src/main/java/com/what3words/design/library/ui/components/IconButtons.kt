@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.theme.W3WTheme
 
 
@@ -34,16 +33,16 @@ enum class IconButtonSize {
     @Composable
     fun toSize(): Dp {
         return when (this) {
-            Small -> 40.dp
-            Medium -> 48.dp
-            Large -> 72.dp
+            Small -> W3WTheme.dimensions.iconButtonSmall
+            Medium -> W3WTheme.dimensions.iconButtonMedium
+            Large -> W3WTheme.dimensions.iconButtonLarge
         }
     }
 
     @Composable
     fun toPadding(): Dp {
         return when (this) {
-            Small -> 6.dp
+            Small -> W3WTheme.dimensions.paddingTiny
             Medium -> W3WTheme.dimensions.paddingSmall
             Large -> W3WTheme.dimensions.paddingSmall
         }
