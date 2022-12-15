@@ -13,6 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.theme.W3WTheme
 
+/**
+ * [NavigationBarScaffold] a what3words styled [TopAppBar] within a [Scaffold] with [bodyContent].
+ *
+ * @param modifier the modifier to be applied to the layout.
+ * @param title the title of this [NavigationBar].
+ * @param navigationIcon sets the navigation icon of this [NavigationBar].
+ * @param bodyContent sets the content of the [Scaffold].
+ */
 @Composable
 fun NavigationBarScaffold(
     modifier: Modifier = Modifier,
@@ -30,6 +38,13 @@ fun NavigationBarScaffold(
     }
 }
 
+/**
+ * [NavigationBar] a what3words styled [TopAppBar].
+ *
+ * @param modifier the modifier to be applied to the layout.
+ * @param title the title of this [NavigationBar].
+ * @param navigationIcon sets the navigation icon of this [NavigationBar].
+ */
 @Composable
 fun NavigationBar(
     modifier: Modifier = Modifier,

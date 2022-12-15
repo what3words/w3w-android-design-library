@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.ButtonSize
 import com.what3words.design.library.ui.components.NavigationBarScaffold
-import com.what3words.design.library.ui.components.OutlineButton
+import com.what3words.design.library.ui.components.OutlinedButton
 import com.what3words.design.library.ui.components.PrimaryButton
 import com.what3words.design.library.ui.components.SecondaryButton
 import com.what3words.design.library.ui.components.TertiaryButton
@@ -345,7 +345,7 @@ fun ButtonScreen(navController: NavController) {
                 style = W3WTheme.typography.footnote,
                 color = W3WTheme.colors.textPrimary
             )
-            OutlineButton(
+            OutlinedButton(
                 text = "small outline button",
                 buttonSize = ButtonSize.Small,
                 onClick = { },
@@ -354,7 +354,7 @@ fun ButtonScreen(navController: NavController) {
                     vertical = W3WTheme.dimensions.paddingSmall
                 )
             )
-            OutlineButton(
+            OutlinedButton(
                 text = "medium outline button with icon",
                 buttonSize = ButtonSize.Medium,
                 onClick = { },
@@ -364,7 +364,7 @@ fun ButtonScreen(navController: NavController) {
                 ),
                 icon = rememberVectorPainter(image = Icons.Default.Info)
             )
-            OutlineButton(
+            OutlinedButton(
                 text = "medium outline button disabled",
                 buttonSize = ButtonSize.Medium,
                 enabled = false,
@@ -376,7 +376,7 @@ fun ButtonScreen(navController: NavController) {
                 icon = rememberVectorPainter(image = Icons.Default.Info)
             )
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                OutlineButton(
+                OutlinedButton(
                     text = "زر الخطوط العريضة العربية المتوسطة",
                     buttonSize = ButtonSize.Medium,
                     onClick = { },
@@ -387,7 +387,7 @@ fun ButtonScreen(navController: NavController) {
                     icon = rememberVectorPainter(image = Icons.Default.Info)
                 )
             }
-            OutlineButton(
+            OutlinedButton(
                 text = "large outline button",
                 buttonSize = ButtonSize.Large,
                 onClick = { },
@@ -396,7 +396,7 @@ fun ButtonScreen(navController: NavController) {
                     vertical = W3WTheme.dimensions.paddingSmall
                 )
             )
-            OutlineButton(
+            OutlinedButton(
                 text = "medium outline button with fillMaxWidth",
                 buttonSize = ButtonSize.Medium,
                 onClick = { },

@@ -119,7 +119,7 @@ fun SuggestionItemExampleRtl(
     CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
         SuggestionWhat3words(
             words = words,
-            near = near,
+            nearestPlace = near,
             distance = "${distance}km",
             isLand = country.lowercase(Locale.getDefault()) != "zz",
             onClick = {})
@@ -147,7 +147,7 @@ fun SuggestionWhat3wordsExample(
     Divider(color = W3WTheme.colors.divider)
     SuggestionWhat3words(
         words = words,
-        near = near,
+        nearestPlace = near,
         distance = "${distance}km",
         isLand = country.lowercase(Locale.getDefault()) != "zz",
         onClick = onClick,

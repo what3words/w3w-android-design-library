@@ -34,20 +34,39 @@ import androidx.constraintlayout.compose.Visibility
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
 
+/**
+ * [SuggestionWhat3words] a list item that contains a what3words address information.
+ *
+ * @param words the what3words address.
+ * @param modifier the modifier to be applied to the layout.
+ * @param nearestPlace the nearest place to this what3words address.
+ * @param isLand if this what3words address is in the land (true) or sea (false).
+ * @param distance the distance to this what3words address if current location is known.
+ * @param isHighlighted sets this what3words address as highlighted, i.e: when matches exactly the searched text.
+ * @param background set the background [Color] of the non-highlighted [SuggestionWhat3words].
+ * @param backgroundHighlighted set the background [Color] of the highlighted [SuggestionWhat3words].
+ * @param wordsTextStyle set [TextStyle] of the [words].
+ * @param wordsTextColor set text [Color] of the [words].
+ * @param nearestPlaceTextStyle set [TextStyle] of the [nearestPlace].
+ * @param nearestPlaceTextColor set text [Color] of the [nearestPlace].
+ * @param showDivider if using on a list and you want to show a [Divider].
+ * @param dividerColor the color of the [Divider].
+ * @param onClick the callback when [SuggestionWhat3words] is clicked.
+ */
 @Composable
 fun SuggestionWhat3words(
     words: String,
     modifier: Modifier = Modifier,
-    near: String? = null,
+    nearestPlace: String? = null,
     isLand: Boolean = true,
     distance: String? = null,
     isHighlighted: Boolean = false,
     background: Color = W3WTheme.colors.background,
     backgroundHighlighted: Color = W3WTheme.colors.backgroundHighlighted,
-    addressTextStyle: TextStyle = W3WTheme.typography.headline,
-    addressTextColor: Color = W3WTheme.colors.primary,
-    nearTextStyle: TextStyle = W3WTheme.typography.footnote,
-    nearTextColor: Color = W3WTheme.colors.textPrimary,
+    wordsTextStyle: TextStyle = W3WTheme.typography.headline,
+    wordsTextColor: Color = W3WTheme.colors.primary,
+    nearestPlaceTextStyle: TextStyle = W3WTheme.typography.footnote,
+    nearestPlaceTextColor: Color = W3WTheme.colors.textPrimary,
     distanceTextStyle: TextStyle = W3WTheme.typography.caption1,
     distanceTextColor: Color = W3WTheme.colors.textPrimary,
     showDivider: Boolean = true,
@@ -71,7 +90,7 @@ fun SuggestionWhat3words(
         ) {
             val (textSlashes, textWords, textNear, icSea, textDistance) = createRefs()
 
-            val startFontSize = addressTextStyle.fontSize
+            val startFontSize = wordsTextStyle.fontSize
             var textSize by remember { mutableStateOf(startFontSize) }
 
             ResponsiveText(
@@ -82,7 +101,7 @@ fun SuggestionWhat3words(
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
                     },
-                textStyle = addressTextStyle,
+                textStyle = wordsTextStyle,
                 targetTextSizeHeight = textSize,
                 color = W3WTheme.colors.accent
             )
@@ -96,8 +115,8 @@ fun SuggestionWhat3words(
                     end.linkTo(parent.end)
                     width = Dimension.fillToConstraints
                 },
-                textStyle = addressTextStyle,
-                color = addressTextColor,
+                textStyle = wordsTextStyle,
+                color = wordsTextColor,
                 targetTextSizeHeight = textSize,
                 resizeFunc = {
                     textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
@@ -119,18 +138,18 @@ fun SuggestionWhat3words(
             )
 
             Text(
-                text = stringResource(id = R.string.near, near.orEmpty()),
+                text = stringResource(id = R.string.near, nearestPlace.orEmpty()),
                 modifier = Modifier.constrainAs(textNear) {
                     top.linkTo(textSlashes.bottom, 4.dp)
                     start.linkTo(icSea.end)
                     end.linkTo(textDistance.start, 6.dp)
                     width = Dimension.fillToConstraints
                     visibility =
-                        if (near.isNullOrEmpty()) Visibility.Invisible else Visibility.Visible
+                        if (nearestPlace.isNullOrEmpty()) Visibility.Invisible else Visibility.Visible
                 },
                 overflow = TextOverflow.Ellipsis,
-                style = nearTextStyle,
-                color = nearTextColor,
+                style = nearestPlaceTextStyle,
+                color = nearestPlaceTextColor,
                 textAlign = TextAlign.Start,
                 maxLines = 1
             )
@@ -162,7 +181,7 @@ fun SuggestionWhat3words(
 @Composable
 fun SuggestionItemLightLandPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", near = "Bayswater, London")
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London")
     }
 }
 
@@ -172,7 +191,7 @@ fun SuggestionItemLightLandBigAddressPreview() {
     W3WTheme {
         SuggestionWhat3words(
             "congratulations.congratulations.congratulations",
-            near = "Bayswater, London"
+            nearestPlace = "Bayswater, London"
         )
     }
 }
@@ -182,7 +201,7 @@ fun SuggestionItemLightLandBigAddressPreview() {
 @Composable
 fun SuggestionItemLightDistanceLandPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", near = "Bayswater, London", distance = "20km")
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", distance = "20km")
     }
 }
 
@@ -190,7 +209,7 @@ fun SuggestionItemLightDistanceLandPreview() {
 @Composable
 fun SuggestionItemLightRightToLeftPreview() {
     W3WTheme {
-        SuggestionWhat3words("القطار.مسعف.شخصيات", near = "لندن, London", distance = "20km")
+        SuggestionWhat3words("القطار.مسعف.شخصيات", nearestPlace = "لندن, London", distance = "20km")
     }
 }
 
@@ -198,7 +217,7 @@ fun SuggestionItemLightRightToLeftPreview() {
 @Composable
 fun SuggestionItemLightSeaPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", near = "Bayswater, London", isLand = false)
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", isLand = false)
     }
 }
 
@@ -206,7 +225,7 @@ fun SuggestionItemLightSeaPreview() {
 @Composable
 fun SuggestionItemNightLandPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", near = "Bayswater, London")
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London")
     }
 }
 
@@ -215,7 +234,7 @@ fun SuggestionItemNightLandPreview() {
 @Composable
 fun SuggestionItemNightDistanceLandPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", near = "Bayswater, London", distance = "20km")
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", distance = "20km")
     }
 }
 
@@ -224,6 +243,6 @@ fun SuggestionItemNightDistanceLandPreview() {
 @Composable
 fun SuggestionItemNightSeaPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", near = "Bayswater, London", isLand = false)
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", isLand = false)
     }
 }

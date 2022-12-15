@@ -79,7 +79,7 @@ private fun ListItemNavigationExampleRtl(
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ListItemNavigation(
             title = navigationTitle,
-            leftIconPainter = iconPainter,
+            startIconPainter = iconPainter,
             onClick = onClick
         )
     }
@@ -101,7 +101,7 @@ private fun ListItemNavigationExample(
     Divider(color = W3WTheme.colors.divider)
     ListItemNavigation(
         title = navigationTitle,
-        leftIconPainter = iconPainter,
+        startIconPainter = iconPainter,
         onClick = onClick
     )
 }

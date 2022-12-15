@@ -22,7 +22,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
@@ -40,6 +39,30 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.what3words.design.library.ui.theme.W3WTheme
 
+/**
+ * [FormField] A TextField to be used in What3words apps and demo apps that can be easily styled to look highly integrated within any app.
+ *
+ * @param value the [FormField] text value.
+ * @param modifier the modifier to be applied to the layout.
+ * @param label the label to describe what information this [FormField] holds or is expected to be typed in, this label will be shown on the top left of the [FormField].
+ * @param enabled enable or disabled [FormField] text input.
+ * @param placeholder the placeholder to be shown when no text is added to the [FormField].
+ * @param labelTextStyle the [TextStyle] for the [label] shown on the top left of the [FormField].
+ * @param labelTextColor the text [Color] for the [label] shown on the top left of the [FormField].
+ * @param valueTextStyle the [TextStyle] for the text inside of the [FormField].
+ * @param valueTextColor the text [Color] for the text inside of the [FormField].
+ * @param placeHolderTextColor the text [Color] for the [placeholder] inside of the [FormField].
+ * @param valueEnabledBackgroundColor the background [Color] for the [FormField] when [enabled] is true.
+ * @param valueDisabledBackgroundColor the background [Color] for the [FormField] when [enabled] is false.
+ * @param borderRadius border radius for [FormField] in [dp].
+ * @param borderColor border [Color] for [FormField].
+ * @param borderThickness border thickness for [FormField] in [dp].
+ * @param action a [Row] of actions buttons to be applied to the [FormField], i.e: multiple [IconButton].
+ * @param focusManager allows to set a custom [FocusManager] to handle focus in a screen.
+ * @param keyboardOptions set [KeyboardOptions] on [FormField].
+ * @param keyboardActions set [KeyboardActions] on [FormField].
+ * @param onValueChange when [value] is changed this callback will be called with the updated text.
+ */
 @Composable
 fun FormField(
     value: String,
