@@ -49,7 +49,7 @@ enum class IconButtonSize {
 }
 
 /**
- * [FilledIconButton] An What3words styled filled round icon button.
+ * [FilledIconButton] A What3words styled filled round icon button.
  *
  * @param icon for the [FilledIconButton].
  * @param buttonSize the size desired for the [FilledIconButton] can by any available [IconButtonSize].
@@ -77,7 +77,7 @@ fun FilledIconButton(
     )
 
 /**
- * [GhostFilledIconButton] An What3words styled ghost filled round icon button.
+ * [GhostFilledIconButton] A What3words styled ghost filled round icon button.
  *
  * @param icon for the [GhostFilledIconButton].
  * @param buttonSize the size desired for the [GhostFilledIconButton] can by any available [IconButtonSize].
@@ -105,7 +105,7 @@ fun GhostFilledIconButton(
     )
 
 /**
- * [OutlinedIconButton] An What3words styled ghost filled round icon button.
+ * [OutlinedIconButton] A What3words outlined icon button.
  *
  * @param icon for the [OutlinedIconButton].
  * @param buttonSize the size desired for the [OutlinedIconButton] can by any available [IconButtonSize].

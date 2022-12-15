@@ -70,7 +70,7 @@ enum class ButtonSize {
 }
 
 /**
- * [PrimaryButton] An What3words styled primary button.
+ * [PrimaryButton] A What3words styled text button.
  *
  * @param text button text.
  * @param buttonSize the size desired for the [PrimaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
