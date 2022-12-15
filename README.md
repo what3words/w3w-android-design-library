@@ -34,7 +34,7 @@ A list item that contains an what3words address information.
 
 ### [SuggestionGeolocation](https://github.com/what3words/w3w-android-design-library/blob/main/design-library/src/main/java/com/what3words/design/library/ui/components/SuggestionGeolocation.kt) 
 
-A list item that contains a geolocation leaf or non-leaf node, with a mandaotry primary address and an optional secondary address.
+A list item that contains a geolocation leaf or non-leaf node, with a mandatory primary address and an optional secondary address.
 
 <p float="left">
     <img src="./images/SuggestionGeolocationDay.png" width=30% height=30%>
