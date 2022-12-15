@@ -35,7 +35,7 @@ import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
 
 /**
- * [ListItemNavigation] a list item that contains an action of the type [ListItemActionType.RadioGroup], [ListItemActionType.Checkbox] or [ListItemActionType.Toggle].
+ * [ListItemNavigation] a list item that navigates to a different screen/action.
  *
  * @param title the title where this [ListItemNavigation] navigates to.
  * @param modifier the modifier to be applied to the layout.
