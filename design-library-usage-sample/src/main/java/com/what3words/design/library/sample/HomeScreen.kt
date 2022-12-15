@@ -21,17 +21,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.what3words.design.library.sample.components.ColorSystemItem
 import com.what3words.design.library.sample.extensions.toHexCode
 import com.what3words.design.library.ui.components.ActionListItemType
 import com.what3words.design.library.ui.components.ButtonSize
+import com.what3words.design.library.ui.components.FilledIconButton
 import com.what3words.design.library.ui.components.FormField
+import com.what3words.design.library.ui.components.GhostFilledIconButton
+import com.what3words.design.library.ui.components.IconButtonSize
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.ListItemNavigation
 import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.components.Notification
 import com.what3words.design.library.ui.components.NotificationType
+import com.what3words.design.library.ui.components.OutlinedIconButton
 import com.what3words.design.library.ui.components.PrimaryButton
 import com.what3words.design.library.ui.theme.W3WTheme
 
@@ -358,8 +363,56 @@ fun HomeScreen(navController: NavController) {
                 text = "click here to see all button types and sizes",
                 buttonSize = ButtonSize.Medium,
                 onClick = { navController.navigate("ButtonScreen") },
-                modifier = Modifier.padding(start = W3WTheme.dimensions.paddingMedium)
+                modifier = Modifier.padding(start = W3WTheme.dimensions.paddingMedium, bottom = W3WTheme.dimensions.paddingMedium)
             )
+
+            Divider(color = W3WTheme.colors.divider)
+
+            Text(
+                text = "IconButtons >",
+                modifier = Modifier
+                    .padding(
+                        top = W3WTheme.dimensions.paddingMedium,
+                        start = W3WTheme.dimensions.paddingSmall,
+                        end = W3WTheme.dimensions.paddingSmall,
+                        bottom = W3WTheme.dimensions.paddingSmall
+                    )
+                    .clickable {
+                        navController.navigate("IconButtonScreen")
+                    },
+                style = W3WTheme.typography.headline,
+                color = W3WTheme.colors.primary,
+            )
+
+            Row {
+                FilledIconButton(
+                    icon = painterResource(id = R.drawable.ic_add),
+                    buttonSize = IconButtonSize.Medium,
+                    onClick = { navController.navigate("IconButtonScreen") },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingMedium
+                    )
+                )
+                GhostFilledIconButton(
+                    icon = painterResource(id = R.drawable.ic_add),
+                    buttonSize = IconButtonSize.Medium,
+                    onClick = { navController.navigate("IconButtonScreen") },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingMedium
+                    )
+                )
+                OutlinedIconButton(
+                    icon = painterResource(id = R.drawable.ic_add),
+                    buttonSize = IconButtonSize.Medium,
+                    onClick = { navController.navigate("IconButtonScreen") },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingMedium
+                    )
+                )
+            }
         }
     }
 }

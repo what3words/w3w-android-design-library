@@ -69,7 +69,7 @@ fun SuggestionWhat3words(
             .background(if (isHighlighted) backgroundHighlighted else background)
             .padding(W3WTheme.dimensions.paddingMedium)
         ) {
-            val (textSlashes, textWords, textNear, icSea, textDistance, divider) = createRefs()
+            val (textSlashes, textWords, textNear, icSea, textDistance) = createRefs()
 
             val startFontSize = addressTextStyle.fontSize
             var textSize by remember { mutableStateOf(startFontSize) }

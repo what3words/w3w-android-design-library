@@ -1,14 +1,18 @@
 package com.what3words.design.library.ui.components
 
+import android.content.res.Configuration
 import android.view.MotionEvent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,13 +21,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -62,6 +69,17 @@ enum class ButtonSize {
     }
 }
 
+/**
+ * [PrimaryButton] An What3words styled primary button.
+ *
+ * @param text button text.
+ * @param buttonSize the size desired for the [PrimaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
+ * @param onClick the [PrimaryButton] click event.
+ * @param modifier .
+ * @param enabled set [PrimaryButton] enabled status, if disabled [onClick] won't be triggered.
+ * @param icon set start icon.
+ * @param buttonRadius border radius of the button in [dp].
+ */
 @Composable
 fun PrimaryButton(
     text: String,
@@ -70,7 +88,7 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     icon: Painter? = null,
-    borderRadius: Dp = W3WTheme.dimensions.borderRadius
+    buttonRadius: Dp = W3WTheme.dimensions.borderRadius
 ) =
     Button(
         text = text,
@@ -82,9 +100,20 @@ fun PrimaryButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        buttonRadius = borderRadius
+        buttonRadius = buttonRadius
     )
 
+/**
+ * [SecondaryButton] An What3words styled secondary button.
+ *
+ * @param text button text.
+ * @param buttonSize the size desired for the [SecondaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
+ * @param onClick the [SecondaryButton] click event.
+ * @param modifier .
+ * @param enabled set [SecondaryButton] enabled status, if disabled [onClick] won't be triggered.
+ * @param icon set start icon.
+ * @param buttonRadius border radius of the button in [dp].
+ */
 @Composable
 fun SecondaryButton(
     text: String,
@@ -93,7 +122,7 @@ fun SecondaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     icon: Painter? = null,
-    borderRadius: Dp = W3WTheme.dimensions.borderRadius
+    buttonRadius: Dp = W3WTheme.dimensions.borderRadius
 ) =
     Button(
         text = text,
@@ -105,9 +134,20 @@ fun SecondaryButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        buttonRadius = borderRadius
+        buttonRadius = buttonRadius
     )
 
+/**
+ * [TertiaryButton] An What3words styled tertiary button.
+ *
+ * @param text button text.
+ * @param buttonSize the size desired for the [TertiaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
+ * @param onClick the [TertiaryButton] click event.
+ * @param modifier .
+ * @param enabled set [TertiaryButton] enabled status, if disabled [onClick] won't be triggered.
+ * @param icon set start icon.
+ * @param buttonRadius border radius of the button in [dp].
+ */
 @Composable
 fun TertiaryButton(
     text: String,
@@ -116,7 +156,7 @@ fun TertiaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     icon: Painter? = null,
-    borderRadius: Dp = W3WTheme.dimensions.borderRadius
+    buttonRadius: Dp = W3WTheme.dimensions.borderRadius
 ) =
     Button(
         text = text,
@@ -128,9 +168,21 @@ fun TertiaryButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        buttonRadius = borderRadius
+        buttonRadius = buttonRadius
     )
 
+
+/**
+ * [TextButton] An What3words styled text button.
+ *
+ * @param text button text.
+ * @param buttonSize the size desired for the [TertiaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
+ * @param onClick the [TextButton] click event.
+ * @param modifier .
+ * @param enabled set [TextButton] enabled status, if disabled [onClick] won't be triggered.
+ * @param icon set start icon.
+ * @param buttonRadius border radius of the button in [dp].
+ */
 @Composable
 fun TextButton(
     text: String,
@@ -139,7 +191,7 @@ fun TextButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     icon: Painter? = null,
-    borderRadius: Dp = W3WTheme.dimensions.borderRadius
+    buttonRadius: Dp = W3WTheme.dimensions.borderRadius
 ) =
     Button(
         text = text,
@@ -151,9 +203,20 @@ fun TextButton(
         modifier = modifier,
         enabled = enabled,
         icon = icon,
-        buttonRadius = borderRadius
+        buttonRadius = buttonRadius
     )
 
+/**
+ * [TextButton] An What3words styled text button.
+ *
+ * @param text button text.
+ * @param buttonSize the size desired for the [TertiaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
+ * @param onClick the [TextButton] click event.
+ * @param modifier .
+ * @param enabled set [TextButton] enabled status, if disabled [onClick] won't be triggered.
+ * @param icon set start icon.
+ * @param borderRadius border radius of the button in [dp].
+ */
 @Composable
 fun OutlineButton(
     text: String,
@@ -210,26 +273,33 @@ private fun Button(
                 )
             else Modifier
         )
+        .alpha(if (enabled) 1f else 0.5f)
         .clip(RoundedCornerShape(buttonRadius))
         .background(backgroundColorState)
-        .pointerInteropFilter {
-            when (it.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    backgroundColorState = backgroundRipple
-                    if (borderStrokeState != null) borderStrokeState = borderStrokeVariant
+        .then(
+            if (enabled) {
+                Modifier.pointerInteropFilter {
+                    when (it.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            backgroundColorState = backgroundRipple
+                            if (borderStrokeState != null) borderStrokeState = borderStrokeVariant
+                        }
+                        MotionEvent.ACTION_UP -> {
+                            backgroundColorState = backgroundColor
+                            if (borderStrokeState != null) borderStrokeState = borderStroke
+                            if (enabled) onClick.invoke()
+                        }
+                        MotionEvent.AXIS_SIZE -> {
+                            backgroundColorState = backgroundColor
+                            if (borderStrokeState != null) borderStrokeState = borderStroke
+                        }
+                    }
+                    true
                 }
-                MotionEvent.ACTION_UP -> {
-                    backgroundColorState = backgroundColor
-                    if (borderStrokeState != null) borderStrokeState = borderStroke
-                    if (enabled) onClick.invoke()
-                }
-                MotionEvent.AXIS_SIZE -> {
-                    backgroundColorState = backgroundColor
-                    if (borderStrokeState != null) borderStrokeState = borderStroke
-                }
+            } else {
+                Modifier
             }
-            true
-        }
+        )
         .padding(
             vertical = buttonSize.toPaddingVertical(),
             horizontal = buttonSize.toPaddingHorizontal()
@@ -267,5 +337,58 @@ private fun Button(
                 overflow = TextOverflow.Ellipsis
             )
         }
+    }
+}
+
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true,
+    locale = "en"
+)
+@Composable
+fun PrimaryButtonSmallLightWithoutIcon() {
+    W3WTheme {
+        PrimaryButton(
+            text = "Primary button small",
+            buttonSize = ButtonSize.Small,
+            enabled = true,
+            onClick = {},
+            modifier = Modifier.padding(W3WTheme.dimensions.paddingLarge)
+        )
+    }
+}
+
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true,
+    locale = "en"
+)
+@Composable
+fun PrimaryButtonSmallLightWithIcon() {
+    W3WTheme {
+        PrimaryButton(
+            text = "Primary button small",
+            buttonSize = ButtonSize.Small,
+            enabled = true,
+            onClick = {},
+            modifier = Modifier.padding(W3WTheme.dimensions.paddingLarge),
+            icon = rememberVectorPainter(image = Icons.Default.Info)
+        )
+    }
+}
+
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true,
+    locale = "ar"
+)
+@Composable
+fun PrimaryButtonSmallLightWithIconArabic() {
+    W3WTheme {
+        PrimaryButton(
+            text = "الزر الأساسي صغير",
+            buttonSize = ButtonSize.Small,
+            enabled = true,
+            onClick = {},
+            modifier = Modifier.padding(W3WTheme.dimensions.paddingLarge),
+            icon = rememberVectorPainter(image = Icons.Default.Info)
+        )
     }
 }

@@ -14,6 +14,7 @@ sealed class NavScreen(val route: String) {
     object FormFieldsScreen : NavScreen("FormFieldsScreen")
     object NotificationScreen : NavScreen("NotificationScreen")
     object ButtonScreen : NavScreen("ButtonScreen")
+    object IconButtonScreen : NavScreen("IconButtonScreen")
 }
 
 @Composable
@@ -43,6 +44,9 @@ fun MainScreen() {
         }
         composable(NavScreen.ButtonScreen.route) {
             ButtonScreen(navController)
+        }
+        composable(NavScreen.IconButtonScreen.route) {
+            IconButtonScreen(navController)
         }
     }
 }

@@ -40,7 +40,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.what3words.design.library.ui.theme.W3WTheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun FormField(
     value: String,

@@ -14,8 +14,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.ButtonSize
@@ -86,6 +89,29 @@ fun ButtonScreen(navController: NavController) {
                 icon = rememberVectorPainter(image = Icons.Default.Info)
             )
             PrimaryButton(
+                text = "medium primary button disabled",
+                buttonSize = ButtonSize.Medium,
+                enabled = false,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                ),
+                icon = rememberVectorPainter(image = Icons.Default.Info)
+            )
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                PrimaryButton(
+                    text = "متوسط \u200B\u200Bالزر العربي الأساسي",
+                    buttonSize = ButtonSize.Medium,
+                    onClick = { },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingSmall
+                    ),
+                    icon = rememberVectorPainter(image = Icons.Default.Info)
+                )
+            }
+            PrimaryButton(
                 text = "large primary button",
                 buttonSize = ButtonSize.Large,
                 onClick = { },
@@ -131,6 +157,29 @@ fun ButtonScreen(navController: NavController) {
                 ),
                 icon = rememberVectorPainter(image = Icons.Default.Info)
             )
+            SecondaryButton(
+                text = "medium secondary button disabled",
+                buttonSize = ButtonSize.Medium,
+                enabled = false,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                ),
+                icon = rememberVectorPainter(image = Icons.Default.Info)
+            )
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                SecondaryButton(
+                    text = "زر متوسط \u200B\u200Bثانوي عربي",
+                    buttonSize = ButtonSize.Medium,
+                    onClick = { },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingSmall
+                    ),
+                    icon = rememberVectorPainter(image = Icons.Default.Info)
+                )
+            }
             SecondaryButton(
                 text = "large secondary button",
                 buttonSize = ButtonSize.Large,
@@ -178,6 +227,29 @@ fun ButtonScreen(navController: NavController) {
                 icon = rememberVectorPainter(image = Icons.Default.Info)
             )
             TertiaryButton(
+                text = "medium tertiary button disabled",
+                buttonSize = ButtonSize.Medium,
+                enabled = false,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                ),
+                icon = rememberVectorPainter(image = Icons.Default.Info)
+            )
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                TertiaryButton(
+                    text = "زر متوسط \u200B\u200Bثلاثي عربي",
+                    buttonSize = ButtonSize.Medium,
+                    onClick = { },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingSmall
+                    ),
+                    icon = rememberVectorPainter(image = Icons.Default.Info)
+                )
+            }
+            TertiaryButton(
                 text = "large tertiary button",
                 buttonSize = ButtonSize.Large,
                 onClick = { },
@@ -224,6 +296,29 @@ fun ButtonScreen(navController: NavController) {
                 icon = rememberVectorPainter(image = Icons.Default.Info)
             )
             TextButton(
+                text = "medium text button disabled",
+                buttonSize = ButtonSize.Medium,
+                enabled = false,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                ),
+                icon = rememberVectorPainter(image = Icons.Default.Info)
+            )
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                TextButton(
+                    text = "زر نص متوسط \u200B\u200Bعربي",
+                    buttonSize = ButtonSize.Medium,
+                    onClick = { },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingSmall
+                    ),
+                    icon = rememberVectorPainter(image = Icons.Default.Info)
+                )
+            }
+            TextButton(
                 text = "large text button",
                 buttonSize = ButtonSize.Large,
                 onClick = { },
@@ -269,6 +364,29 @@ fun ButtonScreen(navController: NavController) {
                 ),
                 icon = rememberVectorPainter(image = Icons.Default.Info)
             )
+            OutlineButton(
+                text = "medium outline button disabled",
+                buttonSize = ButtonSize.Medium,
+                enabled = false,
+                onClick = { },
+                modifier = Modifier.padding(
+                    horizontal = W3WTheme.dimensions.paddingMedium,
+                    vertical = W3WTheme.dimensions.paddingSmall
+                ),
+                icon = rememberVectorPainter(image = Icons.Default.Info)
+            )
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                OutlineButton(
+                    text = "زر الخطوط العريضة العربية المتوسطة",
+                    buttonSize = ButtonSize.Medium,
+                    onClick = { },
+                    modifier = Modifier.padding(
+                        horizontal = W3WTheme.dimensions.paddingMedium,
+                        vertical = W3WTheme.dimensions.paddingSmall
+                    ),
+                    icon = rememberVectorPainter(image = Icons.Default.Info)
+                )
+            }
             OutlineButton(
                 text = "large outline button",
                 buttonSize = ButtonSize.Large,
