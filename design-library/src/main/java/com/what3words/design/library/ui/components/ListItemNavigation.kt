@@ -34,11 +34,25 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
 
+/**
+ * [ListItemNavigation] a list item that navigates to a different screen/action.
+ *
+ * @param title the title where this [ListItemNavigation] navigates to.
+ * @param modifier the modifier to be applied to the layout.
+ * @param startIconPainter set the start icon of this [ListItemAction] if needed.
+ * @param iconTint set the tint [Color] of [startIconPainter].
+ * @param background set the background [Color] of the [ListItemAction].
+ * @param titleTextStyle set [TextStyle] of the [title].
+ * @param titleTextColor set text [Color] of the [title].
+ * @param showDivider if using on a list and you want to show a [Divider].
+ * @param dividerColor the color of the [Divider].
+ * @param onClick the callback when [ListItemNavigation] is clicked.
+ */
 @Composable
 fun ListItemNavigation(
     title: String,
     modifier: Modifier = Modifier,
-    leftIconPainter: Painter? = null,
+    startIconPainter: Painter? = null,
     iconTint: Color = W3WTheme.colors.primary,
     background: Color = W3WTheme.colors.background,
     titleTextStyle: TextStyle = W3WTheme.typography.headline,
@@ -63,9 +77,9 @@ fun ListItemNavigation(
             .padding(W3WTheme.dimensions.paddingSmall)
         ) {
             val (icLeft, textTitle, icType) = createRefs()
-            if (leftIconPainter != null) {
+            if (startIconPainter != null) {
                 Icon(
-                    painter = leftIconPainter,
+                    painter = startIconPainter,
                     contentDescription = null,
                     modifier = Modifier.constrainAs(icLeft) {
                         top.linkTo(parent.top)
@@ -79,7 +93,7 @@ fun ListItemNavigation(
                 text = title,
                 modifier = Modifier.constrainAs(textTitle) {
                     start.linkTo(
-                        if (leftIconPainter != null) icLeft.end else parent.start, 8.dp
+                        if (startIconPainter != null) icLeft.end else parent.start, 8.dp
                     )
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
@@ -131,7 +145,7 @@ fun NavigationListItemWithIconLight() {
     W3WTheme {
         ListItemNavigation(
             title = "Contacts",
-            leftIconPainter = rememberVectorPainter(image = Icons.Filled.Call),
+            startIconPainter = rememberVectorPainter(image = Icons.Filled.Call),
             onClick = {})
     }
 }
@@ -142,7 +156,7 @@ fun NavigationListItemWithIconRtlLight() {
     W3WTheme {
         ListItemNavigation(
             title = "جهات الاتصال",
-            leftIconPainter = rememberVectorPainter(image = Icons.Filled.Call),
+            startIconPainter = rememberVectorPainter(image = Icons.Filled.Call),
             onClick = {})
     }
 }

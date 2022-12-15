@@ -31,24 +31,40 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
 
-enum class ActionListItemType {
+enum class ListItemActionType {
     Checkbox, RadioGroup, Toggle
 }
 
+/**
+ * [ListItemAction] a list item that contains an action of the type [ListItemActionType.RadioGroup], [ListItemActionType.Checkbox] or [ListItemActionType.Toggle].
+ *
+ * @param title the title to describe the results of this action.
+ * @param listItemActionType define the type of Action this [ListItemAction] will hold, can be [ListItemActionType.RadioGroup], [ListItemActionType.Checkbox] or [ListItemActionType.Toggle].
+ * @param isChecked the default state of this action.
+ * @param modifier the modifier to be applied to the layout.
+ * @param startIconPainter set the start icon of this [ListItemAction] if needed.
+ * @param iconTint set the tint [Color] of [startIconPainter].
+ * @param background set the background [Color] of the [ListItemAction].
+ * @param titleTextStyle set [TextStyle] of the [title].
+ * @param titleTextColor set text [Color] of the [title].
+ * @param showDivider if using on a list and you want to show a [Divider].
+ * @param dividerColor the color of the [Divider].
+ * @param onCheckedChange click callback [ListItemAction] is state is changed.
+ */
 @Composable
 fun ListItemAction(
     title: String,
-    actionListItemType: ActionListItemType,
-    isSelected: Boolean,
+    listItemActionType: ListItemActionType,
+    isChecked: Boolean,
     modifier: Modifier = Modifier,
-    leftIconPainter: Painter? = null,
+    startIconPainter: Painter? = null,
     iconTint: Color = W3WTheme.colors.primary,
     background: Color = W3WTheme.colors.background,
     titleTextStyle: TextStyle = W3WTheme.typography.headline,
     titleTextColor: Color = W3WTheme.colors.primary,
     showDivider: Boolean = true,
     dividerColor: Color = W3WTheme.colors.divider,
-    onClick: ((Boolean) -> Unit)
+    onCheckedChange: ((Boolean) -> Unit)
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         ConstraintLayout(
@@ -59,15 +75,15 @@ fun ListItemAction(
                         color = LocalRippleTheme.current.defaultColor()
                     ),
                     onClick = {
-                        onClick.invoke(!isSelected)
+                        onCheckedChange.invoke(!isChecked)
                     })
                 .background(background)
                 .padding(start = W3WTheme.dimensions.paddingSmall, top = W3WTheme.dimensions.paddingTiny, bottom = W3WTheme.dimensions.paddingTiny, end = W3WTheme.dimensions.paddingTiny)
         ) {
             val (icLeft, textTitle, icType) = createRefs()
-            if (leftIconPainter != null) {
+            if (startIconPainter != null) {
                 Icon(
-                    painter = leftIconPainter,
+                    painter = startIconPainter,
                     contentDescription = null,
                     modifier = Modifier.constrainAs(icLeft) {
                         top.linkTo(parent.top)
@@ -81,7 +97,7 @@ fun ListItemAction(
                 text = title,
                 modifier = Modifier.constrainAs(textTitle) {
                     start.linkTo(
-                        if (leftIconPainter != null) icLeft.end else parent.start, 8.dp
+                        if (startIconPainter != null) icLeft.end else parent.start, 8.dp
                     )
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
@@ -94,8 +110,8 @@ fun ListItemAction(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            IconToggleButton(checked = isSelected,
-                onCheckedChange = { onClick.invoke(!isSelected) },
+            IconToggleButton(checked = isChecked,
+                onCheckedChange = { onCheckedChange.invoke(!isChecked) },
                 modifier = Modifier
                     .constrainAs(icType) {
                         end.linkTo(parent.end)
@@ -103,10 +119,10 @@ fun ListItemAction(
                         bottom.linkTo(parent.bottom)
                     }
             ) {
-                when (actionListItemType) {
-                    ActionListItemType.Checkbox -> CheckboxItem(isSelected)
-                    ActionListItemType.RadioGroup -> RadioItem(isSelected)
-                    ActionListItemType.Toggle -> ToggleItem(isSelected)
+                when (listItemActionType) {
+                    ListItemActionType.Checkbox -> CheckboxItem(isChecked)
+                    ListItemActionType.RadioGroup -> RadioItem(isChecked)
+                    ListItemActionType.Toggle -> ToggleItem(isChecked)
                 }
             }
         }
@@ -121,14 +137,14 @@ fun ListItemAction(
 }
 
 @Composable
-private fun RadioItem(isSelected: Boolean) {
+private fun RadioItem(isChecked: Boolean) {
     Image(
         painter = painterResource(
             id = when {
-                isSelected && isSystemInDarkTheme() -> R.drawable.ic_radio_dark_on
-                !isSelected && isSystemInDarkTheme() -> R.drawable.ic_radio_dark_off
-                isSelected && !isSystemInDarkTheme() -> R.drawable.ic_radio_light_on
-                !isSelected && !isSystemInDarkTheme() -> R.drawable.ic_radio_light_off
+                isChecked && isSystemInDarkTheme() -> R.drawable.ic_radio_dark_on
+                !isChecked && isSystemInDarkTheme() -> R.drawable.ic_radio_dark_off
+                isChecked && !isSystemInDarkTheme() -> R.drawable.ic_radio_light_on
+                !isChecked && !isSystemInDarkTheme() -> R.drawable.ic_radio_light_off
                 else -> throw Exception("impossible state")
             }
         ), contentDescription = null
@@ -136,14 +152,14 @@ private fun RadioItem(isSelected: Boolean) {
 }
 
 @Composable
-private fun ToggleItem(isSelected: Boolean) {
+private fun ToggleItem(isChecked: Boolean) {
     Image(
         painter = painterResource(
             id = when {
-                isSelected && isSystemInDarkTheme() -> R.drawable.ic_toggle_dark_on
-                !isSelected && isSystemInDarkTheme() -> R.drawable.ic_toggle_dark_off
-                isSelected && !isSystemInDarkTheme() -> R.drawable.ic_toggle_light_on
-                !isSelected && !isSystemInDarkTheme() -> R.drawable.ic_toggle_light_off
+                isChecked && isSystemInDarkTheme() -> R.drawable.ic_toggle_dark_on
+                !isChecked && isSystemInDarkTheme() -> R.drawable.ic_toggle_dark_off
+                isChecked && !isSystemInDarkTheme() -> R.drawable.ic_toggle_light_on
+                !isChecked && !isSystemInDarkTheme() -> R.drawable.ic_toggle_light_off
                 else -> throw Exception("impossible state")
             }
         ), contentDescription = null
@@ -151,14 +167,14 @@ private fun ToggleItem(isSelected: Boolean) {
 }
 
 @Composable
-private fun CheckboxItem(isSelected: Boolean) {
+private fun CheckboxItem(isChecked: Boolean) {
     Image(
         painter = painterResource(
             id = when {
-                isSelected && isSystemInDarkTheme() -> R.drawable.ic_checkbox_dark_checked
-                !isSelected && isSystemInDarkTheme() -> R.drawable.ic_checkbox_dark_unchecked
-                isSelected && !isSystemInDarkTheme() -> R.drawable.ic_checkbox_light_checked
-                !isSelected && !isSystemInDarkTheme() -> R.drawable.ic_checkbox_light_unchecked
+                isChecked && isSystemInDarkTheme() -> R.drawable.ic_checkbox_dark_checked
+                !isChecked && isSystemInDarkTheme() -> R.drawable.ic_checkbox_dark_unchecked
+                isChecked && !isSystemInDarkTheme() -> R.drawable.ic_checkbox_light_checked
+                !isChecked && !isSystemInDarkTheme() -> R.drawable.ic_checkbox_light_unchecked
                 else -> throw Exception("impossible state")
             }
         ), contentDescription = null
@@ -170,9 +186,9 @@ private fun CheckboxItem(isSelected: Boolean) {
 fun ActionListItemCheckboxLightNotSelected() {
     W3WTheme {
         ListItemAction(title = "Checkbox",
-            actionListItemType = ActionListItemType.Checkbox,
-            isSelected = false,
-            onClick = { })
+            listItemActionType = ListItemActionType.Checkbox,
+            isChecked = false,
+            onCheckedChange = { })
     }
 }
 
@@ -181,9 +197,9 @@ fun ActionListItemCheckboxLightNotSelected() {
 fun ActionListItemCheckboxLightSelected() {
     W3WTheme {
         ListItemAction(title = "Checkbox",
-            actionListItemType = ActionListItemType.Checkbox,
-            isSelected = true,
-            onClick = { })
+            listItemActionType = ListItemActionType.Checkbox,
+            isChecked = true,
+            onCheckedChange = { })
     }
 }
 
@@ -192,9 +208,9 @@ fun ActionListItemCheckboxLightSelected() {
 fun ActionListItemCheckboxDarkNotSelected() {
     W3WTheme {
         ListItemAction(title = "Checkbox",
-            actionListItemType = ActionListItemType.Checkbox,
-            isSelected = false,
-            onClick = { })
+            listItemActionType = ListItemActionType.Checkbox,
+            isChecked = false,
+            onCheckedChange = { })
     }
 }
 
@@ -203,9 +219,9 @@ fun ActionListItemCheckboxDarkNotSelected() {
 fun ActionListItemCheckboxDarkSelected() {
     W3WTheme {
         ListItemAction(title = "Checkbox",
-            actionListItemType = ActionListItemType.Checkbox,
-            isSelected = true,
-            onClick = {})
+            listItemActionType = ListItemActionType.Checkbox,
+            isChecked = true,
+            onCheckedChange = {})
     }
 }
 
@@ -214,9 +230,9 @@ fun ActionListItemCheckboxDarkSelected() {
 fun ActionListItemToggleLightNotSelected() {
     W3WTheme {
         ListItemAction(title = "Toggle",
-            actionListItemType = ActionListItemType.Toggle,
-            isSelected = false,
-            onClick = {})
+            listItemActionType = ListItemActionType.Toggle,
+            isChecked = false,
+            onCheckedChange = {})
     }
 }
 
@@ -225,9 +241,9 @@ fun ActionListItemToggleLightNotSelected() {
 fun ActionListItemToggleLightSelected() {
     W3WTheme {
         ListItemAction(title = "Toggle",
-            actionListItemType = ActionListItemType.Toggle,
-            isSelected = true,
-            onClick = {})
+            listItemActionType = ListItemActionType.Toggle,
+            isChecked = true,
+            onCheckedChange = {})
     }
 }
 
@@ -237,9 +253,9 @@ fun ActionListItemToggleDarkNotSelected() {
     W3WTheme {
         ListItemAction(
             title = "Toggle",
-            actionListItemType = ActionListItemType.Toggle,
-            isSelected = false,
-            onClick = {})
+            listItemActionType = ListItemActionType.Toggle,
+            isChecked = false,
+            onCheckedChange = {})
     }
 }
 
@@ -249,9 +265,9 @@ fun ActionListItemToggleDarkSelected() {
     W3WTheme {
         ListItemAction(
             title = "Toggle",
-            actionListItemType = ActionListItemType.Toggle,
-            isSelected = true,
-            onClick = {})
+            listItemActionType = ListItemActionType.Toggle,
+            isChecked = true,
+            onCheckedChange = {})
     }
 }
 
@@ -260,9 +276,9 @@ fun ActionListItemToggleDarkSelected() {
 fun ActionListItemRadioLightNotSelected() {
     W3WTheme {
         ListItemAction(title = "Radio",
-            actionListItemType = ActionListItemType.RadioGroup,
-            isSelected = false,
-            onClick = {})
+            listItemActionType = ListItemActionType.RadioGroup,
+            isChecked = false,
+            onCheckedChange = {})
     }
 }
 
@@ -271,9 +287,9 @@ fun ActionListItemRadioLightNotSelected() {
 fun ActionListItemRadioLightSelected() {
     W3WTheme {
         ListItemAction(title = "Toggle",
-            actionListItemType = ActionListItemType.RadioGroup,
-            isSelected = true,
-            onClick = {})
+            listItemActionType = ListItemActionType.RadioGroup,
+            isChecked = true,
+            onCheckedChange = {})
     }
 }
 
@@ -283,9 +299,9 @@ fun ActionListItemRadioDarkNotSelected() {
     W3WTheme {
         ListItemAction(
             title = "Radio",
-            actionListItemType = ActionListItemType.RadioGroup,
-            isSelected = false,
-            onClick = {})
+            listItemActionType = ListItemActionType.RadioGroup,
+            isChecked = false,
+            onCheckedChange = {})
     }
 }
 
@@ -295,8 +311,8 @@ fun ActionListItemRadioDarkSelected() {
     W3WTheme {
         ListItemAction(
             title = "Radio",
-            actionListItemType = ActionListItemType.RadioGroup,
-            isSelected = true,
-            onClick = {})
+            listItemActionType = ListItemActionType.RadioGroup,
+            isChecked = true,
+            onCheckedChange = {})
     }
 }

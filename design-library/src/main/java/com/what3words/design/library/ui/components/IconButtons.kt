@@ -24,7 +24,6 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.Dp
 import com.what3words.design.library.ui.theme.W3WTheme
 
-
 enum class IconButtonSize {
     Small,
     Medium,
@@ -49,6 +48,15 @@ enum class IconButtonSize {
     }
 }
 
+/**
+ * [FilledIconButton] A What3words styled filled round icon button.
+ *
+ * @param icon for the [FilledIconButton].
+ * @param buttonSize the size desired for the [FilledIconButton] can by any available [IconButtonSize].
+ * @param onClick the [FilledIconButton] click event.
+ * @param modifier the modifier to be applied to the layout.
+ * @param enabled set [FilledIconButton] enabled status, if disabled [onClick] won't be triggered.
+ */
 @Composable
 fun FilledIconButton(
     icon: Painter,
@@ -68,6 +76,15 @@ fun FilledIconButton(
         enabled = enabled,
     )
 
+/**
+ * [GhostFilledIconButton] A What3words styled ghost filled round icon button.
+ *
+ * @param icon for the [GhostFilledIconButton].
+ * @param buttonSize the size desired for the [GhostFilledIconButton] can by any available [IconButtonSize].
+ * @param onClick the [GhostFilledIconButton] click event.
+ * @param modifier the modifier to be applied to the layout.
+ * @param enabled set [GhostFilledIconButton] enabled status, if disabled [onClick] won't be triggered.
+ */
 @Composable
 fun GhostFilledIconButton(
     icon: Painter,
@@ -87,6 +104,15 @@ fun GhostFilledIconButton(
         enabled = enabled,
     )
 
+/**
+ * [OutlinedIconButton] A What3words outlined icon button.
+ *
+ * @param icon for the [OutlinedIconButton].
+ * @param buttonSize the size desired for the [OutlinedIconButton] can by any available [IconButtonSize].
+ * @param onClick the [OutlinedIconButton] click event.
+ * @param modifier the modifier to be applied to the layout.
+ * @param enabled set [OutlinedIconButton] enabled status, if disabled [onClick] won't be triggered.
+ */
 @Composable
 fun OutlinedIconButton(
     icon: Painter,
@@ -150,7 +176,9 @@ private fun IconButton(
         ),
         contentAlignment = Alignment.Center) {
         Icon(
-            modifier = Modifier.fillMaxSize().padding(buttonSize.toPadding()),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(buttonSize.toPadding()),
             painter = icon,
             contentDescription = null,
             tint = textColor

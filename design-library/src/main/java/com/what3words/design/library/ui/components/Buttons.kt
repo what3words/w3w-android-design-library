@@ -70,15 +70,15 @@ enum class ButtonSize {
 }
 
 /**
- * [PrimaryButton] An What3words styled primary button.
+ * [PrimaryButton] A What3words styled text button.
  *
  * @param text button text.
  * @param buttonSize the size desired for the [PrimaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
  * @param onClick the [PrimaryButton] click event.
- * @param modifier .
+ * @param modifier the modifier to be applied to the layout.
  * @param enabled set [PrimaryButton] enabled status, if disabled [onClick] won't be triggered.
  * @param icon set start icon.
- * @param buttonRadius border radius of the button in [dp].
+ * @param buttonRadius radius of the button in [dp].
  */
 @Composable
 fun PrimaryButton(
@@ -109,10 +109,10 @@ fun PrimaryButton(
  * @param text button text.
  * @param buttonSize the size desired for the [SecondaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
  * @param onClick the [SecondaryButton] click event.
- * @param modifier .
+ * @param modifier the modifier to be applied to the layout.
  * @param enabled set [SecondaryButton] enabled status, if disabled [onClick] won't be triggered.
  * @param icon set start icon.
- * @param buttonRadius border radius of the button in [dp].
+ * @param buttonRadius radius of the button in [dp].
  */
 @Composable
 fun SecondaryButton(
@@ -143,10 +143,10 @@ fun SecondaryButton(
  * @param text button text.
  * @param buttonSize the size desired for the [TertiaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
  * @param onClick the [TertiaryButton] click event.
- * @param modifier .
+ * @param modifier the modifier to be applied to the layout.
  * @param enabled set [TertiaryButton] enabled status, if disabled [onClick] won't be triggered.
  * @param icon set start icon.
- * @param buttonRadius border radius of the button in [dp].
+ * @param buttonRadius radius of the button in [dp].
  */
 @Composable
 fun TertiaryButton(
@@ -176,12 +176,12 @@ fun TertiaryButton(
  * [TextButton] An What3words styled text button.
  *
  * @param text button text.
- * @param buttonSize the size desired for the [TertiaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
+ * @param buttonSize the size desired for the [TextButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
  * @param onClick the [TextButton] click event.
- * @param modifier .
+ * @param modifier the modifier to be applied to the layout.
  * @param enabled set [TextButton] enabled status, if disabled [onClick] won't be triggered.
  * @param icon set start icon.
- * @param buttonRadius border radius of the button in [dp].
+ * @param buttonRadius radius of the button in [dp].
  */
 @Composable
 fun TextButton(
@@ -207,18 +207,21 @@ fun TextButton(
     )
 
 /**
- * [TextButton] An What3words styled text button.
+ * [OutlinedButton] An What3words styled text button.
  *
  * @param text button text.
- * @param buttonSize the size desired for the [TertiaryButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
- * @param onClick the [TextButton] click event.
- * @param modifier .
- * @param enabled set [TextButton] enabled status, if disabled [onClick] won't be triggered.
+ * @param buttonSize the size desired for the [OutlinedButton] can by any available [ButtonSize], to make it full width please use [Modifier.fillMaxWidth], vertical paddings of the [ButtonSize] will be kept.
+ * @param onClick the [OutlinedButton] click event.
+ * @param modifier the modifier to be applied to the layout.
+ * @param enabled set [OutlinedButton] enabled status, if disabled [onClick] won't be triggered.
  * @param icon set start icon.
- * @param borderRadius border radius of the button in [dp].
+ * @param buttonRadius radius of the button in [dp].
+ * @param borderColor border color for normal state of the outlined button in [dp].
+ * @param borderVariantColor border color for the pressed state of the outlined button in [dp].
+ * @param borderThickness thickness of the outlined button border in [dp].
  */
 @Composable
-fun OutlineButton(
+fun OutlinedButton(
     text: String,
     buttonSize: ButtonSize,
     onClick: () -> Unit,

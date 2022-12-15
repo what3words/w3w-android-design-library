@@ -31,6 +31,22 @@ import androidx.constraintlayout.compose.Visibility
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
 
+/**
+ * [SuggestionGeolocation] a list item that contains a geolocation leaf or non-leaf node, which needs at least a [primaryAddress] and an optional [secondaryAddress].
+ *
+ * @param primaryAddress the primary address of this geolocation.
+ * @param isGeolocationGroup define is is a leaf or non-leaf node geolocation.
+ * @param modifier the modifier to be applied to the layout.
+ * @param secondaryAddress the secondary address of this geolocation.
+ * @param background set the background [Color] of the [SuggestionGeolocation].
+ * @param primaryAddressTextStyle set [TextStyle] of the [primaryAddress].
+ * @param primaryAddressTextColor set text [Color] of the [primaryAddress].
+ * @param secondaryAddressTextStyle set [TextStyle] of the [secondaryAddress].
+ * @param secondaryAddressTextColor set text [Color] of the [secondaryAddress].
+ * @param showDivider if using on a list and you want to show a [Divider].
+ * @param dividerColor the color of the [Divider].
+ * @param onClick the callback when [SuggestionGeolocation] is clicked.
+ */
 @Composable
 fun SuggestionGeolocation(
     primaryAddress: String,

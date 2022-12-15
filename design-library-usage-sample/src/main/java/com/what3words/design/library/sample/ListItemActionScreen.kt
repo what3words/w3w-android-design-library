@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.what3words.design.library.ui.components.ActionListItemType
+import com.what3words.design.library.ui.components.ListItemActionType
 import com.what3words.design.library.ui.components.ListItemAction
 import com.what3words.design.library.ui.components.NavigationBarScaffold
 import com.what3words.design.library.ui.theme.W3WTheme
@@ -75,9 +75,9 @@ fun ListItemActionScreen(navController: NavController) {
             Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Checkbox",
-                actionListItemType = ActionListItemType.Checkbox,
-                isSelected = checkbox1,
-                onClick = { isChecked -> checkbox1 = isChecked })
+                listItemActionType = ListItemActionType.Checkbox,
+                isChecked = checkbox1,
+                onCheckedChange = { isChecked -> checkbox1 = isChecked })
             Text(
                 text = "ListItemAction using Checkbox with left Icon",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
@@ -87,10 +87,10 @@ fun ListItemActionScreen(navController: NavController) {
             Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Checkbox",
-                leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Check),
-                actionListItemType = ActionListItemType.Checkbox,
-                isSelected = checkbox2,
-                onClick = { isChecked -> checkbox2 = isChecked })
+                startIconPainter = rememberVectorPainter(image = Icons.Outlined.Check),
+                listItemActionType = ListItemActionType.Checkbox,
+                isChecked = checkbox2,
+                onCheckedChange = { isChecked -> checkbox2 = isChecked })
             Text(
                 text = "ListItemAction using Toggle",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
@@ -100,9 +100,9 @@ fun ListItemActionScreen(navController: NavController) {
             Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Toggle",
-                actionListItemType = ActionListItemType.Toggle,
-                isSelected = toggle1,
-                onClick = { isOn -> toggle1 = isOn })
+                listItemActionType = ListItemActionType.Toggle,
+                isChecked = toggle1,
+                onCheckedChange = { isOn -> toggle1 = isOn })
             Text(
                 text = "ListItemAction using Toggle with left Icon",
                 modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 4.dp),
@@ -112,10 +112,10 @@ fun ListItemActionScreen(navController: NavController) {
             Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Toggle",
-                leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Star),
-                actionListItemType = ActionListItemType.Toggle,
-                isSelected = toggle2,
-                onClick = { isOn ->
+                startIconPainter = rememberVectorPainter(image = Icons.Outlined.Star),
+                listItemActionType = ListItemActionType.Toggle,
+                isChecked = toggle2,
+                onCheckedChange = { isOn ->
                     toggle2 = isOn
                 })
             Text(
@@ -127,23 +127,23 @@ fun ListItemActionScreen(navController: NavController) {
             Divider(color = W3WTheme.colors.divider)
             ListItemAction(
                 title = "Radio 1",
-                actionListItemType = ActionListItemType.RadioGroup,
-                isSelected = radio == 1,
-                onClick = { isOn ->
+                listItemActionType = ListItemActionType.RadioGroup,
+                isChecked = radio == 1,
+                onCheckedChange = { isOn ->
                     if (isOn) radio = 1
                 })
             ListItemAction(
                 title = "Radio 2",
-                actionListItemType = ActionListItemType.RadioGroup,
-                isSelected = radio == 2,
-                onClick = { isOn ->
+                listItemActionType = ListItemActionType.RadioGroup,
+                isChecked = radio == 2,
+                onCheckedChange = { isOn ->
                     if (isOn) radio = 2
                 })
             ListItemAction(
                 title = "Radio 3",
-                actionListItemType = ActionListItemType.RadioGroup,
-                isSelected = radio == 3,
-                onClick = { isOn ->
+                listItemActionType = ListItemActionType.RadioGroup,
+                isChecked = radio == 3,
+                onCheckedChange = { isOn ->
                     if (isOn) radio = 3
                 })
             Text(
@@ -156,10 +156,10 @@ fun ListItemActionScreen(navController: NavController) {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 ListItemAction(
                     title = "خانة اختيار",
-                    leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Check),
-                    actionListItemType = ActionListItemType.Checkbox,
-                    isSelected = checkbox3,
-                    onClick = { isChecked -> checkbox3 = isChecked })
+                    startIconPainter = rememberVectorPainter(image = Icons.Outlined.Check),
+                    listItemActionType = ListItemActionType.Checkbox,
+                    isChecked = checkbox3,
+                    onCheckedChange = { isChecked -> checkbox3 = isChecked })
             }
         }
     }

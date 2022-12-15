@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.TextUnit
 internal const val TEXT_SCALE_REDUCTION_INTERVAL = 0.9f
 
 @Composable
-fun ResponsiveText(
+internal fun ResponsiveText(
     modifier: Modifier = Modifier,
     text: String,
     color: Color,

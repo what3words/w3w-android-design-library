@@ -25,7 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.what3words.design.library.sample.components.ColorSystemItem
 import com.what3words.design.library.sample.extensions.toHexCode
-import com.what3words.design.library.ui.components.ActionListItemType
+import com.what3words.design.library.ui.components.ListItemActionType
 import com.what3words.design.library.ui.components.ButtonSize
 import com.what3words.design.library.ui.components.FilledIconButton
 import com.what3words.design.library.ui.components.FormField
@@ -266,7 +266,7 @@ fun HomeScreen(navController: NavController) {
             Divider(color = W3WTheme.colors.divider)
             ListItemNavigation(
                 title = "Contacts",
-                leftIconPainter = rememberVectorPainter(image = Icons.Outlined.Phone)
+                startIconPainter = rememberVectorPainter(image = Icons.Outlined.Phone)
             ) {
                 navController.navigate("ListItemNavigationScreen")
             }
@@ -289,9 +289,9 @@ fun HomeScreen(navController: NavController) {
             var isChecked by remember { mutableStateOf(value = true) }
             Divider(color = W3WTheme.colors.divider)
             ListItemAction(title = "Contacts",
-                isSelected = isChecked,
-                actionListItemType = ActionListItemType.Checkbox,
-                onClick = { b ->
+                isChecked = isChecked,
+                listItemActionType = ListItemActionType.Checkbox,
+                onCheckedChange = { b ->
                     isChecked = b
                 })
 

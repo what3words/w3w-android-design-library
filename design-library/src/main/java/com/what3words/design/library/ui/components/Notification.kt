@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.zIndex
 import com.what3words.design.library.R
@@ -28,6 +29,17 @@ enum class NotificationType {
     Error
 }
 
+/**
+ * [Notification] a notification component with the following types [NotificationType.Information] or [NotificationType.Error] or [NotificationType.Warning] or [NotificationType.Confirmation].
+ *
+ * @param text the text to be shown in this [Notification].
+ * @param type the [NotificationType] of [Notification], it can be either [NotificationType.Information] or [NotificationType.Error] or [NotificationType.Warning] or [NotificationType.Confirmation].
+ * @param modifier the modifier to be applied to the layout.
+ * @param visible sets the visibility of this [Notification].
+ * @param withIcon sets the visibility of the [Notification] icon.
+ * @param textColor set [TextStyle] of the [Notification].
+ * @param iconTint set [Color] of the [Notification] icon.
+ */
 @Composable
 fun Notification(
     text: String,
