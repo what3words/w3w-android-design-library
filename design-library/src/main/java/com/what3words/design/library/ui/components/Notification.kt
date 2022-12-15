@@ -30,7 +30,7 @@ enum class NotificationType {
 }
 
 /**
- * [Notification] a list item that contains a what3words address information.
+ * [Notification] a notification component with the following types [NotificationType.Information] or [NotificationType.Error] or [NotificationType.Warning] or [NotificationType.Confirmation].
  *
  * @param text the text to be shown in this [Notification].
  * @param type the [NotificationType] of [Notification], it can be either [NotificationType.Information] or [NotificationType.Error] or [NotificationType.Warning] or [NotificationType.Confirmation].
