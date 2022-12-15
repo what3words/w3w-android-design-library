@@ -23,7 +23,7 @@ implementation 'com.what3words:w3w-android-design-library:1.0.0'
 
 ### [SuggestionWhat3words](https://github.com/what3words/w3w-android-design-library/blob/main/design-library/src/main/java/com/what3words/design/library/ui/components/SuggestionWhat3words.kt) 
 
-A list item that contains an what3words address information.
+A list item that contains a what3words address information.
 
 <p float="left">
     <img src="./images/SuggestionWhat3wordsDay.png" width=30% height=30%>
@@ -78,7 +78,7 @@ A TextField to be used in What3words apps and demo apps that can be easily style
 
 ### [Buttons](https://github.com/what3words/w3w-android-design-library/blob/main/design-library/src/main/java/com/what3words/design/library/ui/components/Buttons.kt) 
 
-A set of buttons to be used on our internal what3words and sample apps, we have PrimaryButton, SecondayButton, TertriaryButton, TextButton and OutinedButton with three different sizes and with a optional start icon.
+A set of buttons to be used on our internal what3words and sample apps, we have PrimaryButton, SecondayButton, TertriaryButton, TextButton and OutinedButton with three different sizes and with an optional start icon.
 
 <p float="left">
     <img src="./images/ButtonsDay.png" width=30% height=30%>
