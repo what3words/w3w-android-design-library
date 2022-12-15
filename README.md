@@ -25,8 +25,10 @@ implementation 'com.what3words:w3w-android-design-library:1.0.0'
 
 A list item that contains an what3words address information.
 
-<img src="./images/SuggestionWhat3wordsDay.png" width=30% height=30%>
-<img src="./images/SuggestionWhat3wordsNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/SuggestionWhat3wordsDay.png" width=30% height=30%>
+    <img src="./images/SuggestionWhat3wordsNight.png" width=30% height=30%>
+</p>
 
 #
 
@@ -34,8 +36,10 @@ A list item that contains an what3words address information.
 
 A list item that contains a geolocation leaf or non-leaf node, with a mandaotry primary address and an optional secondary address.
 
-<img src="./images/SuggestionGeolocationDay.png" width=30% height=30%>
-<img src="./images/SuggestionGeolocationNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/SuggestionGeolocationDay.png" width=30% height=30%>
+    <img src="./images/SuggestionGeolocationNight.png" width=30% height=30%>
+</p>
 
 #
 
@@ -43,8 +47,10 @@ A list item that contains a geolocation leaf or non-leaf node, with a mandaotry 
 
 A list item that contains an action of the type RadioGroup, Checkbox or Toggle.
 
-<img src="./images/ListItemActionDay.png" width=30% height=30%>
-<img src="./images/ListItemActionNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/ListItemActionDay.png" width=30% height=30%>
+    <img src="./images/ListItemActionNight.png" width=30% height=30%>
+</p>
 
 #
 
@@ -52,8 +58,10 @@ A list item that contains an action of the type RadioGroup, Checkbox or Toggle.
 
 A list item that navigates to a different screen/action.
 
-<img src="./images/ListItemNavigationDay.png" width=30% height=30%>
-<img src="./images/ListItemNavigationNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/ListItemNavigationDay.png" width=30% height=30%>
+    <img src="./images/ListItemNavigationNight.png" width=30% height=30%>
+</p>
 
 #
 
@@ -61,8 +69,10 @@ A list item that navigates to a different screen/action.
 
 A TextField to be used in What3words apps and demo apps that can be easily styled to look highly integrated within any app.
 
-<img src="./images/FormFieldsDay.png" width=30% height=30%>
-<img src="./images/FormFieldsNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/FormFieldsDay.png" width=30% height=30%>
+    <img src="./images/FormFieldsNight.png" width=30% height=30%>
+</p>
 
 #
 
@@ -70,8 +80,10 @@ A TextField to be used in What3words apps and demo apps that can be easily style
 
 A set of buttons to be used on our internal what3words and sample apps, we have PrimaryButton, SecondayButton, TertriaryButton, TextButton and OutinedButton with three different sizes and with a optional start icon.
 
-<img src="./images/ButtonsDay.png" width=30% height=30%>
-<img src="./images/ButtonsNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/ButtonsDay.png" width=30% height=30%>
+    <img src="./images/ButtonsNight.png" width=30% height=30%>
+</p>
 
 #
 
@@ -79,8 +91,10 @@ A set of buttons to be used on our internal what3words and sample apps, we have 
 
 A set of icon buttons to be used on our internal what3words and sample apps, we have FilledIconButton, GhostFilledIconButton and OutlinedIconButton with three different sizes.
 
-<img src="./images/IconButtonsDay.png" width=30% height=30%>
-<img src="./images/IconButtonsNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/IconButtonsDay.png" width=30% height=30%>
+    <img src="./images/IconButtonsNight.png" width=30% height=30%>
+</p>
 
 #
 
@@ -88,5 +102,7 @@ A set of icon buttons to be used on our internal what3words and sample apps, we 
 
 A notification component with the following types Information, Error, Warning or Confirmation.
 
-<img src="./images/NotificationsDay.png" width=30% height=30%>
-<img src="./images/NotificationsNight.png" width=30% height=30%>
+<p float="left">
+    <img src="./images/NotificationsDay.png" width=30% height=30%>
+    <img src="./images/NotificationsNight.png" width=30% height=30%>
+</p>
