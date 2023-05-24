@@ -63,13 +63,16 @@ fun FilledIconButton(
     buttonSize: IconButtonSize,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    backgroundColor: Color = W3WTheme.colors.buttonPrimary,
+    backgroundRipple: Color = W3WTheme.colors.buttonPrimaryVariant,
+    textColor: Color = W3WTheme.colors.onButtonPrimary
 ) =
     IconButton(
         icon = icon,
-        backgroundColor = W3WTheme.colors.buttonPrimary,
-        backgroundRipple = W3WTheme.colors.buttonPrimaryVariant,
-        textColor = W3WTheme.colors.onButtonPrimary,
+        backgroundColor = backgroundColor,
+        backgroundRipple = backgroundRipple,
+        textColor = textColor,
         buttonSize = buttonSize,
         onClick = onClick,
         modifier = modifier,
@@ -91,13 +94,16 @@ fun GhostFilledIconButton(
     buttonSize: IconButtonSize,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    backgroundColor: Color = W3WTheme.colors.buttonOutline,
+    backgroundRipple: Color = W3WTheme.colors.buttonOutlineVariant,
+    textColor: Color = W3WTheme.colors.onButtonOutline,
 ) =
     IconButton(
         icon = icon,
-        backgroundColor = W3WTheme.colors.buttonOutline,
-        backgroundRipple = W3WTheme.colors.buttonOutlineVariant,
-        textColor = W3WTheme.colors.onButtonOutline,
+        backgroundColor = backgroundColor,
+        backgroundRipple = backgroundRipple,
+        textColor = textColor,
         buttonSize = buttonSize,
         onClick = onClick,
         modifier = modifier,
@@ -119,19 +125,21 @@ fun OutlinedIconButton(
     buttonSize: IconButtonSize,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    backgroundColor: Color = W3WTheme.colors.buttonText,
+    backgroundRipple: Color = W3WTheme.colors.buttonTextVariant,
+    textColor: Color = W3WTheme.colors.onButtonText,
 ) =
     IconButton(
         icon = icon,
-        backgroundColor = W3WTheme.colors.buttonText,
-        backgroundRipple = W3WTheme.colors.buttonTextVariant,
-        textColor = W3WTheme.colors.onButtonText,
+        backgroundColor = backgroundColor,
+        backgroundRipple = backgroundRipple,
+        textColor = textColor,
         buttonSize = buttonSize,
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
     )
-
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -160,10 +168,12 @@ private fun IconButton(
                         MotionEvent.ACTION_DOWN -> {
                             backgroundColorState = backgroundRipple
                         }
+
                         MotionEvent.ACTION_UP -> {
                             backgroundColorState = backgroundColor
                             if (enabled) onClick.invoke()
                         }
+
                         MotionEvent.AXIS_SIZE -> {
                             backgroundColorState = backgroundColor
                         }
