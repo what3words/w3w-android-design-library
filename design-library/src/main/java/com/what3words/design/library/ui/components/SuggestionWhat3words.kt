@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -32,6 +33,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
 import com.what3words.design.library.R
+import com.what3words.design.library.ui.models.DisplayUnits
+import com.what3words.design.library.ui.models.formatUnits
 import com.what3words.design.library.ui.theme.W3WTheme
 
 /**
@@ -59,7 +62,8 @@ fun SuggestionWhat3words(
     modifier: Modifier = Modifier,
     nearestPlace: String? = null,
     isLand: Boolean = true,
-    distance: String? = null,
+    distance: Int? = null,
+    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     isHighlighted: Boolean = false,
     background: Color = W3WTheme.colors.background,
     backgroundHighlighted: Color = W3WTheme.colors.backgroundHighlighted,
@@ -73,6 +77,7 @@ fun SuggestionWhat3words(
     dividerColor: Color = W3WTheme.colors.divider,
     onClick: (() -> Unit)? = null
 ) {
+    val localContext = LocalContext.current
     Column(modifier = modifier.fillMaxWidth()) {
         ConstraintLayout(modifier = modifier
             .fillMaxWidth()
@@ -156,7 +161,7 @@ fun SuggestionWhat3words(
 
             if (distance != null) {
                 Text(
-                    text = distance,
+                    text = formatUnits(distance, displayUnits, localContext),
                     modifier = Modifier.constrainAs(textDistance) {
                         bottom.linkTo(parent.bottom)
                         end.linkTo(parent.end)
@@ -201,7 +206,7 @@ fun SuggestionItemLightLandBigAddressPreview() {
 @Composable
 fun SuggestionItemLightDistanceLandPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", distance = "20km")
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", distance = 20)
     }
 }
 
@@ -209,7 +214,7 @@ fun SuggestionItemLightDistanceLandPreview() {
 @Composable
 fun SuggestionItemLightRightToLeftPreview() {
     W3WTheme {
-        SuggestionWhat3words("القطار.مسعف.شخصيات", nearestPlace = "لندن, London", distance = "20km")
+        SuggestionWhat3words("القطار.مسعف.شخصيات", nearestPlace = "لندن, London", distance = 20)
     }
 }
 
@@ -234,7 +239,7 @@ fun SuggestionItemNightLandPreview() {
 @Composable
 fun SuggestionItemNightDistanceLandPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", distance = "20km")
+        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", distance = 20, displayUnits = DisplayUnits.IMPERIAL)
     }
 }
 
