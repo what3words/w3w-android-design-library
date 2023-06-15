@@ -16,7 +16,7 @@ through [![Maven Central](https://img.shields.io/maven-central/v/com.what3words/
 ### Gradle
 
 ```
-implementation 'com.what3words:w3w-android-design-library:1.0.0'
+implementation 'com.what3words:w3w-android-design-library:1.0.2'
 ```
 
 # Design library components
