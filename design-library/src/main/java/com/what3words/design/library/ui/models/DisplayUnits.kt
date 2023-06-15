@@ -12,17 +12,13 @@ enum class DisplayUnits {
     SYSTEM, IMPERIAL, METRIC
 }
 
+private const val KM_TO_MILES_FACTOR = 1.609
+private val imperialCountries = hashSetOf("US", "LR", "MM", "BS", "BZ", "KY", "PW", "GB", "UK")
+
 internal fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: Context): String {
-    if (distanceKm == 0 ||
-        (
-                displayUnits == DisplayUnits.SYSTEM && !Locale.getDefault()
-                    .isMetric() && (distanceKm / 1.609) < 1
-                ) ||
-        (displayUnits == DisplayUnits.IMPERIAL && (distanceKm / 1.609) < 1)
-    ) {
-        if ((displayUnits == DisplayUnits.SYSTEM && Locale.getDefault().isMetric()) ||
-            displayUnits == DisplayUnits.METRIC
-        ) {
+
+    if (isDistanceBelowThresholdInPreferredUnits(distanceKm, displayUnits)) {
+        if (isMetricDisplayUnitEnabled(displayUnits)) {
             val fmtFr =
                 MeasureFormat.getInstance(Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
             val measureF = Measure(1, MeasureUnit.KILOMETER)
@@ -36,23 +32,33 @@ internal fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: C
     } else {
         val fmtFr =
             MeasureFormat.getInstance(Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
-        return if ((
-                    displayUnits == DisplayUnits.SYSTEM && Locale.getDefault()
-                        .isMetric()
-                    ) || displayUnits == DisplayUnits.METRIC
-        ) {
+        return if (isMetricDisplayUnitEnabled(displayUnits)) {
             val measureF = Measure(distanceKm, MeasureUnit.KILOMETER)
             fmtFr.format(measureF)
         } else {
-            val measureF = Measure((distanceKm / 1.609).roundToInt(), MeasureUnit.MILE)
+            val measureF = Measure((distanceKm / KM_TO_MILES_FACTOR).roundToInt(), MeasureUnit.MILE)
             fmtFr.format(measureF)
         }
     }
 }
 
+private fun isDistanceBelowThresholdInPreferredUnits(
+    distanceKm: Int,
+    displayUnits: DisplayUnits
+): Boolean {
+    return distanceKm == 0 ||
+            (
+                    displayUnits == DisplayUnits.SYSTEM && !Locale.getDefault()
+                        .isMetric() && (distanceKm / KM_TO_MILES_FACTOR) < 1
+                    ) ||
+            (displayUnits == DisplayUnits.IMPERIAL && (distanceKm / KM_TO_MILES_FACTOR) < 1)
+}
+
+private fun isMetricDisplayUnitEnabled(displayUnits: DisplayUnits): Boolean {
+    return (displayUnits == DisplayUnits.SYSTEM && Locale.getDefault().isMetric()) ||
+            displayUnits == DisplayUnits.METRIC
+}
+
 internal fun Locale.isMetric(): Boolean {
-    return when (country.uppercase(this)) {
-        "US", "LR", "MM", "BS", "BZ", "KY", "PW", "GB", "UK" -> false
-        else -> true
-    }
+    return !imperialCountries.contains(country.uppercase(this))
 }
