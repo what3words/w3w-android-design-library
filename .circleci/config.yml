@@ -96,9 +96,13 @@ workflows:
           context: SonarCloud
       - deploy-to-sonatype:
           name: Build, run tests, sonar and push to maven staging
+          context:
+            - SonarCloud
+            - maven-sign
+            - mobile
           requires:
             - build-test-sonar
-#          filters:
-#            branches:
-#              only:
-#                - dev
+          filters:
+            branches:
+              only:
+                - dev

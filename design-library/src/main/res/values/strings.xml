@@ -3,6 +3,8 @@
     <string name="slashes">///</string>
     <string name="near">near %s</string>
     <string name="cd_ic_sea">Icon Sea</string>
+    <string name="distance_metric_low">&lt;%s</string>
+    <string name="distance_imperial_low">&lt;%s</string>
     <string name="cd_ic_geolocation_group">Group of addresses</string>
     <string name="cd_ic_geolocation_single">Address</string>
     <string name="cd_ic_arrow">Arrow forward</string>

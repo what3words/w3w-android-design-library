@@ -120,7 +120,7 @@ fun SuggestionItemExampleRtl(
         SuggestionWhat3words(
             words = words,
             nearestPlace = near,
-            distance = "${distance}km",
+            distance = distance,
             isLand = country.lowercase(Locale.getDefault()) != "zz",
             onClick = {})
     }
@@ -148,7 +148,7 @@ fun SuggestionWhat3wordsExample(
     SuggestionWhat3words(
         words = words,
         nearestPlace = near,
-        distance = "${distance}km",
+        distance = distance,
         isLand = country.lowercase(Locale.getDefault()) != "zz",
         onClick = onClick,
         isHighlighted = isHighlighted
