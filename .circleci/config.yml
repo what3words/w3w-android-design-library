@@ -102,7 +102,7 @@ workflows:
             - mobile
           requires:
             - build-test-sonar
-#          filters:
-#            branches:
-#              only:
-#                - dev
+          filters:
+            branches:
+              only:
+                - dev
