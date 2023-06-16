@@ -37,6 +37,79 @@ import com.what3words.design.library.ui.models.DisplayUnits
 import com.what3words.design.library.ui.models.formatUnits
 import com.what3words.design.library.ui.theme.W3WTheme
 
+
+object SuggestionWhat3wordsDefaults {
+    data class Colors(
+        val background: Color,
+        val backgroundHighlighted: Color,
+        val wordsTextColor: Color,
+        val nearestPlaceTextColor: Color,
+        val distanceTextColor: Color,
+        val dividerColor: Color,
+    )
+
+    data class TextStyles(
+        val wordsTextStyle: TextStyle,
+        val nearestPlaceTextStyle: TextStyle,
+        val distanceTextStyle: TextStyle
+    )
+
+    /**
+     * Creates [SuggestionWhat3wordsDefaults.Colors] to be applied to [SuggestionWhat3words],
+     * allowing to override any [Color] on [SuggestionWhat3words] composable for customization.
+     *
+     * @param background set the background [Color] of the [SuggestionWhat3words].
+     * @param backgroundHighlighted set the background [Color] of the highlighted [SuggestionWhat3words].
+     * @param wordsTextColor set text [Color] of the [SuggestionWhat3words] words.
+     * @param nearestPlaceTextColor set text [Color] of the [SuggestionWhat3words] nearestPlace.
+     * @param distanceTextColor set text [Color] of the [SuggestionWhat3words] distance.
+     * @param dividerColor the color of the [Divider].
+     *
+     * @return [SuggestionWhat3wordsDefaults.Colors] that will be applied to the [SuggestionWhat3words] composable.
+     */
+    @Composable
+    fun defaultColors(
+        background: Color = W3WTheme.colors.background,
+        backgroundHighlighted: Color = W3WTheme.colors.backgroundHighlighted,
+        wordsTextColor: Color = W3WTheme.colors.primary,
+        nearestPlaceTextColor: Color = W3WTheme.colors.textPrimary,
+        distanceTextColor: Color = W3WTheme.colors.textPrimary,
+        dividerColor: Color = W3WTheme.colors.divider
+    ): Colors {
+        return Colors(
+            background = background,
+            backgroundHighlighted = backgroundHighlighted,
+            wordsTextColor = wordsTextColor,
+            nearestPlaceTextColor = nearestPlaceTextColor,
+            distanceTextColor = distanceTextColor,
+            dividerColor = dividerColor
+        )
+    }
+
+    /**
+     * Creates [SuggestionWhat3wordsDefaults.TextStyles] to be applied to [SuggestionWhat3words],
+     * allowing to override any [TextStyle] on [SuggestionWhat3words] composable for customization.
+     *
+     * @param wordsTextStyle set [TextStyle] of the [SuggestionWhat3words] words.
+     * @param nearestPlaceTextStyle set [TextStyle] of the [SuggestionWhat3words] nearestPlace.
+     * @param distanceTextStyle set [TextStyle] of the [SuggestionWhat3words] distance.
+     *
+     * @return [SuggestionWhat3wordsDefaults.TextStyles] that will be applied to the [SuggestionWhat3words] composable.
+     */
+    @Composable
+    fun defaultTextStyles(
+        wordsTextStyle: TextStyle = W3WTheme.typography.headline,
+        nearestPlaceTextStyle: TextStyle = W3WTheme.typography.footnote,
+        distanceTextStyle: TextStyle = W3WTheme.typography.caption1
+    ): TextStyles {
+        return TextStyles(
+            wordsTextStyle = wordsTextStyle,
+            nearestPlaceTextStyle = nearestPlaceTextStyle,
+            distanceTextStyle = distanceTextStyle
+        )
+    }
+}
+
 /**
  * [SuggestionWhat3words] a list item that contains a what3words address information.
  *
@@ -46,14 +119,9 @@ import com.what3words.design.library.ui.theme.W3WTheme
  * @param isLand if this what3words address is in the land (true) or sea (false).
  * @param distance the distance to this what3words address if current location is known.
  * @param isHighlighted sets this what3words address as highlighted, i.e: when matches exactly the searched text.
- * @param background set the background [Color] of the non-highlighted [SuggestionWhat3words].
- * @param backgroundHighlighted set the background [Color] of the highlighted [SuggestionWhat3words].
- * @param wordsTextStyle set [TextStyle] of the [words].
- * @param wordsTextColor set text [Color] of the [words].
- * @param nearestPlaceTextStyle set [TextStyle] of the [nearestPlace].
- * @param nearestPlaceTextColor set text [Color] of the [nearestPlace].
+ * @param colors set the [SuggestionWhat3wordsDefaults.Colors] of [SuggestionWhat3words].
+ * @param textStyles set the [SuggestionWhat3wordsDefaults.TextStyles] of [SuggestionWhat3words].
  * @param showDivider if using on a list and you want to show a [Divider].
- * @param dividerColor the color of the [Divider].
  * @param onClick the callback when [SuggestionWhat3words] is clicked.
  */
 @Composable
@@ -61,20 +129,14 @@ fun SuggestionWhat3words(
     words: String,
     modifier: Modifier = Modifier,
     nearestPlace: String? = null,
+    nearestPlacePrefix : String? = stringResource(id = com.what3words.design.library.R.string.near),
     isLand: Boolean = true,
     distance: Int? = null,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     isHighlighted: Boolean = false,
-    background: Color = W3WTheme.colors.background,
-    backgroundHighlighted: Color = W3WTheme.colors.backgroundHighlighted,
-    wordsTextStyle: TextStyle = W3WTheme.typography.headline,
-    wordsTextColor: Color = W3WTheme.colors.primary,
-    nearestPlaceTextStyle: TextStyle = W3WTheme.typography.footnote,
-    nearestPlaceTextColor: Color = W3WTheme.colors.textPrimary,
-    distanceTextStyle: TextStyle = W3WTheme.typography.caption1,
-    distanceTextColor: Color = W3WTheme.colors.textPrimary,
+    colors: SuggestionWhat3wordsDefaults.Colors = SuggestionWhat3wordsDefaults.defaultColors(),
+    textStyles: SuggestionWhat3wordsDefaults.TextStyles = SuggestionWhat3wordsDefaults.defaultTextStyles(),
     showDivider: Boolean = true,
-    dividerColor: Color = W3WTheme.colors.divider,
     onClick: (() -> Unit)? = null
 ) {
     val localContext = LocalContext.current
@@ -90,23 +152,23 @@ fun SuggestionWhat3words(
                     onClick?.invoke()
                 }
             )
-            .background(if (isHighlighted) backgroundHighlighted else background)
+            .background(if (isHighlighted) colors.backgroundHighlighted else colors.background)
             .padding(W3WTheme.dimensions.paddingMedium)
         ) {
             val (textSlashes, textWords, textNear, icSea, textDistance) = createRefs()
 
-            val startFontSize = wordsTextStyle.fontSize
+            val startFontSize = textStyles.wordsTextStyle.fontSize
             var textSize by remember { mutableStateOf(startFontSize) }
 
             ResponsiveText(
-                text = stringResource(id = R.string.slashes),
+                text = stringResource(id = com.what3words.design.library.R.string.slashes),
                 modifier = Modifier
                     .wrapContentWidth()
                     .constrainAs(textSlashes) {
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
                     },
-                textStyle = wordsTextStyle,
+                textStyle = textStyles.wordsTextStyle,
                 targetTextSizeHeight = textSize,
                 color = W3WTheme.colors.accent
             )
@@ -120,8 +182,8 @@ fun SuggestionWhat3words(
                     end.linkTo(parent.end)
                     width = Dimension.fillToConstraints
                 },
-                textStyle = wordsTextStyle,
-                color = wordsTextColor,
+                textStyle = textStyles.wordsTextStyle,
+                color = colors.wordsTextColor,
                 targetTextSizeHeight = textSize,
                 resizeFunc = {
                     textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
@@ -132,7 +194,7 @@ fun SuggestionWhat3words(
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_sea),
-                contentDescription = stringResource(id = R.string.cd_ic_sea),
+                contentDescription = null,
                 modifier = Modifier.constrainAs(icSea) {
                     top.linkTo(textNear.top)
                     bottom.linkTo(textNear.bottom)
@@ -142,22 +204,22 @@ fun SuggestionWhat3words(
                 tint = W3WTheme.colors.textPrimary
             )
 
-            Text(
-                text = stringResource(id = R.string.near, nearestPlace.orEmpty()),
-                modifier = Modifier.constrainAs(textNear) {
-                    top.linkTo(textSlashes.bottom, 4.dp)
-                    start.linkTo(icSea.end)
-                    end.linkTo(textDistance.start, 6.dp)
-                    width = Dimension.fillToConstraints
-                    visibility =
-                        if (nearestPlace.isNullOrEmpty()) Visibility.Invisible else Visibility.Visible
-                },
-                overflow = TextOverflow.Ellipsis,
-                style = nearestPlaceTextStyle,
-                color = nearestPlaceTextColor,
-                textAlign = TextAlign.Start,
-                maxLines = 1
-            )
+                Text(
+                    text = "${nearestPlacePrefix ?: ""} ${nearestPlace ?: ""}",
+                    modifier = Modifier.constrainAs(textNear) {
+                        top.linkTo(textSlashes.bottom, 4.dp)
+                        start.linkTo(icSea.end)
+                        end.linkTo(textDistance.start, 6.dp)
+                        width = Dimension.fillToConstraints
+                        visibility =
+                            if (nearestPlace.isNullOrEmpty()) Visibility.Invisible else Visibility.Visible
+                    },
+                    overflow = TextOverflow.Ellipsis,
+                    style = textStyles.nearestPlaceTextStyle,
+                    color = colors.nearestPlaceTextColor,
+                    textAlign = TextAlign.Start,
+                    maxLines = 1
+                )
 
             if (distance != null) {
                 Text(
@@ -166,8 +228,8 @@ fun SuggestionWhat3words(
                         bottom.linkTo(parent.bottom)
                         end.linkTo(parent.end)
                     },
-                    style = distanceTextStyle,
-                    color = distanceTextColor,
+                    style = textStyles.distanceTextStyle,
+                    color = colors.distanceTextColor,
                     textAlign = TextAlign.Start
                 )
             }
@@ -175,7 +237,7 @@ fun SuggestionWhat3words(
         if (showDivider) {
             Divider(
                 modifier = Modifier.fillMaxWidth(),
-                color = dividerColor,
+                color = colors.dividerColor,
                 thickness = W3WTheme.dimensions.divider
             )
         }
@@ -239,7 +301,12 @@ fun SuggestionItemNightLandPreview() {
 @Composable
 fun SuggestionItemNightDistanceLandPreview() {
     W3WTheme {
-        SuggestionWhat3words("index.home.raft", nearestPlace = "Bayswater, London", distance = 20, displayUnits = DisplayUnits.IMPERIAL)
+        SuggestionWhat3words(
+            "index.home.raft",
+            nearestPlace = "Bayswater, London",
+            distance = 20,
+            displayUnits = DisplayUnits.IMPERIAL
+        )
     }
 }
 
