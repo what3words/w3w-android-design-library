@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        compose_version = '1.2.1'
+        compose_version = '1.4.3'
     }
     dependencies {
         classpath "org.jlleitschuh.gradle:ktlint-gradle:10.1.0"
