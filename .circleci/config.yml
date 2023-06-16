@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   gradle: circleci/gradle@2.2.0
-  android: circleci/android@1.0
+  android: circleci/android@2.2.0
 
 jobs:
 #  build-ui-test:
@@ -29,6 +29,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
+      tag: 2023.05.1
     steps:
       - checkout
       - restore_cache:
