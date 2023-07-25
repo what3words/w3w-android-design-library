@@ -66,7 +66,8 @@ fun FilledIconButton(
     enabled: Boolean = true,
     backgroundColor: Color = W3WTheme.colors.buttonPrimary,
     backgroundRipple: Color = W3WTheme.colors.buttonPrimaryVariant,
-    textColor: Color = W3WTheme.colors.onButtonPrimary
+    textColor: Color = W3WTheme.colors.onButtonPrimary,
+    iconContentDescription: String? = null
 ) =
     IconButton(
         icon = icon,
@@ -77,6 +78,7 @@ fun FilledIconButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
+        iconContentDescription = iconContentDescription
     )
 
 /**
@@ -87,6 +89,7 @@ fun FilledIconButton(
  * @param onClick the [GhostFilledIconButton] click event.
  * @param modifier the modifier to be applied to the layout.
  * @param enabled set [GhostFilledIconButton] enabled status, if disabled [onClick] won't be triggered.
+ * @param iconContentDescription String resource.
  */
 @Composable
 fun GhostFilledIconButton(
@@ -98,6 +101,7 @@ fun GhostFilledIconButton(
     backgroundColor: Color = W3WTheme.colors.buttonOutline,
     backgroundRipple: Color = W3WTheme.colors.buttonOutlineVariant,
     textColor: Color = W3WTheme.colors.onButtonOutline,
+    iconContentDescription: String? = null
 ) =
     IconButton(
         icon = icon,
@@ -108,6 +112,7 @@ fun GhostFilledIconButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
+        iconContentDescription = iconContentDescription
     )
 
 /**
@@ -129,6 +134,7 @@ fun OutlinedIconButton(
     backgroundColor: Color = W3WTheme.colors.buttonText,
     backgroundRipple: Color = W3WTheme.colors.buttonTextVariant,
     textColor: Color = W3WTheme.colors.onButtonText,
+    iconContentDescription: String? = null
 ) =
     IconButton(
         icon = icon,
@@ -139,6 +145,7 @@ fun OutlinedIconButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
+        iconContentDescription = iconContentDescription
     )
 
 
@@ -152,8 +159,9 @@ private fun IconButton(
     textColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
-) {
+    enabled: Boolean = true,
+    iconContentDescription: String? = null
+    ) {
     var backgroundColorState by remember { mutableStateOf(backgroundColor) }
 
     Box(modifier = modifier
@@ -190,7 +198,7 @@ private fun IconButton(
                 .fillMaxSize()
                 .padding(buttonSize.toPadding()),
             painter = icon,
-            contentDescription = null,
+            contentDescription = iconContentDescription,
             tint = textColor
         )
     }

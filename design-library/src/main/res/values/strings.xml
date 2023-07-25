@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="slashes">///</string>
-    <string name="near">near %s</string>
+    <string name="near">near</string>
     <string name="cd_ic_sea">Icon Sea</string>
     <string name="distance_metric_low">&lt;%s</string>
     <string name="distance_imperial_low">&lt;%s</string>
