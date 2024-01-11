@@ -1,59 +1,42 @@
 package com.what3words.design.library.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.ripple.LocalRippleTheme
-import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.remember
-
-object W3WTheme {
-    val colors: W3WColors
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalColors.current
-    val typography: W3WTypography
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalTypography.current
-    val dimensions: W3WDimensions
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalDimensions.current
-}
-
-object RippleCustomTheme: RippleTheme {
-    @Composable
-    override fun defaultColor() =
-        RippleTheme.defaultRippleColor(
-            W3WTheme.colors.backgroundRipple,
-            lightTheme = !isSystemInDarkTheme()
-        )
-
-    @Composable
-    override fun rippleAlpha(): RippleAlpha =
-        RippleTheme.defaultRippleAlpha(
-            W3WTheme.colors.backgroundRipple,
-            lightTheme = !isSystemInDarkTheme()
-        )
-}
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 
 @Composable
 fun W3WTheme(
-    colors: W3WColors = if (isSystemInDarkTheme()) darkColors() else lightColors(),
-    typography: W3WTypography = W3WTheme.typography,
-    dimensions: W3WDimensions = W3WTheme.dimensions,
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
+    val colorScheme = if (useDarkTheme)
+        w3wDarkColors
+    else w3wLightColors
+
+    val w3wTypography = W3wTypography(
+        titleMediumProminent = MaterialTheme.typography.titleMedium.copy(
+            fontWeight = FontWeight.SemiBold,
+            fontSize = TextUnit(17f, TextUnitType.Sp)
+        ),
+        labelMediumProminent = MaterialTheme.typography.labelMedium.copy(
+            fontWeight = FontWeight.Bold
+        ),
+        labelLargeProminent = MaterialTheme.typography.labelLarge.copy(
+            fontWeight = FontWeight.Bold
+        )
+    )
+
     CompositionLocalProvider(
-        LocalColors provides rememberedColors,
-        LocalDimensions provides dimensions,
-        LocalTypography provides typography,
-        LocalRippleTheme provides RippleCustomTheme
+        LocalW3wTypography provides w3wTypography
     ) {
-        content()
+        MaterialTheme(
+            colorScheme = colorScheme,
+            content = content
+        )
     }
 }
