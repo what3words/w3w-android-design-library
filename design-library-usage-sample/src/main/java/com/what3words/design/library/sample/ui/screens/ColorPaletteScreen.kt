@@ -13,9 +13,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.successColors
 import com.what3words.design.library.ui.theme.warningColors
 
+/**
+ * A screen showcasing the color palette of the [MaterialTheme] and [W3WTheme].
+ * This composable function displays various color combinations from the MaterialTheme color scheme,
+ * including primary, secondary, error, warning, success, surface, and background colors.
+ * Each color is demonstrated with its corresponding on-color (text color) for contrast.
+ *
+ * This screen serves as a visual guide to understanding the color scheme and how colors interact
+ * with their respective on-colors, which is critical for maintaining accessibility and readability
+ * in UI design.
+ */
 @Composable
 fun ColorPaletteScreen() {
     Column(

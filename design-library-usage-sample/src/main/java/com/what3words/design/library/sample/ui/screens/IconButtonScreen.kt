@@ -10,23 +10,27 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.what3words.design.library.ui.theme.W3WTheme
 
+/**
+ * A screen showcasing various styles of icon buttons in Material Design styled by both [MaterialTheme] and [W3WTheme].
+ * This screen displays different types of icon buttons including standard, filled,
+ * tonal, and outlined. Each button is presented in both its enabled and disabled states
+ * to demonstrate the visual changes in different states.
+ *
+ * This screen is useful for designers and developers to understand the styling options
+ * and states of icon buttons in a Material Design-based UI.
+ */
 @Composable
 fun IconButtonScreen() {
     Column(

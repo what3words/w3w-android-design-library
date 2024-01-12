@@ -24,6 +24,7 @@ import com.what3words.design.library.sample.ui.screens.ButtonScreen
 import com.what3words.design.library.sample.ui.screens.ColorPaletteScreen
 import com.what3words.design.library.sample.ui.screens.HomeScreen
 import com.what3words.design.library.sample.ui.screens.IconButtonScreen
+import com.what3words.design.library.sample.ui.screens.ListItemScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressScreen
 
 
@@ -113,22 +114,10 @@ fun DesignLibraryApp(
                 onTitleChanged.invoke("Icon buttons")
                 IconButtonScreen()
             }
-//        composable(NavScreen.SuggestionGeolocationScreen.route) {
-//            SuggestionGeolocationScreen(navController)
-//        }
-//        composable(NavScreen.ListItemNavigationScreen.route) {
-//            ListItemNavigationScreen(navController)
-//        }
-//        composable(NavScreen.ListItemActionScreen.route) {
-//            ListItemActionScreen(navController)
-//        }
-//        composable(NavScreen.FormFieldsScreen.route) {
-//            FormFieldsScreen(navController)
-//        }
-//        composable(NavScreen.NotificationScreen.route) {
-//            NotificationScreen(navController)
-//        }
-
+            composable(NavScreen.ListItemScreen.route) {
+                onTitleChanged.invoke("List Items")
+                ListItemScreen()
+            }
         }
     }
 }

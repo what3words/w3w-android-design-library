@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -126,7 +125,7 @@ object What3wordsAddressDefaults {
         wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.titleMediumProminent,
         nearestPlaceTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
         distanceTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
-        labelTextStyle: TextStyle = MaterialTheme.typography.bodySmall
+        labelTextStyle: TextStyle = MaterialTheme.typography.labelLarge
     ): TextStyles {
         return TextStyles(
             wordsTextStyle = wordsTextStyle,
@@ -142,7 +141,7 @@ object What3wordsAddressDefaults {
  * each with a unique what3words address. This composable function presents these addresses with additional details like
  * nearest place, distance, and custom styling options.
  *
- * @param words The what3words address. Each word is separated by dots or use break lines between words to force the split.
+ * @param words The what3words address.
  * @param modifier [Modifier] for styling and layout of the address view. Default is [Modifier].
  * @param nearestPlace Optional. The nearest significant place to the 3-word address. Null if not specified.
  * @param nearestPlacePrefix Optional. The prefix text for the nearest place. Default is a string resource.
@@ -203,34 +202,23 @@ fun What3wordsAddress(
                 color = colors.slashesColor
             )
 
-            Column(modifier = Modifier.constrainAs(textWords) {
-                top.linkTo(textSlashes.top)
-                start.linkTo(textSlashes.end)
-                end.linkTo(parent.end)
-                width = Dimension.fillToConstraints
-            }) {
-                if (words.contains("\n")) {
-                    Text(
-                        text = words,
-                        style = textStyles.wordsTextStyle,
-                        color = colors.wordsTextColor,
-                        textAlign = TextAlign.Start,
-                        maxLines = 3
-                    )
-                } else {
-                    ResponsiveText(
-                        text = words,
-                        textStyle = textStyles.wordsTextStyle,
-                        color = colors.wordsTextColor,
-                        targetTextSizeHeight = textSize,
-                        resizeFunc = {
-                            textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
-                        },
-                        textAlign = TextAlign.Start,
-                        maxLines = 1
-                    )
-                }
-            }
+            ResponsiveText(
+                modifier = Modifier.constrainAs(textWords) {
+                    top.linkTo(textSlashes.top)
+                    start.linkTo(textSlashes.end)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                },
+                text = words,
+                textStyle = textStyles.wordsTextStyle,
+                color = colors.wordsTextColor,
+                targetTextSizeHeight = textSize,
+                resizeFunc = {
+                    textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
+                },
+                textAlign = TextAlign.Start,
+                maxLines = 1
+            )
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_sea),
@@ -256,8 +244,7 @@ fun What3wordsAddress(
                 overflow = TextOverflow.Ellipsis,
                 style = textStyles.nearestPlaceTextStyle,
                 color = colors.nearestPlaceTextColor,
-                textAlign = TextAlign.Start,
-                maxLines = 1
+                textAlign = TextAlign.Start
             )
 
             if (distance != null) {
@@ -282,7 +269,7 @@ fun What3wordsAddress(
                             start.linkTo(icSea.start)
                         }
                         .background(colors.labelBackground)
-                        .padding(vertical = 8.dp, horizontal = 4.dp),
+                        .padding(vertical = 4.dp, horizontal = 4.dp),
                     style = textStyles.labelTextStyle,
                     color = colors.labelTextColor,
                     textAlign = TextAlign.Center
@@ -307,14 +294,6 @@ fun What3wordsAddress(
 fun SuggestionItemDaySimplePreview() {
     W3WTheme {
         What3wordsAddress("index.home.raft")
-    }
-}
-
-@Preview(uiMode = UI_MODE_NIGHT_NO, showBackground = true)
-@Composable
-fun SuggestionItemDayLineBreakPreview() {
-    W3WTheme {
-        What3wordsAddress("index.\nhome.\nraft")
     }
 }
 

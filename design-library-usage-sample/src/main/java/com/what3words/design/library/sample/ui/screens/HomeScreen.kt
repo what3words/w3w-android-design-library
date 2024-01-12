@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.what3words.design.library.ui.components.What3wordsAddress
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -47,12 +48,13 @@ fun HomeScreen(navController: NavController) {
                 },
             style = MaterialTheme.typography.titleMedium
         )
-        What3wordsAddressExample(title = "",
-            words = "index.home.raft",
-            country = "GB",
-            near = "Bayswater, London",
-            distance = 30,
-            onClick = { navController.navigate("What3wordsAddressScreen") }
+        What3wordsAddress(
+            words = "filled.count.soap",
+            nearestPlace = "Bayswater, London",
+            distance = 0,
+            isLand = false,
+            label = "Label name",
+            onClick = {}
         )
 
         Text(
@@ -118,13 +120,13 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .padding(16.dp)
                 .clickable {
-                    navController.navigate("IconButtonScreen")
+                    navController.navigate("ListItemScreen")
                 },
             style = MaterialTheme.typography.titleMedium
         )
         ListItem(
             modifier = Modifier.clickable {
-                navController.navigate("IconButtonScreen")
+                navController.navigate("ListItemScreen")
             },
             headlineContent = { Text("List Item") },
             leadingContent = {
@@ -140,195 +142,6 @@ fun HomeScreen(navController: NavController) {
                 )
             }
         )
-//            Text(
-//                text = "SuggestionGeolocation >",
-//                modifier = Modifier
-//                    .padding(
-//                        top = W3WTheme.dimensions.paddingMedium,
-//                        start = W3WTheme.dimensions.paddingSmall,
-//                        end = W3WTheme.dimensions.paddingSmall,
-//                        bottom = W3WTheme.dimensions.paddingSmall
-//                    )
-//                    .clickable {
-//                        navController.navigate("SuggestionGeolocationScreen")
-//                    },
-//                style = W3WTheme.typography.headline,
-//                color = W3WTheme.colors.primary,
-//            )
-//            GeolocationItemExample(
-//                title = "",
-//                primaryAddress = "Alfred Road",
-//                secondaryAddress = "London",
-//                isGeolocationGroup = true
-//            ) {
-//                navController.navigate("SuggestionGeolocationScreen")
-//            }
-//            Text(
-//                text = "ListItemNavigation >",
-//                modifier = Modifier
-//                    .padding(
-//                        top = W3WTheme.dimensions.paddingMedium,
-//                        start = W3WTheme.dimensions.paddingSmall,
-//                        end = W3WTheme.dimensions.paddingSmall,
-//                        bottom = W3WTheme.dimensions.paddingSmall
-//                    )
-//                    .clickable {
-//                        navController.navigate("ListItemNavigationScreen")
-//                    },
-//                style = W3WTheme.typography.headline,
-//                color = W3WTheme.colors.primary,
-//            )
-//            Divider(color = W3WTheme.colors.divider)
-//            ListItemNavigation(
-//                title = "Contacts",
-//                startIconPainter = rememberVectorPainter(image = Icons.Outlined.Phone)
-//            ) {
-//                navController.navigate("ListItemNavigationScreen")
-//            }
-//            Text(
-//                text = "ListItemAction >",
-//                modifier = Modifier
-//                    .padding(
-//                        top = W3WTheme.dimensions.paddingMedium,
-//                        start = W3WTheme.dimensions.paddingSmall,
-//                        end = W3WTheme.dimensions.paddingSmall,
-//                        bottom = W3WTheme.dimensions.paddingSmall
-//                    )
-//                    .clickable {
-//                        navController.navigate("ListItemActionScreen")
-//                    },
-//                style = W3WTheme.typography.headline,
-//                color = W3WTheme.colors.primary,
-//            )
-//
-//            var isChecked by remember { mutableStateOf(value = true) }
-//            Divider(color = W3WTheme.colors.divider)
-//            ListItemAction(title = "Contacts",
-//                isChecked = isChecked,
-//                listItemActionType = ListItemActionType.Checkbox,
-//                onCheckedChange = { b ->
-//                    isChecked = b
-//                })
-//
-//            Text(
-//                text = "Form Fields >",
-//                modifier = Modifier
-//                    .padding(
-//                        top = W3WTheme.dimensions.paddingMedium,
-//                        start = W3WTheme.dimensions.paddingSmall,
-//                        end = W3WTheme.dimensions.paddingSmall,
-//                        bottom = W3WTheme.dimensions.paddingSmall
-//                    )
-//                    .clickable {
-//                        navController.navigate("FormFieldsScreen")
-//                    },
-//                style = W3WTheme.typography.headline,
-//                color = W3WTheme.colors.primary,
-//            )
-//
-//            var text by remember { mutableStateOf(value = "Text") }
-//            FormField(
-//                modifier = Modifier.padding(W3WTheme.dimensions.paddingSmall),
-//                label = "Label",
-//                value = text,
-//                onValueChange = { text = it }
-//            )
-//            Divider(color = W3WTheme.colors.divider)
-//
-//            Text(
-//                text = "Notifications >",
-//                modifier = Modifier
-//                    .padding(
-//                        top = W3WTheme.dimensions.paddingMedium,
-//                        start = W3WTheme.dimensions.paddingSmall,
-//                        end = W3WTheme.dimensions.paddingSmall
-//                    )
-//                    .clickable {
-//                        navController.navigate("NotificationScreen")
-//                    },
-//                style = W3WTheme.typography.headline,
-//                color = W3WTheme.colors.primary,
-//            )
-//
-//            Notification(
-//                text = "Notification sample text",
-//                type = NotificationType.Error,
-//                modifier = Modifier.padding(vertical = W3WTheme.dimensions.paddingSmall)
-//            )
-//
-//            Divider(color = W3WTheme.colors.divider)
-//
-//            Text(
-//                text = "Buttons >",
-//                modifier = Modifier
-//                    .padding(
-//                        top = W3WTheme.dimensions.paddingMedium,
-//                        start = W3WTheme.dimensions.paddingSmall,
-//                        end = W3WTheme.dimensions.paddingSmall,
-//                        bottom = W3WTheme.dimensions.paddingSmall
-//                    )
-//                    .clickable {
-//                        navController.navigate("ButtonScreen")
-//                    },
-//                style = W3WTheme.typography.headline,
-//                color = W3WTheme.colors.primary,
-//            )
-//
-//            PrimaryButton(
-//                text = "click here to see all button types and sizes",
-//                buttonSize = ButtonSize.Medium,
-//                onClick = { navController.navigate("ButtonScreen") },
-//                modifier = Modifier.padding(start = W3WTheme.dimensions.paddingMedium, bottom = W3WTheme.dimensions.paddingMedium)
-//            )
-//
-//            Divider(color = W3WTheme.colors.divider)
-//
-//            Text(
-//                text = "IconButtons >",
-//                modifier = Modifier
-//                    .padding(
-//                        top = W3WTheme.dimensions.paddingMedium,
-//                        start = W3WTheme.dimensions.paddingSmall,
-//                        end = W3WTheme.dimensions.paddingSmall,
-//                        bottom = W3WTheme.dimensions.paddingSmall
-//                    )
-//                    .clickable {
-//                        navController.navigate("IconButtonScreen")
-//                    },
-//                style = W3WTheme.typography.headline,
-//                color = W3WTheme.colors.primary,
-//            )
-//
-//            Row {
-//                FilledIconButton(
-//                    icon = painterResource(id = R.drawable.ic_add),
-//                    buttonSize = IconButtonSize.Medium,
-//                    onClick = { navController.navigate("IconButtonScreen") },
-//                    modifier = Modifier.padding(
-//                        horizontal = W3WTheme.dimensions.paddingMedium,
-//                        vertical = W3WTheme.dimensions.paddingMedium
-//                    )
-//                )
-//                GhostFilledIconButton(
-//                    icon = painterResource(id = R.drawable.ic_add),
-//                    buttonSize = IconButtonSize.Medium,
-//                    onClick = { navController.navigate("IconButtonScreen") },
-//                    modifier = Modifier.padding(
-//                        horizontal = W3WTheme.dimensions.paddingMedium,
-//                        vertical = W3WTheme.dimensions.paddingMedium
-//                    )
-//                )
-//                OutlinedIconButton(
-//                    icon = painterResource(id = R.drawable.ic_add),
-//                    buttonSize = IconButtonSize.Medium,
-//                    onClick = { navController.navigate("IconButtonScreen") },
-//                    modifier = Modifier.padding(
-//                        horizontal = W3WTheme.dimensions.paddingMedium,
-//                        vertical = W3WTheme.dimensions.paddingMedium
-//                    )
-//                )
-//            }
-//        }
     }
 }
 

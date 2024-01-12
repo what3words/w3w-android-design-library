@@ -18,7 +18,17 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.what3words.design.library.ui.theme.W3WTheme
 
+/**
+ * Screen showcasing various button styles provided by Material Design in Compose styled by both [MaterialTheme] and [W3WTheme].
+ * This screen displays different types of buttons, including filled, tonal, outlined,
+ * elevated, and text buttons. Each button is shown in both its enabled and disabled states
+ * to provide a visual understanding of the different states.
+ *
+ * This screen is useful for designers and developers to understand the visual and functional
+ * differences between various button styles and states.
+ */
 @Composable
 fun ButtonScreen() {
     Column(
