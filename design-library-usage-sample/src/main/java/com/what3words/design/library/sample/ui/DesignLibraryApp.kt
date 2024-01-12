@@ -79,7 +79,7 @@ fun DesignLibraryApp(
                         Icon(
                             painter = if (currentTheme == MainActivityViewModel.Theme.Material) painterResource(
                                 R.drawable.ic_material_design
-                            ) else painterResource(com.what3words.design.library.R.drawable.ic_slashes),
+                            ) else painterResource(R.drawable.ic_slashes),
                             contentDescription = "Localized description"
                         )
                     }
