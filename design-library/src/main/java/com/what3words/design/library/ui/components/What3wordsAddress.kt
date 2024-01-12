@@ -59,17 +59,25 @@ object What3wordsAddressDefaults {
     )
 
     /**
-     * Creates [What3wordsAddressDefaults.Colors] to be applied to [What3wordsAddress],
-     * allowing to override any [Color] on [What3wordsAddress] composable for customization.
+     * Creates a [What3wordsAddressDefaults.Colors] instance with customizable color properties for the [What3wordsAddress] composable.
+     * This function allows overriding the default colors used in various parts of the [What3wordsAddress] UI component.
      *
-     * @param background set the background [Color] of the [What3wordsAddress].
-     * @param backgroundHighlighted set the background [Color] of the highlighted [What3wordsAddress].
-     * @param wordsTextColor set text [Color] of the [What3wordsAddress] words.
-     * @param nearestPlaceTextColor set text [Color] of the [What3wordsAddress] nearestPlace.
-     * @param distanceTextColor set text [Color] of the [What3wordsAddress] distance.
-     * @param dividerColor the color of the [Divider].
+     * @param background The color for the background of the [What3wordsAddress].
+     * @param backgroundHighlighted The color for the background of the highlighted [What3wordsAddress].
+     * @param slashesColor The color of the slashes between words in the [What3wordsAddress].
+     * @param wordsTextColor The color of the text for the words in the [What3wordsAddress].
+     * @param iconColor The color of any icons displayed within the [What3wordsAddress].
+     * @param nearestPlaceTextColor The color of the text for the nearest place description in the [What3wordsAddress].
+     * @param distanceTextColor The color of the text showing distance in the [What3wordsAddress].
+     * @param dividerColor The color of dividers used within the [What3wordsAddress].
+     * @param labelBackground The background color of labels in the [What3wordsAddress].
+     * @param labelTextColor The color of the text in labels within the [What3wordsAddress].
      *
-     * @return [What3wordsAddressDefaults.Colors] that will be applied to the [What3wordsAddress] composable.
+     * @return A [What3wordsAddressDefaults.Colors] object containing the specified colors.
+     *         This object can then be applied to the [What3wordsAddress] composable for customization.
+     *
+     * This function provides a convenient way to create a cohesive color theme for the What3wordsAddress component,
+     * making it easy to align its appearance with the overall design of the application.
      */
     @Composable
     fun defaultColors(
@@ -99,14 +107,19 @@ object What3wordsAddressDefaults {
     }
 
     /**
-     * Creates [What3wordsAddressDefaults.TextStyles] to be applied to [What3wordsAddress],
-     * allowing to override any [TextStyle] on [What3wordsAddress] composable for customization.
+     * Creates a [What3wordsAddressDefaults.TextStyles] instance with customizable text style properties for the [What3wordsAddress] composable.
+     * This function allows for overriding the default text styles used in different parts of the [What3wordsAddress] UI composable.
      *
-     * @param wordsTextStyle set [TextStyle] of the [What3wordsAddress] words.
-     * @param nearestPlaceTextStyle set [TextStyle] of the [What3wordsAddress] nearestPlace.
-     * @param distanceTextStyle set [TextStyle] of the [What3wordsAddress] distance.
+     * @param wordsTextStyle The [TextStyle] to be applied to the words of the [What3wordsAddress].
+     * @param nearestPlaceTextStyle The [TextStyle] for displaying the nearest place description in the [What3wordsAddress].
+     * @param distanceTextStyle The [TextStyle] for displaying the distance information in the [What3wordsAddress].
+     * @param labelTextStyle The [TextStyle] for any labels within the [What3wordsAddress].
      *
-     * @return [What3wordsAddressDefaults.TextStyles] that will be applied to the [What3wordsAddress] composable.
+     * @return A [What3wordsAddressDefaults.TextStyles] object containing the specified text styles.
+     *         This object can then be applied to the [What3wordsAddress] composable for customization.
+     *
+     * This function provides a streamlined way to define and apply consistent text styling across the What3wordsAddress composable,
+     * enhancing the visual coherence with the overall design language of the application.
      */
     @Composable
     fun defaultTextStyles(
@@ -125,18 +138,23 @@ object What3wordsAddressDefaults {
 }
 
 /**
- * [What3wordsAddress] a list item that contains a what3words address information.
+ * Displays a What3words address in a formatted manner. The What3words system divides the world into 3m x 3m squares,
+ * each with a unique what3words address. This composable function presents these addresses with additional details like
+ * nearest place, distance, and custom styling options.
  *
- * @param words the what3words address.
- * @param modifier the modifier to be applied to the layout.
- * @param nearestPlace the nearest place to this what3words address.
- * @param isLand if this what3words address is in the land (true) or sea (false).
- * @param distance the distance to this what3words address if current location is known.
- * @param isHighlighted sets this what3words address as highlighted, i.e: when matches exactly the searched text.
- * @param colors set the [What3wordsAddressDefaults.Colors] of [What3wordsAddress].
- * @param textStyles set the [What3wordsAddressDefaults.TextStyles] of [What3wordsAddress].
- * @param showDivider if using on a list and you want to show a [Divider].
- * @param onClick the callback when [What3wordsAddress] is clicked.
+ * @param words The what3words address. Each word is separated by dots or use break lines between words to force the split.
+ * @param modifier [Modifier] for styling and layout of the address view. Default is [Modifier].
+ * @param nearestPlace Optional. The nearest significant place to the 3-word address. Null if not specified.
+ * @param nearestPlacePrefix Optional. The prefix text for the nearest place. Default is a string resource.
+ * @param isLand Boolean indicating if the location is on land (true) or water (false). Default is true.
+ * @param distance Optional. The distance to the location. Null if not specified.
+ * @param displayUnits Units for displaying the distance. Default is [DisplayUnits.SYSTEM].
+ * @param isHighlighted If true, highlights the address. Default is false.
+ * @param label Optional. A label to display alongside the address. Null if not specified.
+ * @param colors Color scheme for various elements of the address view. Default is defined by [What3wordsAddressDefaults.defaultColors].
+ * @param textStyles Text style customization for different elements of the address view. Default is defined by [What3wordsAddressDefaults.defaultTextStyles].
+ * @param showDivider Boolean to control the visibility of a divider line below the address. Default is true.
+ * @param onClick Optional. Lambda function to handle click events. Null if no action is specified.
  */
 @Composable
 fun What3wordsAddress(
