@@ -29,7 +29,6 @@ import com.what3words.design.library.ui.components.What3wordsAddress
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +53,7 @@ fun HomeScreen(navController: NavController) {
             distance = 0,
             isLand = false,
             label = "Label name",
-            onClick = {}
+            onClick = { navController.navigate("What3wordsAddressScreen") }
         )
 
         Text(
