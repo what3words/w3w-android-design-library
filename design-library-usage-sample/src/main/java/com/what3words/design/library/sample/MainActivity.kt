@@ -2,6 +2,7 @@
 
 package com.what3words.design.library.sample
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,6 +26,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val viewModel: MainActivityViewModel by viewModels()
+        viewModel.selectedColours.value =
+            if (isDarkMode()) MainActivityViewModel.Colours.Night else MainActivityViewModel.Colours.Day
 
         setContent {
             val selectedTheme by viewModel.selectedTheme.collectAsState()
@@ -58,7 +61,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Day -> {
-                    W3WTheme {
+                    W3WTheme(false) {
                         mainScreen()
                     }
                 }
@@ -69,6 +72,13 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun isDarkMode(): Boolean {
+        return when (resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> true
+            else -> false
         }
     }
 }
