@@ -15,6 +15,7 @@ import androidx.compose.ui.text.TextStyle
  * While it provides a more semantic approach to defining text styles for specific What3words use cases,
  * it defaults back to MaterialTheme typography when no custom styles are set.
  *
+ * @property headlineLargeProminent A TextStyle for large-sized headline text, more prominent variant.
  * @property titleMediumProminent A TextStyle for medium-sized title text, more prominent variant.
  * @property labelLargeProminent A TextStyle for large-sized label text, more prominent variant.
  * @property labelMediumProminent A TextStyle for medium-sized label text, more prominent variant.
