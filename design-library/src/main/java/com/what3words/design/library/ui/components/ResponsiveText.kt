@@ -18,8 +18,8 @@ internal const val TEXT_SCALE_REDUCTION_INTERVAL = 0.9f
  * @param text The text to be displayed.
  * @param color The color to apply to the text.
  * @param textAlign Alignment of the text (default is [TextAlign.Center]).
- * @param textStyle The style to apply to the text (font, fontWeight, etc.).
- * @param targetTextSizeHeight The target size of the text, defaults to the font size defined in [textStyle].
+ * @param style The style to apply to the text (font, fontWeight, etc.).
+ * @param targetTextSizeHeight The target size of the text, defaults to the font size defined in [style].
  * @param resizeFunc Optional function to be called when the text needs to resize due to overflowing.
  * @param maxLines Maximum number of lines the text can occupy, default is 1.
  *
@@ -34,8 +34,8 @@ internal fun ResponsiveText(
     text: String,
     color: Color,
     textAlign: TextAlign = TextAlign.Center,
-    textStyle: TextStyle,
-    targetTextSizeHeight: TextUnit = textStyle.fontSize,
+    style: TextStyle,
+    targetTextSizeHeight: TextUnit = style.fontSize,
     resizeFunc: (() -> Unit)? = null,
     maxLines: Int = 1,
 ) {
@@ -46,10 +46,10 @@ internal fun ResponsiveText(
         color = color,
         textAlign = textAlign,
         fontSize = targetTextSizeHeight,
-        fontFamily = textStyle.fontFamily,
-        fontStyle = textStyle.fontStyle,
-        fontWeight = textStyle.fontWeight,
-        lineHeight = textStyle.lineHeight,
+        fontFamily = style.fontFamily,
+        fontStyle = style.fontStyle,
+        fontWeight = style.fontWeight,
+        lineHeight = style.lineHeight,
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis,
         onTextLayout = { textLayoutResult ->

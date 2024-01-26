@@ -22,10 +22,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.What3wordsAddress
+import com.what3words.design.library.ui.components.What3wordsAddressListItem
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -47,13 +47,28 @@ fun HomeScreen(navController: NavController) {
                 },
             style = MaterialTheme.typography.titleMedium
         )
+
         What3wordsAddress(
+            modifier = Modifier.padding(start = 16.dp),
+            words = "filled.count.soap"
+        )
+
+        Text(
+            text = "What3words Address List Item >",
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    navController.navigate("What3wordsAddressListItemScreen")
+                },
+            style = MaterialTheme.typography.titleMedium
+        )
+        What3wordsAddressListItem(
             words = "filled.count.soap",
             nearestPlace = "Bayswater, London",
             distance = 0,
             isLand = false,
             label = "Label name",
-            onClick = { navController.navigate("What3wordsAddressScreen") }
+            onClick = { navController.navigate("What3wordsAddressListItemScreen") }
         )
 
         Text(

@@ -7,6 +7,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
+import androidx.compose.ui.unit.sp
 
 /**
  * A composable function that applies the What3words theme to its content.
@@ -30,6 +31,10 @@ fun W3WTheme(
 
     // Customize typography for the What3words theme.
     val w3wTypography = W3wTypography(
+        headlineLargeProminent = MaterialTheme.typography.headlineLarge.copy(
+            fontWeight = FontWeight.SemiBold,
+            letterSpacing = TextUnit(-0.1f, TextUnitType.Sp)
+        ),
         titleMediumProminent = MaterialTheme.typography.titleMedium.copy(
             fontWeight = FontWeight.SemiBold,
             fontSize = TextUnit(17f, TextUnitType.Sp)

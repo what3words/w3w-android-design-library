@@ -25,6 +25,7 @@ import com.what3words.design.library.sample.ui.screens.ColorPaletteScreen
 import com.what3words.design.library.sample.ui.screens.HomeScreen
 import com.what3words.design.library.sample.ui.screens.IconButtonScreen
 import com.what3words.design.library.sample.ui.screens.ListItemScreen
+import com.what3words.design.library.sample.ui.screens.What3wordsAddressListItemScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressScreen
 
 
@@ -79,7 +80,7 @@ fun DesignLibraryApp(
                         Icon(
                             painter = if (currentTheme == MainActivityViewModel.Theme.Material) painterResource(
                                 R.drawable.ic_material_design
-                            ) else painterResource(R.drawable.ic_slashes),
+                            ) else painterResource(R.drawable.ic_w3w),
                             contentDescription = "Localized description"
                         )
                     }
@@ -105,6 +106,10 @@ fun DesignLibraryApp(
             composable(NavScreen.What3wordsAddressScreen.route) {
                 onTitleChanged.invoke("What3words Address")
                 What3wordsAddressScreen()
+            }
+            composable(NavScreen.What3wordsAddressListItemScreen.route) {
+                onTitleChanged.invoke("What3words Address List Item")
+                What3wordsAddressListItemScreen()
             }
             composable(NavScreen.ButtonScreen.route) {
                 onTitleChanged.invoke("Buttons")

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.TextStyle
  */
 @Immutable
 data class W3wTypography(
+    val headlineLargeProminent: TextStyle,
     val titleMediumProminent: TextStyle,
     val labelLargeProminent: TextStyle,
     val labelMediumProminent: TextStyle
@@ -41,6 +42,7 @@ val MaterialTheme.w3wTypography: W3wTypography
     @Composable
     @ReadOnlyComposable
     get() = LocalW3wTypography.current ?: W3wTypography(
+        headlineLargeProminent = MaterialTheme.typography.headlineLarge,
         titleMediumProminent = MaterialTheme.typography.titleMedium,
         labelLargeProminent = MaterialTheme.typography.labelLarge,
         labelMediumProminent = MaterialTheme.typography.labelMedium
