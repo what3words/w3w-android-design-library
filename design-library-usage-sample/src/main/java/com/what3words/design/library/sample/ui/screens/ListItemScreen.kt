@@ -34,9 +34,9 @@ import com.what3words.design.library.ui.theme.W3WTheme
  * UI support. Each list item is clickable but does not perform any actions in this demonstration.
  */
 @Composable
-fun ListItemScreen() {
+fun ListItemScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(top = 16.dp)
             .verticalScroll(rememberScrollState()),

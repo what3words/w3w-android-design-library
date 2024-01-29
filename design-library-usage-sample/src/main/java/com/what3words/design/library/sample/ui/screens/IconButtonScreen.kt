@@ -32,9 +32,9 @@ import com.what3words.design.library.ui.theme.W3WTheme
  * and states of icon buttons in a Material Design-based UI.
  */
 @Composable
-fun IconButtonScreen() {
+fun IconButtonScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),

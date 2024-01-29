@@ -30,9 +30,9 @@ import com.what3words.design.library.ui.theme.W3WTheme
  * differences between various button styles and states.
  */
 @Composable
-fun ButtonScreen() {
+fun ButtonScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),

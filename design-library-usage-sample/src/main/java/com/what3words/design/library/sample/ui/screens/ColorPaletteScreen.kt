@@ -28,9 +28,9 @@ import com.what3words.design.library.ui.theme.warningColors
  * in UI design.
  */
 @Composable
-fun ColorPaletteScreen() {
+fun ColorPaletteScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {

@@ -23,9 +23,9 @@ import com.what3words.design.library.ui.components.What3wordsAddressListItem
  * language layouts, making it suitable for internationalization and localization in UI design.
  */
 @Composable
-fun What3wordsAddressScreen() {
+fun What3wordsAddressScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(top = 16.dp),

@@ -28,9 +28,9 @@ import com.what3words.design.library.ui.components.What3wordsAddress
 import com.what3words.design.library.ui.components.What3wordsAddressListItem
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(

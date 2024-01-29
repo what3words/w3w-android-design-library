@@ -24,9 +24,9 @@ import com.what3words.design.library.ui.components.What3wordsAddressListItem
  * additional information when needed.
  */
 @Composable
-fun What3wordsAddressListItemScreen() {
+fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(top = 16.dp),

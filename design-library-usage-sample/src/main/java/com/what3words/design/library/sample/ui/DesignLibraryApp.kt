@@ -38,10 +38,11 @@ fun DesignLibraryApp(
     currentColours: MainActivityViewModel.Colours,
     onThemeChanged: (MainActivityViewModel.Theme) -> (Unit),
     onColourChanged: (MainActivityViewModel.Colours) -> (Unit),
-    onTitleChanged: (String) -> (Unit)
+    onTitleChanged: (String) -> (Unit),
+    modifier: Modifier = Modifier
 ) {
-
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(),
