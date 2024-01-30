@@ -1,400 +1,270 @@
 package com.what3words.design.library.ui.theme
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val Black = Color(0xFF000000)
-val Grey90 = Color(0xFF1A1A1A)
-val Grey85 = Color(0xFF292929)
-val Grey80 = Color(0xFF32373C)
-val Grey70 = Color(0xFF525252)
-val Grey50 = Color(0xFF999999)
-val Grey40 = Color(0xFFBFBFBF)
-val Grey30 = Color(0xFFD6D6D6)
-val Grey20 = Color(0xFFEBEBEB)
-val White = Color(0xFFFFFFFF)
-val WhiteOp16 = Color(0x29FFFFFF)
-val Red = Color(0xFFE11F26)
-val Tamarillo = Color(0xFFAB181D)
-val BurntSienna = Color(0xFFF26C50)
-val BlueWhale = Color(0xFF0A3049)
-val BluePowder = Color(0xFFDBEFFA)
-val BlueOrient = Color(0xFF005379)
-val BlueOrientOp16 = Color(0x29005379)
-val Ziggurat = Color(0xFFB0CFDB)
-val PastelGreen = Color(0xFF65D698)
-val RipeLemon = Color(0xFFF6D31F)
-val RegentStBlue = Color(0xFF98D5E5)
-val Teal = Color(0xFFC2E1EB)
-val Geyser = Color(0xFFD8DEE2)
+/**
+ * Defines the custom color palette for What3words, extending the MaterialTheme color scheme.
+ * This includes both light and dark theme colors and additional semantic colors for specific UI components.
+ * These colors can be overridden in specific parts of the app using local composition.
+ */
 
-class W3WColors(
-    primary: Color,
-    accent: Color,
-    background: Color,
-    backgroundSecondary: Color,
-    backgroundHighlighted: Color,
-    backgroundDisabled: Color,
-    backgroundRipple: Color,
-    backgroundError: Color,
-    backgroundWarning: Color,
-    backgroundConfirmation: Color,
-    backgroundInformation: Color,
-    textPrimary: Color,
-    textPlaceholder: Color,
-    textNotification: Color,
-    divider: Color,
-    border: Color,
-    buttonPrimary: Color,
-    buttonPrimaryVariant: Color,
-    onButtonPrimary: Color,
-    buttonSecondary: Color,
-    buttonSecondaryVariant: Color,
-    onButtonSecondary: Color,
-    buttonTertiary: Color,
-    buttonTertiaryVariant: Color,
-    onButtonTertiary: Color,
-    buttonText: Color,
-    buttonTextVariant: Color,
-    onButtonText: Color,
-    buttonOutline: Color,
-    buttonOutlineVariant: Color,
-    buttonOutlineBorder: Color,
-    buttonOutlineBorderVariant: Color,
-    onButtonOutline: Color,
-    isLight: Boolean
-) {
-    var primary by mutableStateOf(primary)
-        private set
-    var accent by mutableStateOf(accent)
-        private set
-    var background by mutableStateOf(background)
-        private set
-    var backgroundSecondary by mutableStateOf(backgroundSecondary)
-        private set
-    var backgroundHighlighted by mutableStateOf(backgroundHighlighted)
-        private set
-    var backgroundDisabled by mutableStateOf(backgroundDisabled)
-        private set
-    var backgroundRipple by mutableStateOf(backgroundRipple)
-        private set
-    var backgroundError by mutableStateOf(backgroundError)
-        private set
-    var backgroundWarning by mutableStateOf(backgroundWarning)
-        private set
-    var backgroundConfirmation by mutableStateOf(backgroundConfirmation)
-        private set
-    var backgroundInformation by mutableStateOf(backgroundInformation)
-        private set
-    var textPrimary by mutableStateOf(textPrimary)
-        private set
-    var textPlaceholder by mutableStateOf(textPlaceholder)
-        private set
-    var textNotification by mutableStateOf(textNotification)
-        private set
-    var divider by mutableStateOf(divider)
-        private set
-    var border by mutableStateOf(border)
-        private set
+// colors / primary
+val w3w_theme_light_primary = Color(0xFFC00004)
+val w3w_theme_light_onPrimary = Color(0xFFFFFFFF)
+val w3w_theme_light_primaryContainer = Color(0xFFFFCAC2)
+val w3w_theme_light_onPrimaryContainer = Color(0xFF410000)
+val w3w_theme_light_inversePrimary = Color(0xFFFFB4A9)
 
-    //buttonPrimary
-    var buttonPrimary by mutableStateOf(buttonPrimary)
-        private set
-    var buttonPrimaryVariant by mutableStateOf(buttonPrimaryVariant)
-        private set
-    var onButtonPrimary by mutableStateOf(onButtonPrimary)
-        private set
+val w3w_theme_dark_primary = Color(0xFFFFB4A9)
+val w3w_theme_dark_onPrimary = Color(0xFF690001)
+val w3w_theme_dark_primaryContainer = Color(0xFF930002)
+val w3w_theme_dark_onPrimaryContainer = Color(0xFFFFCAC2)
+val w3w_theme_dark_inversePrimary = Color(0xFFC00004)
 
-    //buttonSecondary
-    var buttonSecondary by mutableStateOf(buttonSecondary)
-        private set
-    var buttonSecondaryVariant by mutableStateOf(buttonSecondaryVariant)
-        private set
-    var onButtonSecondary by mutableStateOf(onButtonSecondary)
-        private set
+// colors / secondary
+val w3w_theme_light_secondary = Color(0xFF006397)
+val w3w_theme_light_onSecondary = Color(0xFFFFFFFF)
+val w3w_theme_light_secondaryContainer = Color(0xFFDBEFFA)
+val w3w_theme_light_onSecondaryContainer = Color(0xFF001D31)
 
-    //buttonTertiary
-    var buttonTertiary by mutableStateOf(buttonTertiary)
-        private set
-    var buttonTertiaryVariant by mutableStateOf(buttonTertiaryVariant)
-        private set
-    var onButtonTertiary by mutableStateOf(onButtonTertiary)
-        private set
+val w3w_theme_dark_secondary = Color(0xFFC2E1EB)
+val w3w_theme_dark_onSecondary = Color(0xFF0A3049)
+val w3w_theme_dark_secondaryContainer = Color(0xFF005379)
+val w3w_theme_dark_onSecondaryContainer = Color(0xFFDBEFFA)
 
+// states / error
+val w3w_theme_light_error = Color(0xFFF26C50)
+val w3w_theme_light_onError = Color(0xFFFFFFFF)
+val w3w_theme_light_errorContainer = Color(0xFFFFEDE9)
+val w3w_theme_light_onErrorContainer = Color(0xFF3E0500)
 
-    //buttonText
-    var buttonText by mutableStateOf(buttonText)
-        private set
-    var buttonTextVariant by mutableStateOf(buttonTextVariant)
-        private set
-    var onButtonText by mutableStateOf(onButtonText)
-        private set
+val w3w_theme_dark_error = Color(0xFFFFB4A4)
+val w3w_theme_dark_onError = Color(0xFF3E0500)
+val w3w_theme_dark_errorContainer = Color(0xFFF26C50)
+val w3w_theme_dark_onErrorContainer = Color(0xFF640D00)
 
-    //buttonOutline
-    var buttonOutline by mutableStateOf(buttonOutline)
-        private set
-    var buttonOutlineVariant by mutableStateOf(buttonOutlineVariant)
-        private set
-    var buttonOutlineBorder by mutableStateOf(buttonOutlineBorder)
-        private set
-    var buttonOutlineBorderVariant by mutableStateOf(buttonOutlineBorderVariant)
-        private set
-    var onButtonOutline by mutableStateOf(onButtonOutline)
-        private set
+// states / warning
+val w3w_theme_light_warning = Color(0xFFC7AA00)
+val w3w_theme_light_onWarning = Color(0xFFFFFFFF)
+val w3w_theme_light_warningContainer = Color(0xFFFFFBFF)
+val w3w_theme_light_onWarningContainer = Color(0xFF6F5D00)
 
-    var isLight by mutableStateOf(isLight)
-        internal set
+val w3w_theme_dark_warning = Color(0xFFFFEC8A)
+val w3w_theme_dark_onWarning = Color(0xFF6F5D00)
+val w3w_theme_dark_warningContainer = Color(0xFFC7AA00)
+val w3w_theme_dark_onWarningContainer = Color(0xFFFFF4B2)
 
-    fun copy(
-        primary: Color = this.primary,
-        accent: Color = this.accent,
-        background: Color = this.background,
-        backgroundSecondary: Color = this.backgroundSecondary,
-        backgroundHighlighted: Color = this.backgroundHighlighted,
-        backgroundDisabled: Color = this.backgroundDisabled,
-        backgroundRipple: Color = this.backgroundRipple,
-        backgroundError: Color = this.backgroundError,
-        backgroundWarning: Color = this.backgroundWarning,
-        backgroundConfirmation: Color = this.backgroundConfirmation,
-        backgroundInformation: Color = this.backgroundInformation,
-        textPrimary: Color = this.textPrimary,
-        textPlaceholder: Color = this.textPlaceholder,
-        textNotification: Color = this.textNotification,
-        divider: Color = this.divider,
-        border: Color = this.border,
-        buttonPrimary: Color = this.buttonPrimary,
-        buttonPrimaryVariant: Color = this.buttonPrimaryVariant,
-        onButtonPrimary: Color = this.onButtonPrimary,
-        buttonSecondary: Color = this.buttonSecondary,
-        buttonSecondaryVariant: Color = this.buttonSecondaryVariant,
-        onButtonSecondary: Color = this.onButtonSecondary,
-        buttonTertiary: Color = this.buttonTertiary,
-        buttonTertiaryVariant: Color = this.buttonTertiaryVariant,
-        onButtonTertiary: Color = this.onButtonTertiary,
-        buttonText: Color = this.buttonText,
-        buttonTextVariant: Color = this.buttonTextVariant,
-        onButtonText: Color = this.buttonTextVariant,
-        buttonOutline: Color = this.buttonOutline,
-        buttonOutlineVariant: Color = this.buttonTextVariant,
-        buttonOutlineBorder: Color = this.buttonOutlineBorder,
-        buttonOutlineBorderVariant: Color = this.buttonOutlineBorderVariant,
-        onButtonOutline: Color = this.onButtonOutline,
-        isLight: Boolean = this.isLight
-    ): W3WColors = W3WColors(
-        primary,
-        accent,
-        background,
-        backgroundSecondary,
-        backgroundHighlighted,
-        backgroundDisabled,
-        backgroundRipple,
-        backgroundError,
-        backgroundWarning,
-        backgroundConfirmation,
-        backgroundInformation,
-        textPrimary,
-        textPlaceholder,
-        textNotification,
-        divider,
-        border,
-        buttonPrimary,
-        buttonPrimaryVariant,
-        onButtonPrimary,
-        buttonSecondary,
-        buttonSecondaryVariant,
-        onButtonSecondary,
-        buttonTertiary,
-        buttonTertiaryVariant,
-        onButtonTertiary,
-        buttonText,
-        buttonTextVariant,
-        onButtonText,
-        buttonOutline,
-        buttonOutlineVariant,
-        buttonOutlineBorder,
-        buttonOutlineBorderVariant,
-        onButtonOutline,
-        isLight
-    )
+// states / success.
+val w3w_theme_light_success = Color(0xFF53C18A)
+val w3w_theme_light_onSuccess = Color(0xFFFFFFFF)
+val w3w_theme_light_successContainer = Color(0xFFF5FFF5)
+val w3w_theme_light_onSuccessContainer = Color(0xFF003822)
 
-    fun updateColorsFrom(other: W3WColors) {
-        primary = other.primary
-        accent = other.accent
-        background = other.background
-        backgroundSecondary = other.backgroundSecondary
-        backgroundHighlighted = other.backgroundHighlighted
-        backgroundRipple = other.backgroundRipple
-        backgroundError = other.backgroundError
-        backgroundWarning = other.backgroundWarning
-        backgroundConfirmation = other.backgroundConfirmation
-        backgroundInformation = other.backgroundInformation
-        textPrimary = other.textPrimary
-        textPlaceholder = other.textPlaceholder
-        textNotification = other.textNotification
-        divider = other.divider
-        buttonPrimary = other.buttonPrimary
-        buttonPrimaryVariant = other.buttonPrimaryVariant
-        onButtonPrimary = other.onButtonPrimary
-        buttonSecondary = other.buttonSecondary
-        buttonSecondaryVariant = other.buttonSecondaryVariant
-        onButtonSecondary = other.onButtonSecondary
-        buttonTertiary = other.buttonTertiary
-        buttonTertiaryVariant = other.buttonTertiaryVariant
-        onButtonTertiary = other.onButtonTertiary
-        buttonText = other.buttonText
-        buttonTextVariant = other.buttonTextVariant
-        onButtonText = other.onButtonText
-        buttonOutline = other.buttonOutline
-        buttonOutlineVariant = other.buttonOutlineVariant
-        buttonOutlineBorder = other.buttonOutlineBorder
-        buttonOutlineBorderVariant = other.buttonOutlineBorderVariant
-        onButtonOutline = other.onButtonOutline
-    }
-}
+val w3w_theme_dark_success = Color(0xFF6ECB9C)
+val w3w_theme_dark_onSuccess = Color(0xFF003822)
+val w3w_theme_dark_successContainer = Color(0xFF006C45)
+val w3w_theme_dark_onSuccessContainer = Color(0xFF8BF8BD)
 
-fun lightColors(
-    primary: Color = BlueWhale,
-    accent: Color = Red,
-    background: Color = White,
-    backgroundSecondary: Color = Grey40,
-    backgroundHighlighted: Color = BluePowder,
-    backgroundDisabled: Color = Grey20,
-    backgroundRipple: Color = Grey80,
-    backgroundError: Color = BurntSienna,
-    backgroundWarning: Color = RipeLemon,
-    backgroundConfirmation: Color = PastelGreen,
-    backgroundInformation: Color = RegentStBlue,
-    textPrimary: Color = Grey70,
-    textPlaceholder: Color = Grey50,
-    textNotification: Color = BlueWhale,
-    divider: Color = Grey30,
-    border: Color = Grey40,
-    buttonPrimary: Color = Red,
-    buttonPrimaryVariant: Color = Tamarillo,
-    onButtonPrimary: Color = White,
-    buttonSecondary: Color = BlueWhale,
-    buttonSecondaryVariant: Color = Black,
-    onButtonSecondary: Color = White,
-    buttonTertiary: Color = BlueOrient,
-    buttonTertiaryVariant: Color = BlueWhale,
-    onButtonTertiary: Color = White,
-    buttonText: Color = Color.Transparent,
-    buttonTextVariant: Color = BlueOrientOp16,
-    onButtonText: Color = BlueWhale,
-    buttonOutline: Color = White,
-    buttonOutlineVariant: Color = Geyser,
-    buttonOutlineBorder: Color = Grey30,
-    buttonOutlineBorderVariant: Color = BlueWhale,
-    onButtonOutline: Color = BlueWhale
-): W3WColors = W3WColors(
-    primary = primary,
-    accent = accent,
-    background = background,
-    backgroundSecondary = backgroundSecondary,
-    backgroundHighlighted = backgroundHighlighted,
-    backgroundDisabled = backgroundDisabled,
-    backgroundRipple = backgroundRipple,
-    backgroundError = backgroundError,
-    backgroundWarning = backgroundWarning,
-    backgroundConfirmation = backgroundConfirmation,
-    backgroundInformation = backgroundInformation,
-    textPrimary = textPrimary,
-    textPlaceholder = textPlaceholder,
-    textNotification = textNotification,
-    divider = divider,
-    border = border,
-    buttonPrimary = buttonPrimary,
-    buttonPrimaryVariant = buttonPrimaryVariant,
-    onButtonPrimary = onButtonPrimary,
-    buttonSecondary = buttonSecondary,
-    buttonSecondaryVariant = buttonSecondaryVariant,
-    onButtonSecondary = onButtonSecondary,
-    buttonTertiary = buttonTertiary,
-    buttonTertiaryVariant = buttonTertiaryVariant,
-    onButtonTertiary = onButtonTertiary,
-    buttonText = buttonText,
-    buttonTextVariant = buttonTextVariant,
-    onButtonText = onButtonText,
-    buttonOutline = buttonOutline,
-    buttonOutlineVariant = buttonOutlineVariant,
-    buttonOutlineBorder = buttonOutlineBorder,
-    buttonOutlineBorderVariant = buttonOutlineBorderVariant,
-    onButtonOutline = onButtonOutline,
-    isLight = true
+// surfaces
+val w3w_theme_light_surfaceDim = Color(0xFFD9DADD)
+val w3w_theme_light_surface = Color(0xFFF9F9FC)
+val w3w_theme_light_surfaceBright = Color(0xFFFCFCFF)
+val w3w_theme_light_surfaceVariant = Color(0xFFDFE3E8)
+val w3w_theme_light_surfaceContainerLowest = Color(0xFFFFFFFF)
+val w3w_theme_light_surfaceContainerLow = Color(0xFFF3F3F6)
+val w3w_theme_light_surfaceContainer = Color(0xFFEDEEF0)
+val w3w_theme_light_surfaceContainerHigh = Color(0xFFE7E8EB)
+val w3w_theme_light_surfaceContainerHighest = Color(0xFFE2E2E5)
+val w3w_theme_light_onSurface = Color(0xFF1A1C1E)
+val w3w_theme_light_onSurfaceVariant = Color(0xFF43474B)
+val w3w_theme_light_inverseSurface = Color(0xFF2E3133)
+val w3w_theme_light_inverseOnSurface = Color(0xFFF0F0F3)
+
+val w3w_theme_dark_surfaceDim = Color(0xFF111416)
+val w3w_theme_dark_surface = Color(0xFF111416)
+val w3w_theme_dark_surfaceBright = Color(0xFF37393C)
+val w3w_theme_dark_surfaceVariant = Color(0xFF43474B)
+val w3w_theme_dark_surfaceContainerLowest = Color(0xFF0C0E11)
+val w3w_theme_dark_surfaceContainerLow = Color(0xFF1A1C1E)
+val w3w_theme_dark_surfaceContainer = Color(0xFF1E2022)
+val w3w_theme_dark_surfaceContainerHigh = Color(0xFF282A2D)
+val w3w_theme_dark_surfaceContainerHighest = Color(0xFF333537)
+val w3w_theme_dark_onSurface = Color(0xFFE2E2E5)
+val w3w_theme_dark_onSurfaceVariant = Color(0xFFC3C7CC)
+val w3w_theme_dark_inverseSurface = Color(0xFFE2E2E5)
+val w3w_theme_dark_inverseOnSurface = Color(0xFF2E3133)
+
+// outline
+val w3w_theme_light_outline = Color(0xFF73777C)
+val w3w_theme_light_outlineVariant = Color(0xFFC3C7CC)
+
+val w3w_theme_dark_outline = Color(0xFF8D9196)
+val w3w_theme_dark_outlineVariant = Color(0xFF43474B)
+
+// backgrounds
+val w3w_theme_light_background = Color(0xFFFFFBFF)
+val w3w_theme_light_onBackground = Color(0xFF1A1C1E)
+
+val w3w_theme_dark_background = Color(0xFF1A1C1E)
+val w3w_theme_dark_onBackground = Color(0xFFE2E2E5)
+
+//scrim
+val w3w_theme_light_scrim = Color(0xFF000000)
+
+val w3w_theme_dark_scrim = Color(0xFF000000)
+
+/**
+ * Defines a custom color scheme for What3words using the defined colors for light themes.
+ */
+internal val w3wLightColors = lightColorScheme(
+    primary = w3w_theme_light_primary,
+    onPrimary = w3w_theme_light_onPrimary,
+    primaryContainer = w3w_theme_light_primaryContainer,
+    onPrimaryContainer = w3w_theme_light_onPrimaryContainer,
+    secondary = w3w_theme_light_secondary,
+    onSecondary = w3w_theme_light_onSecondary,
+    secondaryContainer = w3w_theme_light_secondaryContainer,
+    onSecondaryContainer = w3w_theme_light_onSecondaryContainer,
+    error = w3w_theme_light_error,
+    errorContainer = w3w_theme_light_errorContainer,
+    onError = w3w_theme_light_onError,
+    onErrorContainer = w3w_theme_light_onErrorContainer,
+    background = w3w_theme_light_background,
+    onBackground = w3w_theme_light_onBackground,
+    surface = w3w_theme_light_surface,
+    onSurface = w3w_theme_light_onSurface,
+    surfaceVariant = w3w_theme_light_surfaceVariant,
+    onSurfaceVariant = w3w_theme_light_onSurfaceVariant,
+    outline = w3w_theme_light_outline,
+    inverseOnSurface = w3w_theme_light_inverseOnSurface,
+    inverseSurface = w3w_theme_light_inverseSurface,
+    inversePrimary = w3w_theme_light_inversePrimary,
+    outlineVariant = w3w_theme_light_outlineVariant,
+    scrim = w3w_theme_light_scrim,
+    surfaceBright = w3w_theme_light_surfaceBright,
+    surfaceDim = w3w_theme_light_surfaceDim,
+    surfaceContainer = w3w_theme_light_surfaceContainer,
+    surfaceContainerHigh = w3w_theme_light_surfaceContainerHigh,
+    surfaceContainerLow = w3w_theme_light_surfaceContainerLow,
+    surfaceContainerHighest = w3w_theme_light_surfaceContainerHighest,
+    surfaceContainerLowest = w3w_theme_light_surfaceContainerLowest
 )
 
-fun darkColors(
-    primary: Color = White,
-    accent: Color = Red,
-    background: Color = Grey90,
-    backgroundSecondary: Color = Black,
-    backgroundHighlighted: Color = Grey80,
-    backgroundDisabled: Color = Black,
-    backgroundRipple: Color = White,
-    backgroundError: Color = BurntSienna,
-    backgroundWarning: Color = RipeLemon,
-    backgroundConfirmation: Color = PastelGreen,
-    backgroundInformation: Color = RegentStBlue,
-    textPrimary: Color = Grey40,
-    textPlaceholder: Color = Grey50,
-    textNotification: Color = BlueWhale,
-    divider: Color = Grey80,
-    border: Color = Grey70,
-    buttonPrimary: Color = Red,
-    buttonPrimaryVariant: Color = Tamarillo,
-    onButtonPrimary: Color = White,
-    buttonSecondary: Color = Teal,
-    buttonSecondaryVariant: Color = Ziggurat,
-    onButtonSecondary: Color = BlueWhale,
-    buttonTertiary: Color = BlueOrient,
-    buttonTertiaryVariant: Color = BlueWhale,
-    onButtonTertiary: Color = White,
-    buttonText: Color = Color.Transparent,
-    buttonTextVariant: Color = WhiteOp16,
-    onButtonText: Color = White,
-    buttonOutline: Color = Black,
-    buttonOutlineVariant: Color = Grey85,
-    buttonOutlineBorder: Color = Grey30,
-    buttonOutlineBorderVariant: Color = White,
-    onButtonOutline: Color = White
-): W3WColors = W3WColors(
-    primary = primary,
-    accent = accent,
-    background = background,
-    backgroundSecondary = backgroundSecondary,
-    backgroundHighlighted = backgroundHighlighted,
-    backgroundDisabled = backgroundDisabled,
-    backgroundRipple = backgroundRipple,
-    backgroundError = backgroundError,
-    backgroundWarning = backgroundWarning,
-    backgroundConfirmation = backgroundConfirmation,
-    backgroundInformation = backgroundInformation,
-    textPrimary = textPrimary,
-    textPlaceholder = textPlaceholder,
-    textNotification = textNotification,
-    divider = divider,
-    border = border,
-    buttonPrimary = buttonPrimary,
-    buttonPrimaryVariant = buttonPrimaryVariant,
-    onButtonPrimary = onButtonPrimary,
-    buttonSecondary = buttonSecondary,
-    buttonSecondaryVariant = buttonSecondaryVariant,
-    onButtonSecondary = onButtonSecondary,
-    buttonTertiary = buttonTertiary,
-    buttonTertiaryVariant = buttonTertiaryVariant,
-    onButtonTertiary = onButtonTertiary,
-    buttonText = buttonText,
-    buttonTextVariant = buttonTextVariant,
-    onButtonText = onButtonText,
-    buttonOutline = buttonOutline,
-    buttonOutlineVariant = buttonOutlineVariant,
-    buttonOutlineBorder = buttonOutlineBorder,
-    buttonOutlineBorderVariant = buttonOutlineBorderVariant,
-    onButtonOutline = onButtonOutline,
-    isLight = false
+/**
+ * Defines a custom color scheme for What3words using the defined colors for dark themes.
+ */
+internal val w3wDarkColors = darkColorScheme(
+    primary = w3w_theme_dark_primary,
+    onPrimary = w3w_theme_dark_onPrimary,
+    primaryContainer = w3w_theme_dark_primaryContainer,
+    onPrimaryContainer = w3w_theme_dark_onPrimaryContainer,
+    secondary = w3w_theme_dark_secondary,
+    onSecondary = w3w_theme_dark_onSecondary,
+    secondaryContainer = w3w_theme_dark_secondaryContainer,
+    onSecondaryContainer = w3w_theme_dark_onSecondaryContainer,
+    error = w3w_theme_dark_error,
+    errorContainer = w3w_theme_dark_errorContainer,
+    onError = w3w_theme_dark_onError,
+    onErrorContainer = w3w_theme_dark_onErrorContainer,
+    background = w3w_theme_dark_background,
+    onBackground = w3w_theme_dark_onBackground,
+    surface = w3w_theme_dark_surface,
+    onSurface = w3w_theme_dark_onSurface,
+    surfaceVariant = w3w_theme_dark_surfaceVariant,
+    onSurfaceVariant = w3w_theme_dark_onSurfaceVariant,
+    outline = w3w_theme_dark_outline,
+    inverseOnSurface = w3w_theme_dark_inverseOnSurface,
+    inverseSurface = w3w_theme_dark_inverseSurface,
+    inversePrimary = w3w_theme_dark_inversePrimary,
+    outlineVariant = w3w_theme_dark_outlineVariant,
+    scrim = w3w_theme_dark_scrim,
+    surfaceBright = w3w_theme_dark_surfaceBright,
+    surfaceDim = w3w_theme_dark_surfaceDim,
+    surfaceContainer = w3w_theme_dark_surfaceContainer,
+    surfaceContainerHigh = w3w_theme_dark_surfaceContainerHigh,
+    surfaceContainerLow = w3w_theme_dark_surfaceContainerLow,
+    surfaceContainerHighest = w3w_theme_dark_surfaceContainerHighest,
+    surfaceContainerLowest = w3w_theme_dark_surfaceContainerLowest
 )
 
-internal val LocalColors = staticCompositionLocalOf { lightColors() }
+/**
+ * Data class representing custom success colors, allowing for additional color customization.
+ */
+@Immutable
+data class SuccessColors(
+    val success: Color = Color.Unspecified,
+    val onSuccess: Color = Color.Unspecified,
+    val successContainer: Color = Color.Unspecified,
+    val onSuccessContainer: Color = Color.Unspecified
+)
+
+// Success color assignments for light and dark themes.
+val lightSuccessColors = SuccessColors(
+    success = w3w_theme_light_success,
+    onSuccess = w3w_theme_light_onSuccess,
+    successContainer = w3w_theme_light_successContainer,
+    onSuccessContainer = w3w_theme_light_onSuccessContainer
+)
+
+val darkSuccessColors = SuccessColors(
+    success = w3w_theme_dark_success,
+    onSuccess = w3w_theme_dark_onSuccess,
+    successContainer = w3w_theme_dark_successContainer,
+    onSuccessContainer = w3w_theme_dark_onSuccessContainer
+)
+
+/**
+ * Data class representing custom warning colors, allowing for additional color customization.
+ */
+@Immutable
+data class WarningColors(
+    val warning: Color = Color.Unspecified,
+    val onWarning: Color = Color.Unspecified,
+    val warningContainer: Color = Color.Unspecified,
+    val onWarningContainer: Color = Color.Unspecified
+)
+
+// Warning color assignments for light and dark themes.
+val lightWarningColors = WarningColors(
+    warning = w3w_theme_light_warning,
+    onWarning = w3w_theme_light_onWarning,
+    warningContainer = w3w_theme_light_warningContainer,
+    onWarningContainer = w3w_theme_light_onWarningContainer
+)
+
+val darkWarningColors = WarningColors(
+    warning = w3w_theme_dark_warning,
+    onWarning = w3w_theme_dark_onWarning,
+    warningContainer = w3w_theme_dark_warningContainer,
+    onWarningContainer = w3w_theme_dark_onWarningContainer
+)
+
+/**
+ * Composition locals for custom success and warning colors.
+ */
+val LocalDarkWarningColors = staticCompositionLocalOf { darkWarningColors }
+val LocalLightWarningColors = staticCompositionLocalOf { lightWarningColors }
+val LocalDarkSuccessColors = staticCompositionLocalOf { darkSuccessColors }
+val LocalLightSuccessColors = staticCompositionLocalOf { lightSuccessColors }
+
+/**
+ * Extension properties on [MaterialTheme] to provide easy access to custom warning and success colors.
+ * The theme automatically switches between light and dark color sets based on the system theme.
+ */
+val MaterialTheme.warningColors: WarningColors
+    @Composable
+    @ReadOnlyComposable
+    get() = if (isSystemInDarkTheme()) LocalDarkWarningColors.current else LocalLightWarningColors.current
+
+val MaterialTheme.successColors: SuccessColors
+    @Composable
+    @ReadOnlyComposable
+    get() = if (isSystemInDarkTheme()) LocalDarkSuccessColors.current else LocalLightSuccessColors.current
