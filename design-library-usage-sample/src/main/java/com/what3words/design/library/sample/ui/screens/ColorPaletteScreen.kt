@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.successColors
+import com.what3words.design.library.ui.theme.surfaceVariationsColors
 import com.what3words.design.library.ui.theme.warningColors
 
 /**
@@ -200,97 +201,97 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             )
         }
 
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(MaterialTheme.colorScheme.surfaceDim)
-//        ) {
-//            Text(
-//                modifier = Modifier.padding(16.dp),
-//                text = "surfaceDim / onSurface",
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onSurface,
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(MaterialTheme.colorScheme.surfaceBright)
-//        ) {
-//            Text(
-//                modifier = Modifier.padding(16.dp),
-//                text = "surfaceBright / onSurface",
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onSurface,
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier
-//                .padding(top = 8.dp)
-//                .fillMaxWidth()
-//                .background(MaterialTheme.colorScheme.surfaceContainerLowest)
-//        ) {
-//            Text(
-//                modifier = Modifier.padding(16.dp),
-//                text = "surfaceContainerLowest / onSurface",
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onSurface,
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(MaterialTheme.colorScheme.surfaceContainerLow)
-//        ) {
-//            Text(
-//                modifier = Modifier.padding(16.dp),
-//                text = "surfaceContainerLow / onSurface",
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onSurface,
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(MaterialTheme.colorScheme.surfaceContainer)
-//        ) {
-//            Text(
-//                modifier = Modifier.padding(16.dp),
-//                text = "surfaceContainer / onSurface",
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onSurface,
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-//        ) {
-//            Text(
-//                modifier = Modifier.padding(16.dp),
-//                text = "surfaceContainerHigh / onSurface",
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onSurface,
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-//        ) {
-//            Text(
-//                modifier = Modifier.padding(16.dp),
-//                text = "surfaceContainerHighest / onSurface",
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onSurface,
-//            )
-//        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.surfaceVariationsColors.surfaceDim)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "surfaceDim / onSurface",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.surfaceVariationsColors.surfaceBright)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "surfaceBright / onSurface",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerLowest)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "surfaceContainerLowest / onSurface",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerLow)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "surfaceContainerLow / onSurface",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainer)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "surfaceContainer / onSurface",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerHigh)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "surfaceContainerHigh / onSurface",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerHighest)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "surfaceContainerHighest / onSurface",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
 
         Column(
             modifier = Modifier
