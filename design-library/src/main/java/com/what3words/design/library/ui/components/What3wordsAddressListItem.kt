@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,6 +38,7 @@ import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
 import com.what3words.design.library.ui.models.formatUnits
 import com.what3words.design.library.ui.theme.W3WTheme
+import com.what3words.design.library.ui.theme.surfaceVariationsColors
 import com.what3words.design.library.ui.theme.w3wTypography
 
 object What3wordsAddressListItemDefaults {
@@ -84,8 +85,8 @@ object What3wordsAddressListItemDefaults {
      */
     @Composable
     fun defaultColors(
-        background: Color = MaterialTheme.colorScheme.surfaceContainerLowest,
-        backgroundHighlighted: Color = MaterialTheme.colorScheme.surfaceContainerLowest,
+        background: Color = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
+        backgroundHighlighted: Color = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
         slashesColor: Color = MaterialTheme.colorScheme.primary,
         wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
         iconColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -282,7 +283,7 @@ fun What3wordsAddressListItem(
             }
         }
         if (showDivider) {
-            HorizontalDivider(
+            Divider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp),

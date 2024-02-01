@@ -148,14 +148,7 @@ internal val w3wLightColors = lightColorScheme(
     inverseSurface = w3w_theme_light_inverseSurface,
     inversePrimary = w3w_theme_light_inversePrimary,
     outlineVariant = w3w_theme_light_outlineVariant,
-    scrim = w3w_theme_light_scrim,
-    surfaceBright = w3w_theme_light_surfaceBright,
-    surfaceDim = w3w_theme_light_surfaceDim,
-    surfaceContainer = w3w_theme_light_surfaceContainer,
-    surfaceContainerHigh = w3w_theme_light_surfaceContainerHigh,
-    surfaceContainerLow = w3w_theme_light_surfaceContainerLow,
-    surfaceContainerHighest = w3w_theme_light_surfaceContainerHighest,
-    surfaceContainerLowest = w3w_theme_light_surfaceContainerLowest
+    scrim = w3w_theme_light_scrim
 )
 
 /**
@@ -185,7 +178,35 @@ internal val w3wDarkColors = darkColorScheme(
     inverseSurface = w3w_theme_dark_inverseSurface,
     inversePrimary = w3w_theme_dark_inversePrimary,
     outlineVariant = w3w_theme_dark_outlineVariant,
-    scrim = w3w_theme_dark_scrim,
+    scrim = w3w_theme_dark_scrim
+)
+
+/**
+ * Data class representing custom surface variation colors, allowing for additional color customization. (to be deleted when updating material3 to 1.2.0)
+ */
+@Immutable
+data class SurfaceVariationsColors(
+    val surfaceBright: Color = Color.Unspecified,
+    val surfaceDim: Color = Color.Unspecified,
+    val surfaceContainer: Color = Color.Unspecified,
+    val surfaceContainerHigh: Color = Color.Unspecified,
+    val surfaceContainerLow: Color = Color.Unspecified,
+    val surfaceContainerHighest: Color = Color.Unspecified,
+    val surfaceContainerLowest: Color = Color.Unspecified,
+)
+
+// Success color assignments for light and dark themes.
+val lightSurfaceVariationsColors = SurfaceVariationsColors(
+    surfaceBright = w3w_theme_light_surfaceBright,
+    surfaceDim = w3w_theme_light_surfaceDim,
+    surfaceContainer = w3w_theme_light_surfaceContainer,
+    surfaceContainerHigh = w3w_theme_light_surfaceContainerHigh,
+    surfaceContainerLow = w3w_theme_light_surfaceContainerLow,
+    surfaceContainerHighest = w3w_theme_light_surfaceContainerHighest,
+    surfaceContainerLowest = w3w_theme_light_surfaceContainerLowest
+)
+
+val darkSurfaceVariationsColors = SurfaceVariationsColors(
     surfaceBright = w3w_theme_dark_surfaceBright,
     surfaceDim = w3w_theme_dark_surfaceDim,
     surfaceContainer = w3w_theme_dark_surfaceContainer,
@@ -250,10 +271,9 @@ val darkWarningColors = WarningColors(
 /**
  * Composition locals for custom success and warning colors.
  */
-val LocalDarkWarningColors = staticCompositionLocalOf { darkWarningColors }
-val LocalLightWarningColors = staticCompositionLocalOf { lightWarningColors }
-val LocalDarkSuccessColors = staticCompositionLocalOf { darkSuccessColors }
-val LocalLightSuccessColors = staticCompositionLocalOf { lightSuccessColors }
+val LocalWarningColors = staticCompositionLocalOf<WarningColors?> { null }
+val LocalSuccessColors = staticCompositionLocalOf<SuccessColors?> { null }
+val LocalSurfaceVariationsColors = staticCompositionLocalOf<SurfaceVariationsColors?> { null }
 
 /**
  * Extension properties on [MaterialTheme] to provide easy access to custom warning and success colors.
@@ -262,9 +282,14 @@ val LocalLightSuccessColors = staticCompositionLocalOf { lightSuccessColors }
 val MaterialTheme.warningColors: WarningColors
     @Composable
     @ReadOnlyComposable
-    get() = if (isSystemInDarkTheme()) LocalDarkWarningColors.current else LocalLightWarningColors.current
-
+    get() = LocalWarningColors.current ?: (if (isSystemInDarkTheme()) darkWarningColors else lightWarningColors)
 val MaterialTheme.successColors: SuccessColors
     @Composable
     @ReadOnlyComposable
-    get() = if (isSystemInDarkTheme()) LocalDarkSuccessColors.current else LocalLightSuccessColors.current
+    get() = LocalSuccessColors.current ?: (if (isSystemInDarkTheme()) darkSuccessColors else lightSuccessColors)
+
+//to be removed when updating material3 library
+val MaterialTheme.surfaceVariationsColors: SurfaceVariationsColors
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalSurfaceVariationsColors.current ?: (if (isSystemInDarkTheme()) darkSurfaceVariationsColors else lightSurfaceVariationsColors)

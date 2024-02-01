@@ -50,10 +50,9 @@ android {
 }
 
 dependencies {
-    implementation "androidx.compose.material3:material3-android:$material3_version"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation platform("androidx.compose:compose-bom:$compose_bom_version")
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    implementation "androidx.compose.material3:material3"
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.ui:ui-tooling-preview"
 }
