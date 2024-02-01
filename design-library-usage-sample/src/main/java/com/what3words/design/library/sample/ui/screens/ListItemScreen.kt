@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -49,7 +49,7 @@ fun ListItemScreen(modifier: Modifier = Modifier) {
             supportingContent = { Text("Supporting line text lorem ipsum dolor sit amet, consectetur.") },
             trailingContent = {
                 Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    Icons.Filled.KeyboardArrowRight,
                     contentDescription = "Localized description",
                 )
             }
@@ -67,7 +67,7 @@ fun ListItemScreen(modifier: Modifier = Modifier) {
             },
             trailingContent = {
                 Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    Icons.Filled.KeyboardArrowRight,
                     contentDescription = "Localized description",
                 )
             }
@@ -78,7 +78,7 @@ fun ListItemScreen(modifier: Modifier = Modifier) {
             headlineContent = { Text("List Item") },
             trailingContent = {
                 Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    Icons.Filled.KeyboardArrowRight,
                     contentDescription = "Localized description",
                 )
             }
@@ -101,7 +101,7 @@ fun ListItemScreen(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        Icons.Filled.KeyboardArrowRight,
                         contentDescription = "Localized description",
                     )
                 }
@@ -131,7 +131,7 @@ fun ListItemScreen(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        Icons.Filled.KeyboardArrowRight,
                         contentDescription = "Localized description",
                     )
                 }
@@ -154,7 +154,7 @@ fun ListItemScreen(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        Icons.Filled.KeyboardArrowRight,
                         contentDescription = "Localized description",
                     )
                 }
@@ -179,7 +179,7 @@ fun ListItemScreen(modifier: Modifier = Modifier) {
                         verticalArrangement = Arrangement.Center
                     ) {
                         Icon(
-                            Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                            Icons.Filled.KeyboardArrowRight,
                             contentDescription = "Localized description",
                         )
                     }

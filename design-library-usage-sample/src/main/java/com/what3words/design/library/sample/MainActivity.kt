@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +20,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.what3words.design.library.sample.ui.DesignLibraryApp
+import com.what3words.design.library.ui.theme.LocalSuccessColors
+import com.what3words.design.library.ui.theme.LocalSurfaceVariationsColors
+import com.what3words.design.library.ui.theme.LocalWarningColors
 import com.what3words.design.library.ui.theme.W3WTheme
+import com.what3words.design.library.ui.theme.darkSuccessColors
+import com.what3words.design.library.ui.theme.darkSurfaceVariationsColors
+import com.what3words.design.library.ui.theme.darkWarningColors
+import com.what3words.design.library.ui.theme.lightSuccessColors
+import com.what3words.design.library.ui.theme.lightSurfaceVariationsColors
+import com.what3words.design.library.ui.theme.lightWarningColors
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +59,26 @@ class MainActivity : ComponentActivity() {
 
             when {
                 selectedTheme == MainActivityViewModel.Theme.Material && selectedColours == MainActivityViewModel.Colours.Day -> {
-                    MaterialTheme(colorScheme = lightColorScheme()) {
-                        mainScreen()
+                    CompositionLocalProvider(
+                        LocalSurfaceVariationsColors provides lightSurfaceVariationsColors,
+                        LocalSuccessColors provides lightSuccessColors,
+                        LocalWarningColors provides lightWarningColors
+                    ) {
+                        MaterialTheme(colorScheme = lightColorScheme()) {
+                            mainScreen()
+                        }
                     }
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.Material && selectedColours == MainActivityViewModel.Colours.Night -> {
-                    MaterialTheme(colorScheme = darkColorScheme()) {
-                        mainScreen()
+                    CompositionLocalProvider(
+                        LocalSurfaceVariationsColors provides darkSurfaceVariationsColors,
+                        LocalSuccessColors provides darkSuccessColors,
+                        LocalWarningColors provides darkWarningColors
+                    ) {
+                        MaterialTheme(colorScheme = darkColorScheme()) {
+                            mainScreen()
+                        }
                     }
                 }
 

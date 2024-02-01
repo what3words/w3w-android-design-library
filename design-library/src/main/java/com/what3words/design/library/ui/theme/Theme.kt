@@ -29,6 +29,12 @@ fun W3WTheme(
         w3wDarkColors
     else w3wLightColors
 
+    val surfaceVariants = if (useDarkTheme) darkSurfaceVariationsColors else lightSurfaceVariationsColors
+
+    val successColors = if (useDarkTheme) darkSuccessColors else lightSuccessColors
+
+    val warningColors = if (useDarkTheme) darkWarningColors else lightWarningColors
+
     // Customize typography for the What3words theme.
     val w3wTypography = W3wTypography(
         headlineLargeProminent = MaterialTheme.typography.headlineLarge.copy(
@@ -49,7 +55,10 @@ fun W3WTheme(
 
     // Provide the What3words typography to the MaterialTheme.
     CompositionLocalProvider(
-        LocalW3wTypography provides w3wTypography
+        LocalW3wTypography provides w3wTypography,
+        LocalSurfaceVariationsColors provides surfaceVariants,
+        LocalSuccessColors provides successColors,
+        LocalWarningColors provides warningColors
     ) {
         MaterialTheme(
             colorScheme = colorScheme,

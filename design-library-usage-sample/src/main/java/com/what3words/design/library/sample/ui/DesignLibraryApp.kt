@@ -3,7 +3,7 @@ package com.what3words.design.library.sample.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +27,7 @@ import com.what3words.design.library.sample.ui.screens.IconButtonScreen
 import com.what3words.design.library.sample.ui.screens.ListItemScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressListItemScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressScreen
+import com.what3words.design.library.ui.theme.surfaceVariationsColors
 
 
 @ExperimentalMaterial3Api
@@ -58,7 +59,7 @@ fun DesignLibraryApp(
                             navController.popBackStack()
                         }) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = null
                             )
                         }
@@ -91,7 +92,7 @@ fun DesignLibraryApp(
     ) {
         NavHost(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.surfaceContainer)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainer)
                 .padding(it),
             navController = navController,
             startDestination = NavScreen.Home.route

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.successColors
+import com.what3words.design.library.ui.theme.surfaceVariationsColors
 import com.what3words.design.library.ui.theme.warningColors
 
 /**
@@ -203,7 +204,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceDim)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceDim)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
@@ -216,7 +217,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceBright)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceBright)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
@@ -230,7 +231,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(top = 8.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerLowest)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
@@ -243,7 +244,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerLow)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
@@ -256,7 +257,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceContainer)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainer)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
@@ -269,7 +270,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerHigh)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
@@ -282,7 +283,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                .background(MaterialTheme.surfaceVariationsColors.surfaceContainerHighest)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
