@@ -83,13 +83,13 @@ class MainActivity : ComponentActivity() {
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Day -> {
-                    W3WTheme(false) {
+                    W3WTheme(false, setStatusBarColor = {}, setNavigationBarColor = {}) {
                         mainScreen()
                     }
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Night -> {
-                    W3WTheme(true) {
+                    W3WTheme(false, setStatusBarColor = {}, setNavigationBarColor = {}) {
                         mainScreen()
                     }
                 }

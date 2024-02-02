@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 /**
  * A composable function that applies the What3words theme to its content.
@@ -22,6 +23,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun W3WTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
+    setStatusBarColor: (@Composable () -> Unit)? = null,
+    setNavigationBarColor: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     // Choose the appropriate color scheme based on the theme preference.
@@ -29,7 +32,8 @@ fun W3WTheme(
         w3wDarkColors
     else w3wLightColors
 
-    val surfaceVariants = if (useDarkTheme) darkSurfaceVariationsColors else lightSurfaceVariationsColors
+    val surfaceVariants =
+        if (useDarkTheme) darkSurfaceVariationsColors else lightSurfaceVariationsColors
 
     val successColors = if (useDarkTheme) darkSuccessColors else lightSuccessColors
 
@@ -61,8 +65,21 @@ fun W3WTheme(
         LocalWarningColors provides warningColors
     ) {
         MaterialTheme(
-            colorScheme = colorScheme,
-            content = content
-        )
+            colorScheme = colorScheme
+        ) {
+            //to be removed and use non-accompanist way to do this when updated to SDK 34
+            val systemUiController = rememberSystemUiController()
+            if (setStatusBarColor != null) setStatusBarColor()
+            else {
+                systemUiController.setStatusBarColor(
+                    color = MaterialTheme.colorScheme.secondaryContainer
+                )
+            }
+            if (setNavigationBarColor != null) setNavigationBarColor()
+            else {
+                systemUiController.setNavigationBarColor(MaterialTheme.surfaceVariationsColors.surfaceContainerLow)
+            }
+            content()
+        }
     }
 }
