@@ -177,8 +177,9 @@ fun What3wordsAddressListItem(
     onClick: (() -> Unit)? = null
 ) {
     val localContext = LocalContext.current
-    Column(
-        modifier = modifier
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxWidth()
             .clickable(
                 onClick = {
                     onClick?.invoke()
@@ -186,107 +187,113 @@ fun What3wordsAddressListItem(
             )
             .background(if (isHighlighted) colors.backgroundHighlighted else colors.background)
     ) {
-        ConstraintLayout(
+        val (textSlashes, textWords, textNear, icSea, textDistance, textLabel, divider) = createRefs()
+
+        val startFontSize = textStyles.wordsTextStyle.fontSize
+        var textSize by remember { mutableStateOf(startFontSize) }
+        ResponsiveText(
+            text = stringResource(id = R.string.slashes),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            val (textSlashes, textWords, textNear, icSea, textDistance, textLabel) = createRefs()
-
-            val startFontSize = textStyles.wordsTextStyle.fontSize
-            var textSize by remember { mutableStateOf(startFontSize) }
-            ResponsiveText(
-                text = stringResource(id = R.string.slashes),
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .constrainAs(textSlashes) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                    },
-                style = textStyles.wordsTextStyle,
-                color = colors.slashesColor,
-                targetTextSizeHeight = textSize
-            )
-
-            ResponsiveText(
-                modifier = Modifier.constrainAs(textWords) {
-                    top.linkTo(textSlashes.top)
-                    start.linkTo(textSlashes.end)
-                    end.linkTo(parent.end)
-                    width = Dimension.fillToConstraints
+                .wrapContentWidth()
+                .constrainAs(textSlashes) {
+                    top.linkTo(parent.top, 16.dp)
+                    start.linkTo(parent.start, 16.dp)
                 },
-                text = words,
-                style = textStyles.wordsTextStyle,
-                color = colors.wordsTextColor,
-                targetTextSizeHeight = textSize,
-                resizeFunc = {
-                    textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
-                },
-                textAlign = TextAlign.Start,
-                maxLines = 1
-            )
+            style = textStyles.wordsTextStyle,
+            color = colors.slashesColor,
+            targetTextSizeHeight = textSize
+        )
 
-            Icon(
-                painter = painterResource(id = R.drawable.ic_sea),
-                contentDescription = null,
-                modifier = Modifier.constrainAs(icSea) {
-                    top.linkTo(textSlashes.bottom, 4.dp)
-                    start.linkTo(textWords.start)
-                    visibility = if (isLand) Visibility.Gone else Visibility.Visible
-                },
-                tint = colors.iconColor
-            )
+        ResponsiveText(
+            modifier = Modifier.constrainAs(textWords) {
+                top.linkTo(textSlashes.top)
+                start.linkTo(textSlashes.end)
+                end.linkTo(parent.end)
+                width = Dimension.fillToConstraints
+            },
+            text = words,
+            style = textStyles.wordsTextStyle,
+            color = colors.wordsTextColor,
+            targetTextSizeHeight = textSize,
+            resizeFunc = {
+                textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
+            },
+            textAlign = TextAlign.Start,
+            maxLines = 1
+        )
 
+        Icon(
+            painter = painterResource(id = R.drawable.ic_sea),
+            contentDescription = null,
+            modifier = Modifier.constrainAs(icSea) {
+                top.linkTo(textSlashes.bottom, 4.dp)
+                start.linkTo(textWords.start)
+                visibility = if (isLand) Visibility.Gone else Visibility.Visible
+            },
+            tint = colors.iconColor
+        )
+
+        Text(
+            text = "${nearestPlacePrefix ?: ""} ${nearestPlace ?: ""}",
+            modifier = Modifier.constrainAs(textNear) {
+                top.linkTo(textSlashes.bottom, 4.dp)
+                start.linkTo(icSea.end)
+                end.linkTo(textDistance.start, 6.dp)
+                width = Dimension.fillToConstraints
+                visibility =
+                    if (nearestPlace.isNullOrEmpty()) Visibility.Gone else Visibility.Visible
+            },
+            overflow = TextOverflow.Ellipsis,
+            style = textStyles.nearestPlaceTextStyle,
+            color = colors.nearestPlaceTextColor,
+            textAlign = TextAlign.Start
+        )
+
+        if (distance != null) {
             Text(
-                text = "${nearestPlacePrefix ?: ""} ${nearestPlace ?: ""}",
-                modifier = Modifier.constrainAs(textNear) {
+                text = formatUnits(distance, displayUnits, localContext),
+                modifier = Modifier.constrainAs(textDistance) {
                     top.linkTo(textSlashes.bottom, 4.dp)
-                    start.linkTo(icSea.end)
-                    end.linkTo(textDistance.start, 6.dp)
-                    width = Dimension.fillToConstraints
-                    visibility =
-                        if (nearestPlace.isNullOrEmpty()) Visibility.Gone else Visibility.Visible
+                    end.linkTo(parent.end, 16.dp)
                 },
-                overflow = TextOverflow.Ellipsis,
-                style = textStyles.nearestPlaceTextStyle,
-                color = colors.nearestPlaceTextColor,
+                style = textStyles.distanceTextStyle,
+                color = colors.distanceTextColor,
                 textAlign = TextAlign.Start
             )
-
-            if (distance != null) {
-                Text(
-                    text = formatUnits(distance, displayUnits, localContext),
-                    modifier = Modifier.constrainAs(textDistance) {
-                        top.linkTo(textSlashes.bottom, 4.dp)
-                        end.linkTo(parent.end)
-                    },
-                    style = textStyles.distanceTextStyle,
-                    color = colors.distanceTextColor,
-                    textAlign = TextAlign.Start
-                )
-            }
-
-            if (label != null) {
-                Text(
-                    text = label,
-                    modifier = Modifier
-                        .constrainAs(textLabel) {
-                            top.linkTo(textNear.bottom, 4.dp)
-                            start.linkTo(icSea.start)
-                        }
-                        .background(colors.labelBackground)
-                        .padding(vertical = 4.dp, horizontal = 4.dp),
-                    style = textStyles.labelTextStyle,
-                    color = colors.labelTextColor,
-                    textAlign = TextAlign.Center
-                )
-            }
         }
+
+        if (label != null) {
+            Text(
+                text = label,
+                modifier = Modifier
+                    .constrainAs(textLabel) {
+                        when {
+                            nearestPlace?.isNotEmpty() == true -> top.linkTo(textNear.bottom, 4.dp)
+                            else -> top.linkTo(textSlashes.bottom, 4.dp)
+                        }
+                        start.linkTo(icSea.start)
+                    }
+                    .background(colors.labelBackground)
+                    .padding(vertical = 4.dp, horizontal = 4.dp),
+                style = textStyles.labelTextStyle,
+                color = colors.labelTextColor,
+                textAlign = TextAlign.Center
+            )
+        }
+
         if (showDivider) {
             Divider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp),
+                    .constrainAs(divider) {
+                        when {
+                            label != null -> top.linkTo(textLabel.bottom, 16.dp)
+                            distance != null -> top.linkTo(textDistance.bottom, 16.dp)
+                            nearestPlace?.isNotEmpty() == true -> top.linkTo(textNear.bottom, 16.dp)
+                            else -> top.linkTo(textSlashes.bottom, 16.dp)
+                        }
+                        start.linkTo(textWords.start)
+                    },
                 color = colors.dividerColor,
                 thickness = 1.dp
             )
@@ -295,7 +302,12 @@ fun What3wordsAddressListItem(
 }
 
 //region Previews with W3WTheme day
-@Preview(group = "W3WTheme", name = "W3WTheme/Day/LTR", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A1() {
     W3WTheme {
@@ -303,7 +315,12 @@ private fun A1() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Day/LTR with near", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with near",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A2() {
     W3WTheme {
@@ -311,7 +328,12 @@ private fun A2() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Day/LTR with distance", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A3() {
     W3WTheme {
@@ -319,7 +341,12 @@ private fun A3() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Day/LTR with long what3words address", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with long what3words address",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A4() {
     W3WTheme {
@@ -331,7 +358,12 @@ private fun A4() {
 }
 
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Day/LTR in land with near and distance", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR in land with near and distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A5() {
     W3WTheme {
@@ -343,7 +375,12 @@ private fun A5() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Day/LTR in sea with near", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR in sea with near",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A6() {
     W3WTheme {
@@ -355,7 +392,12 @@ private fun A6() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Day/LTR with near, distance and label", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with near, distance and label",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A7() {
     W3WTheme {
@@ -368,9 +410,32 @@ private fun A7() {
     }
 }
 
-@Preview(group = "W3WTheme", locale = "ar", name = "W3WTheme/Day/RTL with near and distance", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with distance and label",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun A8() {
+    W3WTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            distance = 20,
+            label = "Label name"
+        )
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    locale = "ar",
+    name = "W3WTheme/Day/RTL with near and distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A9() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         W3WTheme {
             What3wordsAddressListItem(
@@ -384,7 +449,12 @@ private fun A8() {
 //endregion
 
 //region Previews with W3WTheme night
-@Preview(group = "W3WTheme", name = "W3WTheme/Night/LTR", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B1() {
     W3WTheme {
@@ -392,7 +462,12 @@ private fun B1() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Night/LTR with near", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR with near",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B2() {
     W3WTheme {
@@ -400,7 +475,12 @@ private fun B2() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Night/LTR with distance", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR with distance",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B3() {
     W3WTheme {
@@ -408,7 +488,12 @@ private fun B3() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Night/LTR with long what3words address", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR with long what3words address",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B4() {
     W3WTheme {
@@ -420,7 +505,12 @@ private fun B4() {
 }
 
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Night/LTR in land with near and distance", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR in land with near and distance",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B5() {
     W3WTheme {
@@ -432,7 +522,12 @@ private fun B5() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Night/LTR in sea with near", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR in sea with near",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B6() {
     W3WTheme {
@@ -444,7 +539,12 @@ private fun B6() {
     }
 }
 
-@Preview(group = "W3WTheme", name = "W3WTheme/Night/LTR with near, distance and label", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR with near, distance and label",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B7() {
     W3WTheme {
@@ -457,9 +557,32 @@ private fun B7() {
     }
 }
 
-@Preview(group = "W3WTheme", locale = "ar", name = "W3WTheme/Night/RTL with near and distance", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR with distance and label",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun B8() {
+    W3WTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            distance = 20,
+            label = "Label name"
+        )
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    locale = "ar",
+    name = "W3WTheme/Night/RTL with near and distance",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun B9() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         W3WTheme {
             What3wordsAddressListItem(
@@ -473,7 +596,12 @@ private fun B8() {
 //endregion
 
 //region Previews with MaterialTheme day
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Day/LTR", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C1() {
     MaterialTheme {
@@ -481,7 +609,12 @@ private fun C1() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Day/LTR with near", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR with near",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C2() {
     MaterialTheme {
@@ -489,7 +622,12 @@ private fun C2() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Day/LTR with distance", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR with distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C3() {
     MaterialTheme {
@@ -497,7 +635,12 @@ private fun C3() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Day/LTR with long what3words address", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR with long what3words address",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C4() {
     MaterialTheme {
@@ -509,7 +652,12 @@ private fun C4() {
 }
 
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Day/LTR in land with near and distance", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR in land with near and distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C5() {
     MaterialTheme {
@@ -521,7 +669,12 @@ private fun C5() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Day/LTR in sea with near", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR in sea with near",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C6() {
     MaterialTheme {
@@ -533,7 +686,12 @@ private fun C6() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Day/LTR with near, distance and label", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR with near, distance and label",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C7() {
     MaterialTheme {
@@ -546,9 +704,32 @@ private fun C7() {
     }
 }
 
-@Preview(group = "MaterialTheme", locale = "ar", name = "MaterialTheme/Day/RTL with near and distance", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Day/LTR with distance and label",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
 @Composable
 private fun C8() {
+    MaterialTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            distance = 20,
+            label = "Label name"
+        )
+    }
+}
+
+@Preview(
+    group = "MaterialTheme",
+    locale = "ar",
+    name = "MaterialTheme/Day/RTL with near and distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun C9() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         MaterialTheme {
             What3wordsAddressListItem(
@@ -562,7 +743,12 @@ private fun C8() {
 //endregion
 
 //region Previews with MaterialTheme night
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Night/LTR", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D1() {
     MaterialTheme(colorScheme = darkColorScheme()) {
@@ -570,7 +756,12 @@ private fun D1() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Night/LTR with near", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR with near",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D2() {
     MaterialTheme(colorScheme = darkColorScheme()) {
@@ -578,7 +769,12 @@ private fun D2() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Night/LTR with distance", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR with distance",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D3() {
     MaterialTheme(colorScheme = darkColorScheme()) {
@@ -586,7 +782,12 @@ private fun D3() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Night/LTR with long what3words address", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR with long what3words address",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D4() {
     MaterialTheme(colorScheme = darkColorScheme()) {
@@ -598,7 +799,12 @@ private fun D4() {
 }
 
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Night/LTR in land with near and distance", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR in land with near and distance",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D5() {
     MaterialTheme(colorScheme = darkColorScheme()) {
@@ -610,7 +816,12 @@ private fun D5() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Night/LTR in sea with near", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR in sea with near",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D6() {
     MaterialTheme(colorScheme = darkColorScheme()) {
@@ -622,7 +833,12 @@ private fun D6() {
     }
 }
 
-@Preview(group = "MaterialTheme", name = "MaterialTheme/Night/LTR with near, distance and label", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR with near, distance and label",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D7() {
     MaterialTheme(colorScheme = darkColorScheme()) {
@@ -635,9 +851,33 @@ private fun D7() {
     }
 }
 
-@Preview(group = "MaterialTheme", locale = "ar", name = "MaterialTheme/Night/RTL with near and distance", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR with distance and label",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 private fun D8() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            distance = 20,
+            label = "Label name"
+        )
+    }
+}
+
+
+@Preview(
+    group = "MaterialTheme",
+    locale = "ar",
+    name = "MaterialTheme/Night/RTL with near and distance",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun D9() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         MaterialTheme(colorScheme = darkColorScheme()) {
             What3wordsAddressListItem(
