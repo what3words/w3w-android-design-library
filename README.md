@@ -6,8 +6,8 @@ A Jetpack compose design library to be used across what3words components and app
 
 ## Installation
 
-The artifact is available
-through [![Maven Central](https://img.shields.io/maven-central/v/com.what3words/w3w-android-design-library.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.what3words%22%20AND%20a:%22w3w-android-design-library%22)
+The artifact is available 
+through [![Maven Central](https://img.shields.io/maven-central/v/com.what3words/w3w-android-design-library)](https://central.sonatype.com/artifact/com.what3words/w3w-android-design-library/)
 
 ### Android minimum SDK support
 
@@ -16,7 +16,7 @@ through [![Maven Central](https://img.shields.io/maven-central/v/com.what3words/
 ### Gradle
 
 ```
-implementation 'com.what3words:w3w-android-design-library:1.0.2'
+implementation 'com.what3words:w3w-android-design-library:1.0.3'
 ```
 
 # Design library components
