@@ -59,6 +59,13 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
             onClick = {}
         )
 
+        What3wordsAddressListItem(
+            words = "filled.count.soap",
+            distance = 20,
+            label = "Label name",
+            onClick = {}
+        )
+
         CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
             What3wordsAddressListItem("لبن.درجات.عنق")
 
