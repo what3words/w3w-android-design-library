@@ -10,11 +10,11 @@ apply from: 'maven-push.gradle'
 apply from: '../jacoco.gradle'
 
 android {
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         minSdk 24
-        targetSdk 34
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -52,7 +52,9 @@ android {
 dependencies {
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     implementation "androidx.compose.material3:material3"
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.ui:ui-tooling-preview"
+    debugImplementation 'androidx.compose.ui:ui-tooling'
 }
