@@ -4,27 +4,6 @@ orbs:
   android: circleci/android@2.2.0
 
 jobs:
-#  build-ui-test:
-#    executor:
-#      name: android/android-machine
-#      resource-class: large
-#    steps:
-#      - checkout
-#      - android/create-avd:
-#          avd-name: testDevice
-#          system-image: system-images;android-30;google_apis;x86
-#          install: true
-#      - android/start-emulator:
-#          avd-name: testDevice
-#          no-window: true
-#          restore-gradle-cache-prefix: v1a
-#      - android/run-tests:
-#          test-command: ./gradlew testing:jacocoTestReport
-#          max-tries: 5
-#      - store_test_results:
-#          path: testing/build/outputs/androidTest-results
-#      - android/save-gradle-cache:
-#          cache-prefix: v1a
   build-test-sonar:
     executor:
       name: android/android-machine
@@ -106,5 +85,4 @@ workflows:
             - build-test-sonar
           filters:
             branches:
-              only:
-                - dev
+              only: /^(beta)\/.*/
