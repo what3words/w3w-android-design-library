@@ -14,9 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.theme.W3WTheme
-import com.what3words.design.library.ui.theme.successColors
 import com.what3words.design.library.ui.theme.surfaceVariationsColors
-import com.what3words.design.library.ui.theme.warningColors
+import com.what3words.design.library.ui.theme.w3wColorScheme
 
 /**
  * A screen showcasing the color palette of the [MaterialTheme] and [W3WTheme].
@@ -35,6 +34,13 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = "Colors",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -47,6 +53,7 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
                 color = MaterialTheme.colorScheme.onPrimary,
             )
         }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -55,6 +62,19 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "primaryContainer / onPrimaryContainer",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.inversePrimary)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "inversePrimary / onPrimaryContainer",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
             )
@@ -91,6 +111,40 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(top = 8.dp)
                 .fillMaxWidth()
+                .background(MaterialTheme.w3wColorScheme.brand)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "brand / onBrand",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.w3wColorScheme.onBrand,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.w3wColorScheme.brandContainer)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "brandContainer / onBrandContainer",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.w3wColorScheme.onBrandContainer,
+            )
+        }
+
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = "States",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+
+        Column(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.error)
         ) {
             Text(
@@ -118,26 +172,26 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(top = 8.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.warningColors.warning)
+                .background(MaterialTheme.w3wColorScheme.warning)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "warning / onWarning",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.warningColors.onWarning,
+                color = MaterialTheme.w3wColorScheme.onWarning,
             )
         }
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.warningColors.warningContainer)
+                .background(MaterialTheme.w3wColorScheme.warningContainer)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "warningContainer / onWarningContainer",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.warningColors.onWarningContainer,
+                color = MaterialTheme.w3wColorScheme.onWarningContainer,
             )
         }
 
@@ -145,26 +199,26 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(top = 8.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.successColors.success)
+                .background(MaterialTheme.w3wColorScheme.success)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "success / onSuccess",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.successColors.onSuccess,
+                color = MaterialTheme.w3wColorScheme.onSuccess,
             )
         }
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.successColors.successContainer)
+                .background(MaterialTheme.w3wColorScheme.successContainer)
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "successContainer / onSuccessContainer",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.successColors.onSuccessContainer,
+                color = MaterialTheme.w3wColorScheme.onSuccessContainer,
             )
         }
 
@@ -293,6 +347,13 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             )
         }
 
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = "Backgrounds",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+
         Column(
             modifier = Modifier
                 .padding(top = 8.dp)
@@ -302,6 +363,41 @@ fun ColorPaletteScreen(modifier: Modifier = Modifier) {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "background / onBackground",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
+
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = "Outlines",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+
+        Column(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.outline)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "outline",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.outlineVariant)
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "outlineVariant",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )

@@ -20,17 +20,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.what3words.design.library.sample.ui.DesignLibraryApp
-import com.what3words.design.library.ui.theme.LocalSuccessColors
 import com.what3words.design.library.ui.theme.LocalSurfaceVariationsColors
-import com.what3words.design.library.ui.theme.LocalWarningColors
+import com.what3words.design.library.ui.theme.LocalW3WColorScheme
 import com.what3words.design.library.ui.theme.W3WTheme
-import com.what3words.design.library.ui.theme.darkSuccessColors
 import com.what3words.design.library.ui.theme.darkSurfaceVariationsColors
-import com.what3words.design.library.ui.theme.darkWarningColors
-import com.what3words.design.library.ui.theme.lightSuccessColors
+import com.what3words.design.library.ui.theme.darkW3WColors
 import com.what3words.design.library.ui.theme.lightSurfaceVariationsColors
-import com.what3words.design.library.ui.theme.lightWarningColors
+import com.what3words.design.library.ui.theme.lightW3WColors
 
+@OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +59,7 @@ class MainActivity : ComponentActivity() {
                 selectedTheme == MainActivityViewModel.Theme.Material && selectedColours == MainActivityViewModel.Colours.Day -> {
                     CompositionLocalProvider(
                         LocalSurfaceVariationsColors provides lightSurfaceVariationsColors,
-                        LocalSuccessColors provides lightSuccessColors,
-                        LocalWarningColors provides lightWarningColors
+                        LocalW3WColorScheme provides lightW3WColors
                     ) {
                         MaterialTheme(colorScheme = lightColorScheme()) {
                             mainScreen()
@@ -73,8 +70,7 @@ class MainActivity : ComponentActivity() {
                 selectedTheme == MainActivityViewModel.Theme.Material && selectedColours == MainActivityViewModel.Colours.Night -> {
                     CompositionLocalProvider(
                         LocalSurfaceVariationsColors provides darkSurfaceVariationsColors,
-                        LocalSuccessColors provides darkSuccessColors,
-                        LocalWarningColors provides darkWarningColors
+                        LocalW3WColorScheme provides darkW3WColors
                     ) {
                         MaterialTheme(colorScheme = darkColorScheme()) {
                             mainScreen()
@@ -89,7 +85,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Night -> {
-                    W3WTheme(false, setStatusBarColor = {}, setNavigationBarColor = {}) {
+                    W3WTheme(true, setStatusBarColor = {}, setNavigationBarColor = {}) {
                         mainScreen()
                     }
                 }

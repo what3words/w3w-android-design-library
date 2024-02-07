@@ -17,28 +17,39 @@ import androidx.compose.ui.graphics.Color
  */
 
 // colors / primary
-val w3w_theme_light_primary = Color(0xFFC00004)
+val w3w_theme_light_primary = Color(0xFF187DB9)
 val w3w_theme_light_onPrimary = Color(0xFFFFFFFF)
-val w3w_theme_light_primaryContainer = Color(0xFFFFCAC2)
-val w3w_theme_light_onPrimaryContainer = Color(0xFF410000)
-val w3w_theme_light_inversePrimary = Color(0xFFFFB4A9)
+val w3w_theme_light_primaryContainer = Color(0xFFDBEFFA)
+val w3w_theme_light_onPrimaryContainer = Color(0xFF001D31)
+val w3w_theme_light_inversePrimary = Color(0xFFC2E1EB)
 
-val w3w_theme_dark_primary = Color(0xFFFFB4A9)
-val w3w_theme_dark_onPrimary = Color(0xFF690001)
-val w3w_theme_dark_primaryContainer = Color(0xFF930002)
-val w3w_theme_dark_onPrimaryContainer = Color(0xFFFFCAC2)
-val w3w_theme_dark_inversePrimary = Color(0xFFC00004)
+val w3w_theme_dark_primary = Color(0xFF60B2F2)
+val w3w_theme_dark_onPrimary = Color(0xFF0A3049)
+val w3w_theme_dark_primaryContainer = Color(0xFF005379)
+val w3w_theme_dark_onPrimaryContainer = Color(0xFFDBEFFA)
+val w3w_theme_dark_inversePrimary = Color(0xFF006397)
 
 // colors / secondary
 val w3w_theme_light_secondary = Color(0xFF006397)
 val w3w_theme_light_onSecondary = Color(0xFFFFFFFF)
-val w3w_theme_light_secondaryContainer = Color(0xFFDBEFFA)
+val w3w_theme_light_secondaryContainer = Color(0xFFC2E1EB)
 val w3w_theme_light_onSecondaryContainer = Color(0xFF001D31)
 
 val w3w_theme_dark_secondary = Color(0xFFC2E1EB)
 val w3w_theme_dark_onSecondary = Color(0xFF0A3049)
 val w3w_theme_dark_secondaryContainer = Color(0xFF005379)
-val w3w_theme_dark_onSecondaryContainer = Color(0xFFDBEFFA)
+val w3w_theme_dark_onSecondaryContainer = Color(0xFFFCFCFF)
+
+// colors / brand
+val w3w_theme_light_brand = Color(0xFFE11F26)
+val w3w_theme_light_onBrand = Color(0xFFFFFFFF)
+val w3w_theme_light_brandContainer = Color(0xFFFFEDEA)
+val w3w_theme_light_onBrandContainer = Color(0xFF930002)
+
+val w3w_theme_dark_brand = Color(0xFFE11F26)
+val w3w_theme_dark_onBrand = Color(0xFF410000)
+val w3w_theme_dark_brandContainer = Color(0xFF930002)
+val w3w_theme_dark_onBrandContainer = Color(0xFFFFCAC2)
 
 // states / error
 val w3w_theme_light_error = Color(0xFFF26C50)
@@ -217,79 +228,74 @@ val darkSurfaceVariationsColors = SurfaceVariationsColors(
 )
 
 /**
- * Data class representing custom success colors, allowing for additional color customization.
+ * Data class representing custom w3w colors, allowing for additional color customization.
  */
 @Immutable
-data class SuccessColors(
-    val success: Color = Color.Unspecified,
-    val onSuccess: Color = Color.Unspecified,
-    val successContainer: Color = Color.Unspecified,
-    val onSuccessContainer: Color = Color.Unspecified
-)
-
-// Success color assignments for light and dark themes.
-val lightSuccessColors = SuccessColors(
-    success = w3w_theme_light_success,
-    onSuccess = w3w_theme_light_onSuccess,
-    successContainer = w3w_theme_light_successContainer,
-    onSuccessContainer = w3w_theme_light_onSuccessContainer
-)
-
-val darkSuccessColors = SuccessColors(
-    success = w3w_theme_dark_success,
-    onSuccess = w3w_theme_dark_onSuccess,
-    successContainer = w3w_theme_dark_successContainer,
-    onSuccessContainer = w3w_theme_dark_onSuccessContainer
-)
-
-/**
- * Data class representing custom warning colors, allowing for additional color customization.
- */
-@Immutable
-data class WarningColors(
+data class W3WColorScheme(
     val warning: Color = Color.Unspecified,
     val onWarning: Color = Color.Unspecified,
     val warningContainer: Color = Color.Unspecified,
-    val onWarningContainer: Color = Color.Unspecified
+    val onWarningContainer: Color = Color.Unspecified,
+    val success: Color = Color.Unspecified,
+    val onSuccess: Color = Color.Unspecified,
+    val successContainer: Color = Color.Unspecified,
+    val onSuccessContainer: Color = Color.Unspecified,
+    val brand: Color = Color.Unspecified,
+    val onBrand: Color = Color.Unspecified,
+    val brandContainer: Color = Color.Unspecified,
+    val onBrandContainer: Color = Color.Unspecified
 )
 
-// Warning color assignments for light and dark themes.
-val lightWarningColors = WarningColors(
+// W3W proprietary color assignments for light and dark themes.
+val lightW3WColors = W3WColorScheme(
     warning = w3w_theme_light_warning,
     onWarning = w3w_theme_light_onWarning,
     warningContainer = w3w_theme_light_warningContainer,
-    onWarningContainer = w3w_theme_light_onWarningContainer
+    onWarningContainer = w3w_theme_light_onWarningContainer,
+    success = w3w_theme_light_success,
+    onSuccess = w3w_theme_light_onSuccess,
+    successContainer = w3w_theme_light_successContainer,
+    onSuccessContainer = w3w_theme_light_onSuccessContainer,
+    brand = w3w_theme_light_brand,
+    onBrand = w3w_theme_light_onBrand,
+    brandContainer = w3w_theme_light_brandContainer,
+    onBrandContainer = w3w_theme_light_onBrandContainer
 )
 
-val darkWarningColors = WarningColors(
+val darkW3WColors = W3WColorScheme(
     warning = w3w_theme_dark_warning,
     onWarning = w3w_theme_dark_onWarning,
     warningContainer = w3w_theme_dark_warningContainer,
-    onWarningContainer = w3w_theme_dark_onWarningContainer
+    onWarningContainer = w3w_theme_dark_onWarningContainer,
+    success = w3w_theme_dark_success,
+    onSuccess = w3w_theme_dark_onSuccess,
+    successContainer = w3w_theme_dark_successContainer,
+    onSuccessContainer = w3w_theme_dark_onSuccessContainer,
+    brand = w3w_theme_dark_brand,
+    onBrand = w3w_theme_dark_onBrand,
+    brandContainer = w3w_theme_dark_brandContainer,
+    onBrandContainer = w3w_theme_dark_onBrandContainer
 )
 
 /**
  * Composition locals for custom success and warning colors.
  */
-val LocalWarningColors = staticCompositionLocalOf<WarningColors?> { null }
-val LocalSuccessColors = staticCompositionLocalOf<SuccessColors?> { null }
+val LocalW3WColorScheme = staticCompositionLocalOf<W3WColorScheme?> { null }
 val LocalSurfaceVariationsColors = staticCompositionLocalOf<SurfaceVariationsColors?> { null }
 
 /**
  * Extension properties on [MaterialTheme] to provide easy access to custom warning and success colors.
  * The theme automatically switches between light and dark color sets based on the system theme.
  */
-val MaterialTheme.warningColors: WarningColors
+val MaterialTheme.w3wColorScheme: W3WColorScheme
     @Composable
     @ReadOnlyComposable
-    get() = LocalWarningColors.current ?: (if (isSystemInDarkTheme()) darkWarningColors else lightWarningColors)
-val MaterialTheme.successColors: SuccessColors
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalSuccessColors.current ?: (if (isSystemInDarkTheme()) darkSuccessColors else lightSuccessColors)
+    get() = LocalW3WColorScheme.current
+        ?: (if (isSystemInDarkTheme()) darkW3WColors else lightW3WColors)
 
 //to be removed when updating material3 library
 val MaterialTheme.surfaceVariationsColors: SurfaceVariationsColors
     @Composable
     @ReadOnlyComposable
-    get() = LocalSurfaceVariationsColors.current ?: (if (isSystemInDarkTheme()) darkSurfaceVariationsColors else lightSurfaceVariationsColors)
+    get() = LocalSurfaceVariationsColors.current
+        ?: (if (isSystemInDarkTheme()) darkSurfaceVariationsColors else lightSurfaceVariationsColors)
