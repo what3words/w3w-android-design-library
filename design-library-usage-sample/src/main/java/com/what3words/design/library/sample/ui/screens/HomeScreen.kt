@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.ui.components.What3wordsAddress
 import com.what3words.design.library.ui.components.What3wordsAddressListItem
+import com.what3words.design.library.ui.theme.w3wColorScheme
 
 @Composable
 fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -219,6 +220,33 @@ fun ColorPalette(navController: NavController) {
             text = "secondaryContainer / onSecondaryContainer",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .fillMaxWidth()
+            .background(MaterialTheme.w3wColorScheme.brand)
+    ) {
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = "brand / onBrand",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.w3wColorScheme.onBrand,
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.w3wColorScheme.brandContainer)
+    ) {
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = "brandContainer / onBrandContainer",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.w3wColorScheme.onBrandContainer,
         )
     }
 }
