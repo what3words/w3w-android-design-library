@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
+import com.what3words.design.library.ui.theme.w3wColorScheme
 import com.what3words.design.library.ui.theme.w3wTypography
 
 /**
@@ -59,7 +60,7 @@ object What3wordsAddressDefaults {
      */
     @Composable
     fun defaultColors(
-        slashesColor: Color = MaterialTheme.colorScheme.primary,
+        slashesColor: Color = MaterialTheme.w3wColorScheme.brand,
         wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
     ): Colors {
         return Colors(

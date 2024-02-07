@@ -39,6 +39,7 @@ import com.what3words.design.library.ui.models.DisplayUnits
 import com.what3words.design.library.ui.models.formatUnits
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.surfaceVariationsColors
+import com.what3words.design.library.ui.theme.w3wColorScheme
 import com.what3words.design.library.ui.theme.w3wTypography
 
 object What3wordsAddressListItemDefaults {
@@ -87,7 +88,7 @@ object What3wordsAddressListItemDefaults {
     fun defaultColors(
         background: Color = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
         backgroundHighlighted: Color = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
-        slashesColor: Color = MaterialTheme.colorScheme.primary,
+        slashesColor: Color = MaterialTheme.w3wColorScheme.brand,
         wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
         iconColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
         nearestPlaceTextColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -178,7 +179,7 @@ fun What3wordsAddressListItem(
 ) {
     val localContext = LocalContext.current
     ConstraintLayout(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable(
                 onClick = {
