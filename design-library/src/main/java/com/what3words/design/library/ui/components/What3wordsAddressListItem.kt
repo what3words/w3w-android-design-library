@@ -282,23 +282,22 @@ fun What3wordsAddressListItem(
             )
         }
 
-        if (showDivider) {
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .constrainAs(divider) {
-                        when {
-                            label != null -> top.linkTo(textLabel.bottom, 16.dp)
-                            distance != null -> top.linkTo(textDistance.bottom, 16.dp)
-                            nearestPlace?.isNotEmpty() == true -> top.linkTo(textNear.bottom, 16.dp)
-                            else -> top.linkTo(textSlashes.bottom, 16.dp)
-                        }
-                        start.linkTo(textWords.start)
-                    },
-                color = colors.dividerColor,
-                thickness = 1.dp
-            )
-        }
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(divider) {
+                    when {
+                        label != null -> top.linkTo(textLabel.bottom, 16.dp)
+                        distance != null -> top.linkTo(textDistance.bottom, 16.dp)
+                        nearestPlace?.isNotEmpty() == true -> top.linkTo(textNear.bottom, 16.dp)
+                        else -> top.linkTo(textSlashes.bottom, 16.dp)
+                    }
+                    start.linkTo(textWords.start)
+                    visibility = if (showDivider) Visibility.Visible else Visibility.Invisible
+                },
+            color = colors.dividerColor,
+            thickness = 1.dp
+        )
     }
 }
 
