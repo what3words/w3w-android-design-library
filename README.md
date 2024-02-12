@@ -4,6 +4,18 @@
 
 A Jetpack compose design library based on Material3 to be used across what3words components and apps.
 
+###### Color scheme, Material and What3words composables using W3W Theme
+<p float="left">
+    <img src="./images/sample_app_w3w_theme_day.png" width=30% height=30%>
+    <img src="./images/sample_app_w3w_theme_night.png" width=30% height=30%>
+</p>
+
+###### Color scheme, Material and What3words composables using Material Theme
+<p float="left">
+    <img src="./images/sample_app_material_theme_day.png" width=30% height=30%>
+    <img src="./images/sample_app_material_theme_night.png" width=30% height=30%>
+</p>
+
 ## Installation
 
 The artifact is available 
