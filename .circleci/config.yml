@@ -87,8 +87,8 @@ workflows:
             - mobile
           requires:
             - build-test-sonar
-#          filters:
-#            branches:
-#              only:
-#                - staging
-#                - /^epic.*/
+          filters:
+            branches:
+              only:
+                - staging
+                - /^epic.*/
