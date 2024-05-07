@@ -1,11 +1,12 @@
 package com.what3words.design.library.sample.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.components.VoiceRecognitionAnimation
@@ -27,7 +29,7 @@ import kotlin.random.Random
 
 @Composable
 fun VoiceRecognitionAnimationScreen() {
-
+    val context = LocalContext.current
     val state: MutableState<VoiceRecognitionState> =
         remember { mutableStateOf(VoiceRecognitionState.Idle) }
 
@@ -39,45 +41,83 @@ fun VoiceRecognitionAnimationScreen() {
 
     Column(modifier = Modifier.fillMaxSize()) {
         VoiceRecognitionAnimation(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+            modifier = Modifier
+                .fillMaxWidth(.5f)
+                .aspectRatio(1f)
+                .align(Alignment.CenterHorizontally),
             state = state.value,
-            onClick = {}
+            activeOnClick = {
+                Toast.makeText(context, "Active clicked", Toast.LENGTH_SHORT).show()
+            },
+            inactiveOnClick = {
+                Toast.makeText(context, "Inactive clicked", Toast.LENGTH_SHORT).show()
+            }
         )
 
-        Row(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(onClick = {
-                job.value?.cancel()
-                state.value = VoiceRecognitionState.Idle
-            }) {
-                Text("Idle")
-            }
-
-            Button(onClick = {
-                job.value?.cancel()
-                job.value = coroutineScope.launch {
-                    while (this.isActive) {
-                        delay(300)
-                        state.value =
-                            VoiceRecognitionState.Active(Random.nextFloat().coerceIn(0f, 1f))
-                    }
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Button(onClick = {
+                    job.value?.cancel()
+                    state.value = VoiceRecognitionState.Idle
+                }) {
+                    Text("Idle")
                 }
-            }) {
-                Text("Active")
-            }
 
-            Button(onClick = {
-                job.value?.cancel()
-                state.value = VoiceRecognitionState.Loading
-            }) {
-                Text("Loading")
+                Button(onClick = {
+                    job.value?.cancel()
+                    state.value = VoiceRecognitionState.Loading
+                }) {
+                    Text("Loading")
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Button(onClick = {
+                    job.value?.cancel()
+                    state.value = VoiceRecognitionState.Active(0f)
+                }) {
+                    Text("Active 0%")
+                }
+
+                Button(onClick = {
+                    job.value?.cancel()
+                    state.value = VoiceRecognitionState.Active(0.5f)
+                }) {
+                    Text("Active 50%")
+                }
+
+                Button(onClick = {
+                    job.value?.cancel()
+                    state.value = VoiceRecognitionState.Active(1f)
+                }) {
+                    Text("Active 100%")
+                }
+
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Button(onClick = {
+                    job.value?.cancel()
+                    job.value = coroutineScope.launch {
+                        while (this.isActive) {
+                            delay(200)
+                            state.value =
+                                VoiceRecognitionState.Active(Random.nextFloat().coerceIn(0f, 1f))
+                        }
+                    }
+                }) {
+                    Text("Active Random")
+                }
             }
         }
+
     }
 }
 

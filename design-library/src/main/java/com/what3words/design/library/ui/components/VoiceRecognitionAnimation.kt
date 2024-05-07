@@ -1,22 +1,24 @@
 package com.what3words.design.library.ui.components
 
-import android.util.Log
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -62,43 +63,19 @@ object VoiceRecognitionAnimationDefaults {
     )
 
     /**
-     * A data class representing the sizes used in the [VoiceRecognitionAnimation].
-     *
-     * @property innerOrbSize The size of the inner orb.
-     * @property middleOrbSize The size of the middle orb.
-     * @property outerOrbSize The size of the outer orb.
-     * @property iconSize The size of the icon.
-     */
-    data class Size(
-        val innerOrbSize: Dp,
-        val middleOrbSize: Dp,
-        val outerOrbSize: Dp,
-        val iconSize: Dp
-    )
-
-    /**
      * This function returns the default colors for the Voice Animation.
      *
      * @return A Colors object with the default colors.
      */
     @Composable
-    fun defaultColors(): Colors = Colors(
-        orbColors = MaterialTheme.w3wColorScheme.brand,
-        loadingIconColor = MaterialTheme.w3wColorScheme.brand,
-        idleIconColor = Color.White,
-    )
-
-    /**
-     * This function returns the default sizes for the Voice Animation.
-     *
-     * @return A Size object with the default sizes.
-     */
-    @Composable
-    fun defaultSize(): Size = Size(
-        innerOrbSize = 124.dp,
-        middleOrbSize = 186.dp,
-        outerOrbSize = 248.dp,
-        iconSize = 64.dp
+    fun defaultColors(
+        orbColors: Color = MaterialTheme.w3wColorScheme.brand,
+        loadingIconColor: Color = MaterialTheme.w3wColorScheme.brand,
+        idleIconColor: Color = Color.White
+    ): Colors = Colors(
+        orbColors = orbColors,
+        loadingIconColor = loadingIconColor,
+        idleIconColor = idleIconColor
     )
 }
 
@@ -139,37 +116,35 @@ sealed interface VoiceRecognitionState {
  *
  * @param modifier The modifier to be applied to the animation. Default is Modifier.
  * @param color The colors to be used in the animation. Default is the default colors defined in VoiceRecognitionAnimationDefaults.
- * @param size The sizes to be used in the animation. Default is the default sizes defined in VoiceRecognitionAnimationDefaults.
  * @param state The current state of the Voice Recognition. It can be Idle, Active, or Loading.
- * @param onClick The function to be called when the animation is clicked AND the state is Idle.
+ * @param inactiveOnClick The function to be called when the animation is clicked AND the state is Idle.
+ * @param activeOnClick The function to be called when the animation is clicked AND the state is Active.
  */
 @Composable
 fun VoiceRecognitionAnimation(
     modifier: Modifier = Modifier,
     color: VoiceRecognitionAnimationDefaults.Colors = VoiceRecognitionAnimationDefaults.defaultColors(),
-    size: VoiceRecognitionAnimationDefaults.Size = VoiceRecognitionAnimationDefaults.defaultSize(),
     state: VoiceRecognitionState,
-    onClick: () -> Unit,
+    inactiveOnClick: (() -> Unit)? = null,
+    activeOnClick: (() -> Unit)? = null
 ) {
     when (state) {
         is VoiceRecognitionState.Idle -> IdleVoiceAnimation(
             modifier = modifier,
             color = color,
-            size = size,
-            onClick = onClick
+            onClick = inactiveOnClick
         )
 
         is VoiceRecognitionState.Active -> ActiveVoiceAnimation(
             signalStrength = state.signalStrength,
             modifier = modifier,
             color = color,
-            size = size
+            onClick = activeOnClick
         )
 
         is VoiceRecognitionState.Loading -> LoadingVoiceAnimation(
             modifier = modifier,
-            color = color,
-            size = size
+            color = color
         )
     }
 }
@@ -177,25 +152,25 @@ fun VoiceRecognitionAnimation(
 @Composable
 private fun IdleVoiceAnimation(
     modifier: Modifier = Modifier,
-    color: VoiceRecognitionAnimationDefaults.Colors = VoiceRecognitionAnimationDefaults.defaultColors(),
-    size: VoiceRecognitionAnimationDefaults.Size = VoiceRecognitionAnimationDefaults.defaultSize(),
-    onClick: () -> Unit,
+    color: VoiceRecognitionAnimationDefaults.Colors,
+    onClick: (() -> Unit)? = null
 ) {
-    Box(modifier = modifier.size(size.outerOrbSize)) {
+    Box(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
-                .size(size.innerOrbSize)
+                .fillMaxWidth(.5f)
+                .aspectRatio(1f)
                 .clip(CircleShape)
                 .align(Alignment.Center)
                 .background(color.orbColors)
+                .clickable(enabled = onClick != null, onClick = { onClick?.invoke() })
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_voice_inactive),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(size.iconSize)
-                    .align(Alignment.Center)
-                    .clickable { onClick() },
+                    .fillMaxSize(.5f)
+                    .align(Alignment.Center),
                 colorFilter = ColorFilter.tint(color.idleIconColor)
             )
         }
@@ -205,26 +180,30 @@ private fun IdleVoiceAnimation(
 @Composable
 private fun ActiveVoiceAnimation(
     modifier: Modifier = Modifier,
-    color: VoiceRecognitionAnimationDefaults.Colors = VoiceRecognitionAnimationDefaults.defaultColors(),
-    size: VoiceRecognitionAnimationDefaults.Size = VoiceRecognitionAnimationDefaults.defaultSize(),
+    color: VoiceRecognitionAnimationDefaults.Colors,
     signalStrength: Float,
+    onClick: (() -> Unit)? = null,
 ) {
-    val infiniteTransition = rememberInfiniteTransition(label = "infiniteOrbAnimation")
-    val scale by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = signalStrength.coerceIn(0f, 1f),
-        animationSpec = infiniteRepeatable(
-            animation = tween(activeAnimationDurationMs),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "orbScaleAnimation"
+    val scale = animateFloatAsState(
+        signalStrength.coerceIn(0f, 1f),
+        label = "orbScaleAnimation",
+        animationSpec = tween(activeAnimationDurationMs)
     )
-    Box(modifier = modifier.size(size.outerOrbSize)) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                enabled = onClick != null,
+                onClick = { onClick?.invoke() })
+    )
+    {
         Surface(
             modifier = Modifier
                 .align(Alignment.Center)
-                .scale(scale)
-                .size(size.innerOrbSize),
+                .scale(scale.value)
+                .fillMaxSize(.33f),
             shape = CircleShape,
             color = color.orbColors.copy(alpha = 0.32f),
             content = {}
@@ -232,8 +211,8 @@ private fun ActiveVoiceAnimation(
         Surface(
             modifier = Modifier
                 .align(Alignment.Center)
-                .scale(scale)
-                .size(size.middleOrbSize),
+                .scale(scale.value)
+                .fillMaxSize(.66f),
             shape = CircleShape,
             color = color.orbColors.copy(alpha = 0.16f),
             content = {}
@@ -241,8 +220,8 @@ private fun ActiveVoiceAnimation(
         Surface(
             modifier = Modifier
                 .align(Alignment.Center)
-                .scale(scale)
-                .size(size.outerOrbSize),
+                .scale(scale.value)
+                .fillMaxSize(.99f),
             shape = CircleShape,
             color = color.orbColors.copy(alpha = 0.08f),
             content = {}
@@ -252,7 +231,7 @@ private fun ActiveVoiceAnimation(
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.Center)
-                .size(size.iconSize),
+                .fillMaxSize(.25f),
         )
     }
 }
@@ -261,8 +240,7 @@ private fun ActiveVoiceAnimation(
 @Composable
 private fun LoadingVoiceAnimation(
     modifier: Modifier = Modifier,
-    color: VoiceRecognitionAnimationDefaults.Colors = VoiceRecognitionAnimationDefaults.defaultColors(),
-    size: VoiceRecognitionAnimationDefaults.Size = VoiceRecognitionAnimationDefaults.defaultSize(),
+    color: VoiceRecognitionAnimationDefaults.Colors,
 ) {
     val dynamicProperties = rememberLottieDynamicProperties(
         rememberLottieDynamicProperty(
@@ -281,13 +259,14 @@ private fun LoadingVoiceAnimation(
         composition,
         iterations = LottieConstants.IterateForever
     )
-    Box(modifier = modifier.size(size.outerOrbSize)) {
+    Box(modifier = modifier.fillMaxSize()) {
         LottieAnimation(
             composition = composition,
             progress = { progress },
             dynamicProperties = dynamicProperties,
             modifier = Modifier
-                .size(size.iconSize)
+                .fillMaxSize(0.25f)
+                .scale(1.35f) // to remove when we get a new lottie file
                 .align(Alignment.Center)
         )
     }
@@ -296,25 +275,37 @@ private fun LoadingVoiceAnimation(
 @Preview
 @Composable
 fun VoiceAnimationIdlePreview() {
-    Column {
-        VoiceRecognitionAnimation(state = VoiceRecognitionState.Idle, onClick = {})
+    Column(
+        modifier = Modifier
+            .width(248.dp)
+            .height(248.dp)
+    ) {
+        VoiceRecognitionAnimation(state = VoiceRecognitionState.Idle)
     }
 }
 
 @Preview
 @Composable
 fun VoiceAnimationLoadingPreview() {
-    Column {
-        VoiceRecognitionAnimation(state = VoiceRecognitionState.Loading, onClick = {})
+    Column(
+        modifier = Modifier
+            .width(248.dp)
+            .height(248.dp)
+    ) {
+        VoiceRecognitionAnimation(state = VoiceRecognitionState.Loading)
     }
 }
 
 @Preview
 @Composable
 fun VoiceAnimationActivePreview() {
-    Column {
+    Column(
+        modifier = Modifier
+            .width(248.dp)
+            .height(248.dp)
+    ) {
         VoiceRecognitionAnimation(
-            state = VoiceRecognitionState.Active(signalStrength = 0.8f),
-            onClick = {})
+            state = VoiceRecognitionState.Active(signalStrength = 0.2f)
+        )
     }
 }
