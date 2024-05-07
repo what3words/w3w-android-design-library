@@ -1,21 +1,20 @@
 package com.what3words.design.library.ui.components
 
+import android.util.Log
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -70,10 +70,10 @@ object VoiceRecognitionAnimationDefaults {
      * @property iconSize The size of the icon.
      */
     data class Size(
-        val innerOrbSize: Float,
-        val middleOrbSize: Float,
-        val outerOrbSize: Float,
-        val iconSize: Float
+        val innerOrbSize: Dp,
+        val middleOrbSize: Dp,
+        val outerOrbSize: Dp,
+        val iconSize: Dp
     )
 
     /**
@@ -95,10 +95,10 @@ object VoiceRecognitionAnimationDefaults {
      */
     @Composable
     fun defaultSize(): Size = Size(
-        innerOrbSize = 124f,
-        middleOrbSize = 186f,
-        outerOrbSize = 248f,
-        iconSize = 64f
+        innerOrbSize = 124.dp,
+        middleOrbSize = 186.dp,
+        outerOrbSize = 248.dp,
+        iconSize = 64.dp
     )
 }
 
@@ -181,10 +181,10 @@ private fun IdleVoiceAnimation(
     size: VoiceRecognitionAnimationDefaults.Size = VoiceRecognitionAnimationDefaults.defaultSize(),
     onClick: () -> Unit,
 ) {
-    Box(modifier = modifier.size(size.outerOrbSize.dp)) {
+    Box(modifier = modifier.size(size.outerOrbSize)) {
         Box(
             modifier = Modifier
-                .size(size.innerOrbSize.dp)
+                .size(size.innerOrbSize)
                 .clip(CircleShape)
                 .align(Alignment.Center)
                 .background(color.orbColors)
@@ -193,7 +193,7 @@ private fun IdleVoiceAnimation(
                 painter = painterResource(id = R.drawable.ic_voice_inactive),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(size.iconSize.dp)
+                    .size(size.iconSize)
                     .align(Alignment.Center)
                     .clickable { onClick() },
                 colorFilter = ColorFilter.tint(color.idleIconColor)
@@ -219,29 +219,40 @@ private fun ActiveVoiceAnimation(
         ),
         label = "orbScaleAnimation"
     )
-    Box(modifier = modifier.size(size.outerOrbSize.dp)) {
-        Canvas(modifier = Modifier
-            .align(Alignment.Center)
-            .scale(scale), onDraw = {
-            drawCircle(
-                color = color.orbColors.copy(alpha = 0.32f),
-                radius = size.innerOrbSize,
-            )
-            drawCircle(
-                color = color.orbColors.copy(alpha = 0.16f),
-                radius = size.middleOrbSize,
-            )
-            drawCircle(
-                color = color.orbColors.copy(alpha = 0.08f),
-                radius = size.outerOrbSize,
-            )
-        })
+    Box(modifier = modifier.size(size.outerOrbSize)) {
+        Surface(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .scale(scale)
+                .size(size.innerOrbSize),
+            shape = CircleShape,
+            color = color.orbColors.copy(alpha = 0.32f),
+            content = {}
+        )
+        Surface(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .scale(scale)
+                .size(size.middleOrbSize),
+            shape = CircleShape,
+            color = color.orbColors.copy(alpha = 0.16f),
+            content = {}
+        )
+        Surface(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .scale(scale)
+                .size(size.outerOrbSize),
+            shape = CircleShape,
+            color = color.orbColors.copy(alpha = 0.08f),
+            content = {}
+        )
         Image(
             painter = painterResource(id = R.drawable.ic_voice_active),
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.Center)
-                .size(size.iconSize.dp),
+                .size(size.iconSize),
         )
     }
 }
@@ -270,13 +281,13 @@ private fun LoadingVoiceAnimation(
         composition,
         iterations = LottieConstants.IterateForever
     )
-    Box(modifier = modifier.size(size.outerOrbSize.dp)) {
+    Box(modifier = modifier.size(size.outerOrbSize)) {
         LottieAnimation(
             composition = composition,
             progress = { progress },
             dynamicProperties = dynamicProperties,
             modifier = Modifier
-                .size(size.iconSize.dp)
+                .size(size.iconSize)
                 .align(Alignment.Center)
         )
     }
