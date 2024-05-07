@@ -25,9 +25,11 @@ import com.what3words.design.library.sample.ui.screens.ColorPaletteScreen
 import com.what3words.design.library.sample.ui.screens.HomeScreen
 import com.what3words.design.library.sample.ui.screens.IconButtonScreen
 import com.what3words.design.library.sample.ui.screens.ListItemScreen
+import com.what3words.design.library.sample.ui.screens.VoiceRecognitionAnimationScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressListItemScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressScreen
 import com.what3words.design.library.ui.theme.surfaceVariationsColors
+import com.what3words.design.library.ui.components.VoiceRecognitionState
 
 
 @ExperimentalMaterial3Api
@@ -124,6 +126,10 @@ fun DesignLibraryApp(
             composable(NavScreen.ListItemScreen.route) {
                 onTitleChanged.invoke("List Items")
                 ListItemScreen()
+            }
+            composable(NavScreen.VoiceRecognitionAnimationScreen.route) {
+                onTitleChanged.invoke("Voice Recognition Animation")
+                VoiceRecognitionAnimationScreen()
             }
         }
     }

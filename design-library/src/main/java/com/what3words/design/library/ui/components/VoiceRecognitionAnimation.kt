@@ -11,6 +11,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -191,7 +193,7 @@ private fun IdleVoiceAnimation(
                 painter = painterResource(id = R.drawable.ic_voice_inactive),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(size.innerOrbSize.dp)
+                    .size(size.iconSize.dp)
                     .align(Alignment.Center)
                     .clickable { onClick() },
                 colorFilter = ColorFilter.tint(color.idleIconColor)

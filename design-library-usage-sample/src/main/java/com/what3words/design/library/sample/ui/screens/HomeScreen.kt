@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.what3words.design.library.sample.ui.NavScreen
 import com.what3words.design.library.ui.components.What3wordsAddress
 import com.what3words.design.library.ui.components.What3wordsAddressListItem
 import com.what3words.design.library.ui.theme.w3wColorScheme
@@ -156,6 +157,15 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                     contentDescription = "Localized description",
                 )
             }
+        )
+        Text(
+            text = "Voice Recognition Component >",
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    navController.navigate(NavScreen.VoiceRecognitionAnimationScreen.route)
+                },
+            style = MaterialTheme.typography.titleMedium
         )
     }
 }
