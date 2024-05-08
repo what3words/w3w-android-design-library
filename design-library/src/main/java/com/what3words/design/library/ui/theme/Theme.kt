@@ -33,9 +33,9 @@ fun W3WTheme(
     else w3wLightColors
 
     val surfaceVariants =
-        if (useDarkTheme) darkSurfaceVariationsColors else lightSurfaceVariationsColors
+        if (useDarkTheme) w3wDarkSurfaceVariationsColors else w3wLightSurfaceVariationsColors
 
-    val w3WColorScheme = if (useDarkTheme) darkW3WColors else lightW3WColors
+    val w3WColorScheme = if (useDarkTheme) w3wDarkW3WSchemeColors else w3wLightW3WSchemeColors
 
     // Customize typography for the What3words theme.
     val w3wTypography = W3wTypography(
