@@ -203,7 +203,7 @@ private fun ActiveVoiceAnimation(
             modifier = Modifier
                 .align(Alignment.Center)
                 .scale(scale.value)
-                .fillMaxSize(.33f),
+                .fillMaxSize(.5f),
             shape = CircleShape,
             color = color.orbColors.copy(alpha = 0.32f),
             content = {}
@@ -212,7 +212,7 @@ private fun ActiveVoiceAnimation(
             modifier = Modifier
                 .align(Alignment.Center)
                 .scale(scale.value)
-                .fillMaxSize(.66f),
+                .fillMaxSize(.75f),
             shape = CircleShape,
             color = color.orbColors.copy(alpha = 0.16f),
             content = {}
@@ -221,7 +221,7 @@ private fun ActiveVoiceAnimation(
             modifier = Modifier
                 .align(Alignment.Center)
                 .scale(scale.value)
-                .fillMaxSize(.99f),
+                .fillMaxSize(),
             shape = CircleShape,
             color = color.orbColors.copy(alpha = 0.08f),
             content = {}
