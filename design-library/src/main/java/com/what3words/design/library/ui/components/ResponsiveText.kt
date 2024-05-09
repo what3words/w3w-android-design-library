@@ -29,7 +29,7 @@ internal const val TEXT_SCALE_REDUCTION_INTERVAL = 0.9f
  * truncating the text with an ellipsis if it exceeds the specified line count.
  */
 @Composable
-internal fun ResponsiveText(
+fun ResponsiveText(
     modifier: Modifier = Modifier,
     text: String,
     color: Color,
