@@ -1,4 +1,4 @@
-package com.what3words.design.library.ui.components
+package com.what3words.design.library.ui.models
 
 import androidx.compose.runtime.Immutable
 import kotlin.reflect.KProperty

@@ -44,6 +44,11 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.sp
 import com.what3words.design.library.ui.components.SuggestedFontSizesStatus.Companion.rememberSuggestedFontSizesStatus
+import com.what3words.design.library.ui.extensions.roundToPx
+import com.what3words.design.library.ui.extensions.toIntSize
+import com.what3words.design.library.ui.extensions.toSp
+import com.what3words.design.library.ui.models.ImmutableWrapper
+import com.what3words.design.library.ui.models.toImmutableWrapper
 import kotlin.math.min
 
 /**

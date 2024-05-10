@@ -41,14 +41,17 @@ fun What3wordsAddressScreen(modifier: Modifier = Modifier) {
                 .padding(start = 16.dp)
         )
         What3wordsAddress(
-            "props.rest.power", secondaryText = "long.live.fever", modifier = Modifier
+            "props.rest.power",
+            secondaryText = "long.live.fever",
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
 
         What3wordsAddress(
-            "index.home.raft", secondaryText = "congratulations.congratulations.congratulations"
-            , modifier = Modifier
+            "index.home.raft",
+            secondaryText = "congratulations.congratulations.congratulations",
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
