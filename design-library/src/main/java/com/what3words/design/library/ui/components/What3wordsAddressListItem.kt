@@ -4,10 +4,12 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +21,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -178,7 +182,7 @@ fun What3wordsAddressListItem(
     onClick: (() -> Unit)? = null
 ) {
     val localContext = LocalContext.current
-    ConstraintLayout(
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .clickable(
@@ -187,117 +191,89 @@ fun What3wordsAddressListItem(
                 }
             )
             .background(if (isHighlighted) colors.backgroundHighlighted else colors.background)
+            .padding(top = 16.dp, start = 16.dp, end = 0.dp, bottom = 0.dp)
     ) {
-        val (textSlashes, textWords, textNear, icSea, textDistance, textLabel, divider) = createRefs()
 
-        val startFontSize = textStyles.wordsTextStyle.fontSize
-        var textSize by remember { mutableStateOf(startFontSize) }
-        ResponsiveText(
-            text = stringResource(id = R.string.slashes),
-            modifier = Modifier
-                .wrapContentWidth()
-                .constrainAs(textSlashes) {
-                    top.linkTo(parent.top, 16.dp)
-                    start.linkTo(parent.start, 16.dp)
-                },
-            style = textStyles.wordsTextStyle,
-            color = colors.slashesColor,
-            targetTextSizeHeight = textSize
-        )
-
-        ResponsiveText(
-            modifier = Modifier.constrainAs(textWords) {
-                top.linkTo(textSlashes.top)
-                start.linkTo(textSlashes.end)
-                end.linkTo(parent.end)
-                width = Dimension.fillToConstraints
+        var slashesMargin by remember { mutableStateOf(0.dp) }
+        What3wordsAddress(
+            modifier = Modifier.padding(end = 16.dp, bottom = 16.dp),
+            words = words,
+            colors = What3wordsAddressDefaults.defaultColors(
+                slashesColor = colors.slashesColor,
+                wordsTextColor = colors.wordsTextColor
+            ),
+            textStyles = What3wordsAddressDefaults.defaultTextStyles(textStyles.wordsTextStyle),
+            slashesMargin = {
+                slashesMargin = it
             },
-            text = words,
-            style = textStyles.wordsTextStyle,
-            color = colors.wordsTextColor,
-            targetTextSizeHeight = textSize,
-            resizeFunc = {
-                textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
-            },
-            textAlign = TextAlign.Start,
-            maxLines = 1
-        )
-
-        Icon(
-            painter = painterResource(id = R.drawable.ic_sea),
-            contentDescription = null,
-            modifier = Modifier.constrainAs(icSea) {
-                top.linkTo(textSlashes.bottom, 4.dp)
-                start.linkTo(textWords.start)
-                visibility = if (isLand) Visibility.Gone else Visibility.Visible
-            },
-            tint = colors.iconColor
-        )
-
-        Text(
-            text = "${nearestPlacePrefix ?: ""} ${nearestPlace ?: ""}",
-            modifier = Modifier.constrainAs(textNear) {
-                top.linkTo(textSlashes.bottom, 4.dp)
-                start.linkTo(icSea.end)
-                end.linkTo(textDistance.start, 6.dp)
-                width = Dimension.fillToConstraints
-                visibility =
-                    if (nearestPlace.isNullOrEmpty()) Visibility.Gone else Visibility.Visible
-            },
-            overflow = TextOverflow.Ellipsis,
-            style = textStyles.nearestPlaceTextStyle,
-            color = colors.nearestPlaceTextColor,
-            textAlign = TextAlign.Start
-        )
-
-        if (distance != null) {
-            Text(
-                text = formatUnits(distance, displayUnits, localContext),
-                modifier = Modifier.constrainAs(textDistance) {
-                    top.linkTo(textSlashes.bottom, 4.dp)
-                    end.linkTo(parent.end, 16.dp)
-                },
-                style = textStyles.distanceTextStyle,
-                color = colors.distanceTextColor,
-                textAlign = TextAlign.Start
-            )
-        }
-
-        if (label != null) {
-            Text(
-                text = label,
-                modifier = Modifier
-                    .constrainAs(textLabel) {
-                        when {
-                            nearestPlace?.isNotEmpty() == true -> top.linkTo(textNear.bottom, 4.dp)
-                            else -> top.linkTo(textSlashes.bottom, 4.dp)
+            secondaryContent = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .fillMaxWidth()
+                    ) {
+                        if (!isLand) {
+                            Icon(
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                painter = painterResource(id = R.drawable.ic_sea),
+                                contentDescription = null,
+                                tint = colors.iconColor
+                            )
                         }
-                        start.linkTo(icSea.start)
+                        if (!nearestPlace.isNullOrEmpty()) {
+                            Text(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .align(Alignment.CenterVertically),
+                                text = "${nearestPlacePrefix ?: ""} ${nearestPlace ?: ""}",
+                                overflow = TextOverflow.Ellipsis,
+                                style = textStyles.nearestPlaceTextStyle,
+                                color = colors.nearestPlaceTextColor,
+                                textAlign = TextAlign.Start,
+                            )
+                        } else {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                        if (distance != null) {
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically),
+                                text = formatUnits(distance, displayUnits, localContext),
+                                style = textStyles.distanceTextStyle,
+                                color = colors.distanceTextColor,
+                                textAlign = TextAlign.Start
+                            )
+                        }
                     }
-                    .background(colors.labelBackground)
-                    .padding(vertical = 4.dp, horizontal = 4.dp),
-                style = textStyles.labelTextStyle,
-                color = colors.labelTextColor,
-                textAlign = TextAlign.Center
+                    if (label != null) {
+                        Text(
+                            text = label,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .background(colors.labelBackground)
+                                .padding(vertical = 4.dp, horizontal = 4.dp),
+                            style = textStyles.labelTextStyle,
+                            color = colors.labelTextColor,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        )
+
+        if (showDivider) {
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomStart),
+                color = colors.dividerColor,
+                thickness = 1.dp
             )
         }
-
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(divider) {
-                    when {
-                        label != null -> top.linkTo(textLabel.bottom, 16.dp)
-                        distance != null -> top.linkTo(textDistance.bottom, 16.dp)
-                        nearestPlace?.isNotEmpty() == true -> top.linkTo(textNear.bottom, 16.dp)
-                        else -> top.linkTo(textSlashes.bottom, 16.dp)
-                    }
-                    start.linkTo(textWords.start)
-                    visibility = if (showDivider) Visibility.Visible else Visibility.Invisible
-                },
-            color = colors.dividerColor,
-            thickness = 1.dp
-        )
     }
 }
 
@@ -434,6 +410,7 @@ private fun A8() {
     uiMode = UI_MODE_NIGHT_NO,
     showBackground = true
 )
+
 @Composable
 private fun A9() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -446,6 +423,7 @@ private fun A9() {
         }
     }
 }
+
 //endregion
 
 //region Previews with W3WTheme night
