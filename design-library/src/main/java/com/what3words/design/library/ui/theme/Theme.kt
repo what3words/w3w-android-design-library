@@ -1,7 +1,9 @@
 package com.what3words.design.library.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.text.font.FontWeight
@@ -10,6 +12,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+
 /**
  * A composable function that applies the What3words theme to its content.
  * This theme is an extension of the MaterialTheme with customized colors and typography
@@ -17,28 +20,24 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
  *
  * @param useDarkTheme A boolean value to specify if the dark theme should be used.
  *                     By default, it's set based on the system's theme preference.
+ * @param colorScheme The color scheme to be used. Default is set based on the theme preference.
+ * @param surfaceVariationsColors The surface variations colors to be used. Default is set based on the theme preference.
+ * @param w3WColorScheme The What3words color scheme to be used. Default is set based on the theme preference.
+ * @param typography The typography to be used. Default is set by [MaterialTheme.typography].
+ * @param w3wTypography The What3words typography to be used. Default is set with custom configurations.
+ * @param setStatusBarColor A composable lambda function to set the status bar color. If null, the status bar color is set by [MaterialTheme.colorScheme.secondaryContainer].
+ * @param setNavigationBarColor A composable lambda function to set the navigation bar color. If null, the navigation bar color is set by [MaterialTheme.surfaceVariationsColors.surfaceContainerLow].
  * @param content A composable lambda which will be the content of this theme. All composable
  *                functions inside this lambda will inherit the What3words theme.
  */
 @Composable
 fun W3WTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    setStatusBarColor: (@Composable () -> Unit)? = null,
-    setNavigationBarColor: (@Composable () -> Unit)? = null,
-    content: @Composable () -> Unit
-) {
-    // Choose the appropriate color scheme based on the theme preference.
-    val colorScheme = if (useDarkTheme)
-        w3wDarkColors
-    else w3wLightColors
-
-    val surfaceVariants =
-        if (useDarkTheme) w3wDarkSurfaceVariationsColors else w3wLightSurfaceVariationsColors
-
-    val w3WColorScheme = if (useDarkTheme) w3wDarkW3WSchemeColors else w3wLightW3WSchemeColors
-
-    // Customize typography for the What3words theme.
-    val w3wTypography = W3wTypography(
+    colorScheme: ColorScheme = if (useDarkTheme) w3wDarkColors else w3wLightColors,
+    surfaceVariationsColors: SurfaceVariationsColors = if (useDarkTheme) w3wDarkSurfaceVariationsColors else w3wLightSurfaceVariationsColors,
+    w3WColorScheme: W3WColorScheme = if (useDarkTheme) w3wDarkW3WSchemeColors else w3wLightW3WSchemeColors,
+    typography: Typography = MaterialTheme.typography,
+    w3wTypography: W3wTypography = W3wTypography(
         headlineLargeProminent = MaterialTheme.typography.headlineLarge.copy(
             fontWeight = FontWeight.SemiBold,
             letterSpacing = TextUnit(-0.1f, TextUnitType.Sp)
@@ -53,16 +52,20 @@ fun W3WTheme(
         labelLargeProminent = MaterialTheme.typography.labelLarge.copy(
             fontWeight = FontWeight.Bold
         )
-    )
-
+    ),
+    setStatusBarColor: (@Composable () -> Unit)? = null,
+    setNavigationBarColor: (@Composable () -> Unit)? = null,
+    content: @Composable () -> Unit
+) {
     // Provide the What3words typography to the MaterialTheme.
     CompositionLocalProvider(
         LocalW3wTypography provides w3wTypography,
-        LocalSurfaceVariationsColors provides surfaceVariants,
+        LocalSurfaceVariationsColors provides surfaceVariationsColors,
         LocalW3WColorScheme provides w3WColorScheme,
     ) {
         MaterialTheme(
-            colorScheme = colorScheme
+            colorScheme = colorScheme,
+            typography = typography,
         ) {
             //to be removed and use non-accompanist way to do this when updated to SDK 34
             val systemUiController = rememberSystemUiController()
