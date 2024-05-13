@@ -198,7 +198,7 @@ fun What3wordsAddressListItem(
         What3wordsAddress(
             modifier = Modifier.padding(end = 16.dp, bottom = 16.dp),
             words = words,
-            colors = What3wordsAddressDefaults.Colors(
+            colors = What3wordsAddressDefaults.defaultColors(
                 slashesColor = colors.slashesColor,
                 wordsTextColor = colors.wordsTextColor
             ),
