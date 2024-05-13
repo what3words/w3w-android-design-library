@@ -55,19 +55,23 @@ object What3wordsAddressDefaults {
      *
      * @property slashesColor The color to be used for slashes.
      * @property wordsTextColor The color to be used for words text.
+     * @property secondaryTextColor The color to be used for the secondary text, if provided.
      */
     data class Colors(
         val slashesColor: Color,
-        val wordsTextColor: Color
+        val wordsTextColor: Color,
+        val secondaryTextColor: Color
     )
 
     /**
      * Data class that holds text style configurations for the What3wordsAddress composable function.
      *
      * @property wordsTextStyle The text style to be used for words text.
+     * @property secondaryTextTextStyle The text style to be used for the secondary text, if provided.
      */
     data class TextStyles(
-        val wordsTextStyle: TextStyle
+        val wordsTextStyle: TextStyle,
+        val secondaryTextTextStyle: TextStyle
     )
 
     /**
@@ -75,16 +79,19 @@ object What3wordsAddressDefaults {
      *
      * @param slashesColor The color to be used for slashes. Default is set by [MaterialTheme.w3wColorScheme.brand].
      * @param wordsTextColor The color to be used for words text. Default is set by [MaterialTheme.colorScheme.onSecondaryContainer].
+     * @param secondaryTextColor The color to be used for the secondary text, if provided. Default is set by [MaterialTheme.colorScheme.onSecondaryContainer].
      * @return A Colors object with the provided color configurations.
      */
     @Composable
     fun defaultColors(
         slashesColor: Color = MaterialTheme.w3wColorScheme.brand,
-        wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
+        wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
+        secondaryTextColor: Color =  MaterialTheme.colorScheme.onSecondaryContainer
     ): Colors {
         return Colors(
             slashesColor = slashesColor,
-            wordsTextColor = wordsTextColor
+            wordsTextColor = wordsTextColor,
+            secondaryTextColor = secondaryTextColor
         )
     }
 
@@ -92,14 +99,17 @@ object What3wordsAddressDefaults {
      * Composable function that provides default text style configurations for the What3wordsAddress composable function.
      *
      * @param wordsTextStyle The text style to be used for words text. Default is set by [MaterialTheme.w3wTypography.headlineLargeProminent].
+     * @param secondaryTextTextStyle The text style to be used for the secondary text, if provided. Default is set by [MaterialTheme.typography.titleLarge].
      * @return A TextStyles object with the provided text style configurations.
      */
     @Composable
     fun defaultTextStyles(
-        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeProminent
+        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeProminent,
+        secondaryTextTextStyle: TextStyle = MaterialTheme.typography.titleLarge
     ): TextStyles {
         return TextStyles(
-            wordsTextStyle = wordsTextStyle
+            wordsTextStyle = wordsTextStyle,
+            secondaryTextTextStyle = secondaryTextTextStyle
         )
     }
 }
@@ -112,7 +122,7 @@ object What3wordsAddressDefaults {
  * @param colors The Colors object for color configurations. Default is set by [What3wordsAddressDefaults.defaultColors].
  * @param textStyles The TextStyles object for text style configurations. Default is set by [What3wordsAddressDefaults.defaultTextStyles].
  * @param secondaryText The secondary text string to be displayed.
- * @param slashesMargin A lambda function for setting the margin of slashes.
+ * @param slashesPadding A lambda function for setting the margin of slashes.
  */
 @Composable
 fun What3wordsAddress(
@@ -121,7 +131,7 @@ fun What3wordsAddress(
     colors: What3wordsAddressDefaults.Colors = What3wordsAddressDefaults.defaultColors(),
     textStyles: What3wordsAddressDefaults.TextStyles = What3wordsAddressDefaults.defaultTextStyles(),
     secondaryText: String,
-    slashesMargin: ((Dp) -> Unit)? = null
+    slashesPadding: ((Dp) -> Unit)? = null
 ) {
     What3wordsAddress(
         words = words,
@@ -132,17 +142,17 @@ fun What3wordsAddress(
             AutoSizeText(
                 text = secondaryText,
                 //to remove when we update to the latest jetpack compose version
-                style = MaterialTheme.typography.titleLarge.copy(
+                style = textStyles.secondaryTextTextStyle.copy(
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false,
                     )
                 ),
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                maxTextSize = MaterialTheme.typography.titleLarge.fontSize,
+                color = colors.secondaryTextColor,
+                maxTextSize = textStyles.secondaryTextTextStyle.fontSize,
                 maxLines = 1
             )
         },
-        slashesMargin = slashesMargin
+        slashesMargin = slashesPadding
     )
 }
 
