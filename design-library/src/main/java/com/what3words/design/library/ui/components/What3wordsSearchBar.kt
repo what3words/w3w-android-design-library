@@ -14,19 +14,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.DocumentScanner
-import androidx.compose.material.icons.filled.Filter
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SettingsVoice
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -56,24 +55,25 @@ import com.what3words.design.library.ui.theme.surfaceVariationsColors
  * @param cardColors The colors to be used for the card. Default is set by [CardDefaults.cardColors].
  */
 @Composable
-fun W3WSearchBar(
+fun What3wordsSearchBar(
     content: @Composable RowScope.() -> Unit,
     onContentClick: () -> Unit,
     modifier: Modifier = Modifier,
     layoutConfig: W3WSearchBarDefaults.LayoutConfig = W3WSearchBarDefaults.defaultLayoutConfig(),
     leadingActions: @Composable RowScope.() -> Unit = {},
     trailingActions: (@Composable RowScope.() -> Unit)? = null,
-    cardColors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest
-    )
+    cardColors: CardColors = CardDefaults.elevatedCardColors(
+        containerColor = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
+    ),
+    cardElevation: CardElevation = CardDefaults.elevatedCardElevation()
 ) {
-    Card(
+    ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Max),
-        elevation = CardDefaults.cardElevation(defaultElevation = layoutConfig.elevation),
         shape = RoundedCornerShape(layoutConfig.cornerRadius),
-        colors = cardColors
+        colors = cardColors,
+        elevation = cardElevation
     ) {
         Row(
             modifier = Modifier
@@ -119,14 +119,12 @@ object W3WSearchBarDefaults {
      * @property paddingHorizontal The horizontal padding of the search bar.
      * @property paddingVertical The vertical padding of the search bar.
      * @property dividerWidth The width of the divider in the search bar.
-     * @property elevation The elevation of the search bar.
      */
     data class LayoutConfig(
         val cornerRadius: Dp,
         val paddingHorizontal: Dp,
         val paddingVertical: Dp,
-        val dividerWidth: Dp,
-        val elevation: Dp
+        val dividerWidth: Dp
     )
 
     /**
@@ -136,7 +134,6 @@ object W3WSearchBarDefaults {
      * @param paddingHorizontal The horizontal padding of the search bar. Default is 4.dp.
      * @param paddingVertical The vertical padding of the search bar. Default is 9.dp.
      * @param dividerWidth The width of the divider in the search bar. Default is 1.dp.
-     * @param elevation The elevation of the search bar. Default is 4.dp.
      * @return A LayoutConfig object with the provided layout configurations.
      */
     @Composable
@@ -144,15 +141,13 @@ object W3WSearchBarDefaults {
         cornerRadius: Dp = 16.dp,
         paddingHorizontal: Dp = 4.dp,
         paddingVertical: Dp = 9.dp,
-        dividerWidth: Dp = 1.dp,
-        elevation: Dp = 4.dp
+        dividerWidth: Dp = 1.dp
     ): LayoutConfig {
         return LayoutConfig(
             cornerRadius = cornerRadius,
             paddingHorizontal = paddingHorizontal,
             paddingVertical = paddingVertical,
-            dividerWidth = dividerWidth,
-            elevation = elevation
+            dividerWidth = dividerWidth
         )
     }
 }
@@ -167,7 +162,7 @@ object W3WSearchBarDefaults {
 private fun A1() {
     W3WTheme {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 trailingActions = {
@@ -232,7 +227,7 @@ private fun A1() {
 private fun A2() {
     W3WTheme {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 trailingActions = {
@@ -275,7 +270,7 @@ private fun A2() {
 private fun A3() {
     W3WTheme {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 leadingActions = {
@@ -318,7 +313,7 @@ private fun A3() {
 private fun A4() {
     W3WTheme {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 content = {
@@ -350,7 +345,7 @@ private fun A5() {
     W3WTheme {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Surface {
-                W3WSearchBar(
+                What3wordsSearchBar(
                     modifier = Modifier
                         .padding(4.dp),
                     trailingActions = {
@@ -416,7 +411,7 @@ private fun A5() {
 private fun B1() {
     W3WTheme(useDarkTheme = true) {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 trailingActions = {
@@ -481,7 +476,7 @@ private fun B1() {
 private fun B2() {
     W3WTheme(useDarkTheme = true) {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 trailingActions = {
@@ -524,7 +519,7 @@ private fun B2() {
 private fun B3() {
     W3WTheme(useDarkTheme = true) {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 leadingActions = {
@@ -567,7 +562,7 @@ private fun B3() {
 private fun B4() {
     W3WTheme(useDarkTheme = true) {
         Surface {
-            W3WSearchBar(
+            What3wordsSearchBar(
                 modifier = Modifier
                     .padding(4.dp),
                 content = {
@@ -599,7 +594,7 @@ private fun B5() {
     W3WTheme(useDarkTheme = true) {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Surface {
-                W3WSearchBar(
+                What3wordsSearchBar(
                     modifier = Modifier
                         .padding(4.dp),
                     trailingActions = {
@@ -644,7 +639,7 @@ private fun B5() {
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.size(4.dp))
-                        Text(text = "تنقيب")
+                        Text(text = "يبحث")
                     },
                     onContentClick = {
                         // Handle action
