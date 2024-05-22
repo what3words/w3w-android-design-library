@@ -13,4 +13,5 @@ sealed class NavScreen(val route: String) {
     object ButtonScreen : NavScreen("ButtonScreen")
     object IconButtonScreen : NavScreen("IconButtonScreen")
     object VoiceRecognitionAnimationScreen : NavScreen("VoiceRecognitionAnimationScreen")
+    object What3WordsSearchBarScreen : NavScreen("What3WordsSearchBarScreen")
 }

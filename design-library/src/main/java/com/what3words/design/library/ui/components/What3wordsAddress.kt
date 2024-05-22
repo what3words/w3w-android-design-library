@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
@@ -140,6 +141,7 @@ fun What3wordsAddress(
         textStyles = textStyles,
         secondaryContent = {
             AutoSizeText(
+                modifier = Modifier.padding(top = 4.dp),
                 text = secondaryText,
                 //to remove when we update to the latest jetpack compose version
                 style = textStyles.secondaryTextTextStyle.copy(
@@ -271,8 +273,8 @@ private fun A3() {
     W3WTheme {
         Surface {
             What3wordsAddress(
-                "filled.count.soap",
-                secondaryText = "index.home.raft"
+                "congratulations.congratulations.congratulations",
+                secondaryText = "congratulations.congratulations.congratulations"
             )
         }
     }
