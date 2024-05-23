@@ -88,7 +88,7 @@ fun What3wordsSearchBar(
                 trailingActions()
                 Divider(
                     modifier = Modifier
-                        .fillMaxHeight()
+                        .fillMaxHeight(0.8f)
                         .width(layoutConfig.dividerWidth)
                         .background(MaterialTheme.colorScheme.outlineVariant)
                 )
