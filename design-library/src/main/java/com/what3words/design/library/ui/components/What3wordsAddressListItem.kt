@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -35,9 +34,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
-import androidx.constraintlayout.compose.Visibility
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
 import com.what3words.design.library.ui.models.formatUnits
@@ -132,7 +128,7 @@ object What3wordsAddressListItemDefaults {
      */
     @Composable
     fun defaultTextStyles(
-        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.titleMediumProminent,
+        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.titleMediumSemibold,
         nearestPlaceTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
         distanceTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
         labelTextStyle: TextStyle = MaterialTheme.typography.labelLarge

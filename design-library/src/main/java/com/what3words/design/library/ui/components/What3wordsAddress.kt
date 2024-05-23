@@ -105,7 +105,7 @@ object What3wordsAddressDefaults {
      */
     @Composable
     fun defaultTextStyles(
-        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeProminent,
+        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeSemibold,
         secondaryTextTextStyle: TextStyle = MaterialTheme.typography.titleLarge
     ): TextStyles {
         return TextStyles(

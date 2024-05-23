@@ -9,7 +9,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -38,18 +37,25 @@ fun W3WTheme(
     w3WColorScheme: W3WColorScheme = if (useDarkTheme) w3wDarkW3WSchemeColors else w3wLightW3WSchemeColors,
     typography: Typography = MaterialTheme.typography,
     w3wTypography: W3wTypography = W3wTypography(
-        headlineLargeProminent = MaterialTheme.typography.headlineLarge.copy(
+        displayMediumMedium = MaterialTheme.typography.displayMedium.copy(
+            fontWeight = FontWeight.Medium,
+        ),
+        headlineLargeSemibold = MaterialTheme.typography.headlineLarge.copy(
             fontWeight = FontWeight.SemiBold,
             letterSpacing = TextUnit(-0.1f, TextUnitType.Sp)
         ),
-        titleMediumProminent = MaterialTheme.typography.titleMedium.copy(
+        titleLargeSemibold = MaterialTheme.typography.titleLarge.copy(
+            fontWeight = FontWeight.SemiBold,
+            letterSpacing = TextUnit(-0.1f, TextUnitType.Sp)
+        ),
+        titleMediumSemibold = MaterialTheme.typography.titleMedium.copy(
             fontWeight = FontWeight.SemiBold,
             fontSize = TextUnit(17f, TextUnitType.Sp)
         ),
-        labelMediumProminent = MaterialTheme.typography.labelMedium.copy(
+        labelMediumBold = MaterialTheme.typography.labelMedium.copy(
             fontWeight = FontWeight.Bold
         ),
-        labelLargeProminent = MaterialTheme.typography.labelLarge.copy(
+        labelLargeBold = MaterialTheme.typography.labelLarge.copy(
             fontWeight = FontWeight.Bold
         )
     ),
