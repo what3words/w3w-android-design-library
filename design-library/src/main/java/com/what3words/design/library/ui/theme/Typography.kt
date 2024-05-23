@@ -15,17 +15,21 @@ import androidx.compose.ui.text.TextStyle
  * While it provides a more semantic approach to defining text styles for specific What3words use cases,
  * it defaults back to MaterialTheme typography when no custom styles are set.
  *
- * @property headlineLargeProminent A TextStyle for large-sized headline text, more prominent variant.
- * @property titleMediumProminent A TextStyle for medium-sized title text, more prominent variant.
- * @property labelLargeProminent A TextStyle for large-sized label text, more prominent variant.
- * @property labelMediumProminent A TextStyle for medium-sized label text, more prominent variant.
+ * @property displayMediumMedium A TextStyle for medium-sized display text, more prominent variant.
+ * @property headlineLargeSemibold A TextStyle for large-sized headline text, more prominent variant.
+ * @property titleLargeSemibold A TextStyle for large-sized title text, more prominent variant.
+ * @property titleMediumSemibold A TextStyle for medium-sized title text, more prominent variant.
+ * @property labelLargeBold A TextStyle for large-sized label text, more prominent variant.
+ * @property labelMediumBold A TextStyle for medium-sized label text, more prominent variant.
  */
 @Immutable
 data class W3wTypography(
-    val headlineLargeProminent: TextStyle,
-    val titleMediumProminent: TextStyle,
-    val labelLargeProminent: TextStyle,
-    val labelMediumProminent: TextStyle
+    val displayMediumMedium: TextStyle,
+    val headlineLargeSemibold: TextStyle,
+    val titleLargeSemibold: TextStyle,
+    val titleMediumSemibold: TextStyle,
+    val labelLargeBold: TextStyle,
+    val labelMediumBold: TextStyle
 )
 
 /**
@@ -43,8 +47,10 @@ val MaterialTheme.w3wTypography: W3wTypography
     @Composable
     @ReadOnlyComposable
     get() = LocalW3wTypography.current ?: W3wTypography(
-        headlineLargeProminent = MaterialTheme.typography.headlineLarge,
-        titleMediumProminent = MaterialTheme.typography.titleMedium,
-        labelLargeProminent = MaterialTheme.typography.labelLarge,
-        labelMediumProminent = MaterialTheme.typography.labelMedium
+        displayMediumMedium = typography.displayMedium,
+        headlineLargeSemibold = typography.headlineLarge,
+        titleLargeSemibold = typography.titleLarge,
+        titleMediumSemibold = typography.titleMedium,
+        labelLargeBold = typography.labelLarge,
+        labelMediumBold = typography.labelMedium,
     )
