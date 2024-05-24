@@ -32,6 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.R
@@ -61,6 +62,14 @@ object What3wordsAddressListItemDefaults {
         val nearestPlaceTextStyle: TextStyle,
         val distanceTextStyle: TextStyle,
         val labelTextStyle: TextStyle
+    )
+
+    data class Paddings(
+        val start: Dp,
+        val top: Dp,
+        val end: Dp,
+        val bottom: Dp,
+        val item: Dp
     )
 
     /**
@@ -140,6 +149,23 @@ object What3wordsAddressListItemDefaults {
             labelTextStyle = labelTextStyle
         )
     }
+
+    @Composable
+    fun defaultPaddings(
+        start: Dp = 16.dp,
+        top: Dp = 16.dp,
+        end: Dp = 16.dp,
+        bottom: Dp = 16.dp,
+        item: Dp = 4.dp
+    ): Paddings {
+        return Paddings(
+            start = start,
+            top = top,
+            end = end,
+            bottom = bottom,
+            item = item
+        )
+    }
 }
 
 /**
@@ -174,6 +200,7 @@ fun What3wordsAddressListItem(
     label: String? = null,
     colors: What3wordsAddressListItemDefaults.Colors = What3wordsAddressListItemDefaults.defaultColors(),
     textStyles: What3wordsAddressListItemDefaults.TextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(),
+    paddings: What3wordsAddressListItemDefaults.Paddings = What3wordsAddressListItemDefaults.defaultPaddings(),
     showDivider: Boolean = true,
     onClick: (() -> Unit)? = null
 ) {
@@ -187,12 +214,14 @@ fun What3wordsAddressListItem(
                 }
             )
             .background(if (isHighlighted) colors.backgroundHighlighted else colors.background)
-            .padding(top = 16.dp, start = 16.dp, end = 0.dp, bottom = 0.dp)
+            .padding(
+                top = paddings.top,
+                start = paddings.start
+            )
     ) {
-
         var slashesMargin by remember { mutableStateOf(0.dp) }
         What3wordsAddress(
-            modifier = Modifier.padding(end = 16.dp, bottom = 16.dp),
+            modifier = Modifier.padding(end = paddings.end, bottom = paddings.bottom),
             words = words,
             colors = What3wordsAddressDefaults.defaultColors(
                 slashesColor = colors.slashesColor,
@@ -209,7 +238,7 @@ fun What3wordsAddressListItem(
                 ) {
                     Row(
                         modifier = Modifier
-                            .padding(top = 4.dp)
+                            .padding(top = paddings.item)
                             .fillMaxWidth()
                     ) {
                         if (!isLand) {
@@ -249,9 +278,9 @@ fun What3wordsAddressListItem(
                         Text(
                             text = label,
                             modifier = Modifier
-                                .padding(top = 4.dp)
+                                .padding(top = paddings.item)
                                 .background(colors.labelBackground)
-                                .padding(vertical = 4.dp, horizontal = 4.dp),
+                                .padding(paddings.item),
                             style = textStyles.labelTextStyle,
                             color = colors.labelTextColor,
                             textAlign = TextAlign.Center
@@ -265,6 +294,7 @@ fun What3wordsAddressListItem(
             Divider(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(start = slashesMargin)
                     .align(Alignment.BottomStart),
                 color = colors.dividerColor,
                 thickness = 1.dp
