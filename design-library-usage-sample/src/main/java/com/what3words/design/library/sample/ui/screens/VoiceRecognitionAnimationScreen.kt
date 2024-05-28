@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.what3words.design.library.ui.components.VoiceRecognitionAnimation
-import com.what3words.design.library.ui.components.VoiceRecognitionState
+import com.what3words.design.library.ui.components.VoiceAnimation
+import com.what3words.design.library.ui.components.VoiceAnimationState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -28,10 +28,10 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 @Composable
-fun VoiceRecognitionAnimationScreen() {
+fun VoiceAnimationScreen() {
     val context = LocalContext.current
-    val state: MutableState<VoiceRecognitionState> =
-        remember { mutableStateOf(VoiceRecognitionState.Idle) }
+    val state: MutableState<VoiceAnimationState> =
+        remember { mutableStateOf(VoiceAnimationState.Idle) }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -40,7 +40,7 @@ fun VoiceRecognitionAnimationScreen() {
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        VoiceRecognitionAnimation(
+        VoiceAnimation(
             modifier = Modifier
                 .fillMaxWidth(.5f)
                 .aspectRatio(1f)
@@ -61,14 +61,14 @@ fun VoiceRecognitionAnimationScreen() {
             ) {
                 Button(onClick = {
                     job.value?.cancel()
-                    state.value = VoiceRecognitionState.Idle
+                    state.value = VoiceAnimationState.Idle
                 }) {
                     Text("Idle")
                 }
 
                 Button(onClick = {
                     job.value?.cancel()
-                    state.value = VoiceRecognitionState.Loading
+                    state.value = VoiceAnimationState.Loading
                 }) {
                     Text("Loading")
                 }
@@ -79,21 +79,21 @@ fun VoiceRecognitionAnimationScreen() {
             ) {
                 Button(onClick = {
                     job.value?.cancel()
-                    state.value = VoiceRecognitionState.Active(0f)
+                    state.value = VoiceAnimationState.Active(0f)
                 }) {
                     Text("Active 0%")
                 }
 
                 Button(onClick = {
                     job.value?.cancel()
-                    state.value = VoiceRecognitionState.Active(0.5f)
+                    state.value = VoiceAnimationState.Active(0.5f)
                 }) {
                     Text("Active 50%")
                 }
 
                 Button(onClick = {
                     job.value?.cancel()
-                    state.value = VoiceRecognitionState.Active(1f)
+                    state.value = VoiceAnimationState.Active(1f)
                 }) {
                     Text("Active 100%")
                 }
@@ -109,7 +109,7 @@ fun VoiceRecognitionAnimationScreen() {
                         while (this.isActive) {
                             delay(200)
                             state.value =
-                                VoiceRecognitionState.Active(Random.nextFloat().coerceIn(0f, 1f))
+                                VoiceAnimationState.Active(Random.nextFloat().coerceIn(0f, 1f))
                         }
                     }
                 }) {
@@ -123,6 +123,6 @@ fun VoiceRecognitionAnimationScreen() {
 
 @Preview
 @Composable
-fun VoiceRecognitionAnimationScreenPreview() {
-    VoiceRecognitionAnimationScreen()
+fun VoiceAnimationScreenPreview() {
+    VoiceAnimationScreen()
 }

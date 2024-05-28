@@ -40,8 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.what3words.design.library.sample.ui.NavScreen
-import com.what3words.design.library.ui.components.VoiceRecognitionAnimation
-import com.what3words.design.library.ui.components.VoiceRecognitionState
+import com.what3words.design.library.ui.components.VoiceAnimation
+import com.what3words.design.library.ui.components.VoiceAnimationState
 import com.what3words.design.library.ui.components.What3wordsSearchBar
 import com.what3words.design.library.ui.components.What3wordsAddress
 import com.what3words.design.library.ui.components.What3wordsAddressListItem
@@ -184,23 +184,23 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(16.dp)
                 .clickable {
-                    navController.navigate(NavScreen.VoiceRecognitionAnimationScreen.route)
+                    navController.navigate(NavScreen.VoiceAnimationScreen.route)
                 },
             style = MaterialTheme.typography.titleMedium
         )
         val context = LocalContext.current
-        val state: MutableState<VoiceRecognitionState> =
-            remember { mutableStateOf(VoiceRecognitionState.Idle) }
+        val state: MutableState<VoiceAnimationState> =
+            remember { mutableStateOf(VoiceAnimationState.Idle) }
 
         LaunchedEffect(Unit) {
             while (this.isActive) {
                 delay(200)
                 state.value =
-                    VoiceRecognitionState.Active(Random.nextFloat().coerceIn(0f, 1f))
+                    VoiceAnimationState.Active(Random.nextFloat().coerceIn(0f, 1f))
             }
         }
 
-        VoiceRecognitionAnimation(
+        VoiceAnimation(
             modifier = Modifier
                 .fillMaxWidth(.5f)
                 .aspectRatio(1f)

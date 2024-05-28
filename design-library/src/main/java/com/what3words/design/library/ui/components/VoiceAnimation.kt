@@ -39,22 +39,22 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.rememberLottieDynamicProperties
 import com.airbnb.lottie.compose.rememberLottieDynamicProperty
 import com.what3words.design.library.R
-import com.what3words.design.library.ui.components.VoiceRecognitionAnimationDefaults.activeAnimationDurationMs
+import com.what3words.design.library.ui.components.VoiceAnimationDefaults.activeAnimationDurationMs
 import com.what3words.design.library.ui.theme.w3wColorScheme
 
 /**
- * This object contains default values used by the [VoiceRecognitionAnimation].
+ * This object contains default values used by the [VoiceAnimation].
  */
-object VoiceRecognitionAnimationDefaults {
+object VoiceAnimationDefaults {
 
     const val activeAnimationDurationMs = 200
 
     /**
-     * A data class representing the colors used in the [VoiceRecognitionAnimation].
+     * A data class representing the colors used in the [VoiceAnimation].
      *
-     * @property orbColors The color of the orbs in [VoiceRecognitionState.Active] and the icon background color in [VoiceRecognitionState.Idle].
-     * @property loadingIconColor The color of the loading icon in [VoiceRecognitionState.Loading].
-     * @property idleIconColor The color of the idle icon in [VoiceRecognitionState.Idle].
+     * @property orbColors The color of the orbs in [VoiceAnimationState.Active] and the icon background color in [VoiceAnimationState.Idle].
+     * @property loadingIconColor The color of the loading icon in [VoiceAnimationState.Loading].
+     * @property idleIconColor The color of the idle icon in [VoiceAnimationState.Idle].
      */
     data class Colors(
         val orbColors: Color,
@@ -80,36 +80,35 @@ object VoiceRecognitionAnimationDefaults {
 }
 
 /**
- * This is a sealed interface that represents the state of the Voice Recognition.
+ * This is a sealed interface that represents the state of the Voice Animation.
  */
-sealed interface VoiceRecognitionState {
+sealed interface VoiceAnimationState {
     /**
-     * Represents the Idle state of the Voice Recognition.
+     * Represents the Idle state of the Voice Animation.
      * In this state, the Voice Recognition is not actively listening or loading.
      *
-     * Use this state when waiting for the user to start the Voice Recognition process or
-     * when the Voice Recognition process has the errors.
+     * This state should be used when voice animation is not actively listening or loading and acts as a start button
      */
-    object Idle : VoiceRecognitionState
+    object Idle : VoiceAnimationState
 
     /**
-     * Represents the Active state of the Voice Recognition.
-     * In this state, the Voice Recognition is actively listening.
+     * Represents the Active state of the Voice Animation.
+     * This state should be used when the ASR is actively collecting data from the microphone.
      * @property signalStrength The strength of the signal being received by the Voice Recognition. It is a Float value between 0 and 1.
      */
-    data class Active(val signalStrength: Float) : VoiceRecognitionState
+    data class Active(val signalStrength: Float) : VoiceAnimationState
 
     /**
-     * Represents the Loading state of the Voice Recognition.
-     * In this state, the Voice Recognition is processing the user's voice.
+     * Represents the Loading state of the Voice Animation.
+     * This state should be used when the ASR is loading.
      */
-    object Loading : VoiceRecognitionState
+    object Loading : VoiceAnimationState
 }
 
 /**
- * This is a Composable function that represents the Voice Recognition Animation.
+ * This is a Composable function that represents the Voice Animation.
  *
- * Depending on the state of the Voice Recognition, it displays the corresponding animation:
+ * Depending on the state of the Voice, it displays the corresponding animation:
  * - If the state is Idle, it displays the IdleVoiceAnimation.
  * - If the state is Active, it displays the ActiveVoiceAnimation.
  * - If the state is Loading, it displays the LoadingVoiceAnimation.
@@ -121,28 +120,28 @@ sealed interface VoiceRecognitionState {
  * @param activeOnClick The function to be called when the animation is clicked AND the state is Active.
  */
 @Composable
-fun VoiceRecognitionAnimation(
+fun VoiceAnimation(
     modifier: Modifier = Modifier,
-    color: VoiceRecognitionAnimationDefaults.Colors = VoiceRecognitionAnimationDefaults.defaultColors(),
-    state: VoiceRecognitionState,
+    color: VoiceAnimationDefaults.Colors = VoiceAnimationDefaults.defaultColors(),
+    state: VoiceAnimationState,
     inactiveOnClick: (() -> Unit)? = null,
     activeOnClick: (() -> Unit)? = null
 ) {
     when (state) {
-        is VoiceRecognitionState.Idle -> IdleVoiceAnimation(
+        is VoiceAnimationState.Idle -> IdleVoiceAnimation(
             modifier = modifier,
             color = color,
             onClick = inactiveOnClick
         )
 
-        is VoiceRecognitionState.Active -> ActiveVoiceAnimation(
+        is VoiceAnimationState.Active -> ActiveVoiceAnimation(
             signalStrength = state.signalStrength,
             modifier = modifier,
             color = color,
             onClick = activeOnClick
         )
 
-        is VoiceRecognitionState.Loading -> LoadingVoiceAnimation(
+        is VoiceAnimationState.Loading -> LoadingVoiceAnimation(
             modifier = modifier,
             color = color
         )
@@ -152,7 +151,7 @@ fun VoiceRecognitionAnimation(
 @Composable
 private fun IdleVoiceAnimation(
     modifier: Modifier = Modifier,
-    color: VoiceRecognitionAnimationDefaults.Colors,
+    color: VoiceAnimationDefaults.Colors,
     onClick: (() -> Unit)? = null
 ) {
     Box(modifier = modifier.fillMaxSize()) {
@@ -180,7 +179,7 @@ private fun IdleVoiceAnimation(
 @Composable
 private fun ActiveVoiceAnimation(
     modifier: Modifier = Modifier,
-    color: VoiceRecognitionAnimationDefaults.Colors,
+    color: VoiceAnimationDefaults.Colors,
     signalStrength: Float,
     onClick: (() -> Unit)? = null,
 ) {
@@ -240,7 +239,7 @@ private fun ActiveVoiceAnimation(
 @Composable
 private fun LoadingVoiceAnimation(
     modifier: Modifier = Modifier,
-    color: VoiceRecognitionAnimationDefaults.Colors,
+    color: VoiceAnimationDefaults.Colors,
 ) {
     val dynamicProperties = rememberLottieDynamicProperties(
         rememberLottieDynamicProperty(
@@ -280,7 +279,7 @@ fun VoiceAnimationIdlePreview() {
             .width(248.dp)
             .height(248.dp)
     ) {
-        VoiceRecognitionAnimation(state = VoiceRecognitionState.Idle)
+        VoiceAnimation(state = VoiceAnimationState.Idle)
     }
 }
 
@@ -292,7 +291,7 @@ fun VoiceAnimationLoadingPreview() {
             .width(248.dp)
             .height(248.dp)
     ) {
-        VoiceRecognitionAnimation(state = VoiceRecognitionState.Loading)
+        VoiceAnimation(state = VoiceAnimationState.Loading)
     }
 }
 
@@ -304,8 +303,8 @@ fun VoiceAnimationActivePreview() {
             .width(248.dp)
             .height(248.dp)
     ) {
-        VoiceRecognitionAnimation(
-            state = VoiceRecognitionState.Active(signalStrength = 0.2f)
+        VoiceAnimation(
+            state = VoiceAnimationState.Active(signalStrength = 0.2f)
         )
     }
 }
