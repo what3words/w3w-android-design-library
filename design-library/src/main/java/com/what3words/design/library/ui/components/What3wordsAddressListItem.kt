@@ -207,7 +207,6 @@ fun What3wordsAddressListItem(
     val localContext = LocalContext.current
     Box(
         modifier = modifier
-            .fillMaxWidth()
             .clickable(
                 onClick = {
                     onClick?.invoke()
@@ -255,10 +254,11 @@ fun What3wordsAddressListItem(
                                     .weight(1f)
                                     .align(Alignment.CenterVertically),
                                 text = "${nearestPlacePrefix ?: ""} ${nearestPlace ?: ""}",
-                                overflow = TextOverflow.Ellipsis,
                                 style = textStyles.nearestPlaceTextStyle,
                                 color = colors.nearestPlaceTextColor,
                                 textAlign = TextAlign.Start,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         } else {
                             Spacer(modifier = Modifier.weight(1f))
@@ -283,7 +283,9 @@ fun What3wordsAddressListItem(
                                 .padding(paddings.item),
                             style = textStyles.labelTextStyle,
                             color = colors.labelTextColor,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
