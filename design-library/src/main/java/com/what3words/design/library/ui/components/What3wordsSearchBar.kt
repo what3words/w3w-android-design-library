@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.what3words.design.library.ui.components.W3WSearchBarDefaults.LayoutConfig
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.surfaceVariationsColors
 
@@ -70,7 +71,7 @@ fun What3wordsSearchBar(
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .height(intrinsicSize = IntrinsicSize.Max),
+            .height(intrinsicSize = IntrinsicSize.Min),
         shape = RoundedCornerShape(layoutConfig.cornerRadius),
         colors = cardColors,
         elevation = cardElevation
