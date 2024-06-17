@@ -31,6 +31,27 @@ through [![Maven Central](https://img.shields.io/maven-central/v/com.what3words/
 implementation 'com.what3words:w3w-android-design-library:2.0.0'
 ```
 
+#### Snapshots
+We deploy snapshot versions of the library to [Sonatype's snapshot repository](https://s01.oss.sonatype.org/content/repositories/snapshots/). These snapshots are generated after every merge to an Epic branch, providing an easy way to test the latest unreleased changes and upcoming updates without waiting for the next official version release.
+
+To use snapshot versions in your project, add the snapshot repository to your Gradle script:
+
+```
+repositories {
+    maven {
+        url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+```
+Then, update your dependencies to use the snapshot version:
+
+```
+dependencies {
+    implementation 'com.what3words:w3w-android-design-library:2.0.0-SNAPSHOT'
+}
+```
+The latest snapshot versions are available [here](https://s01.oss.sonatype.org/content/repositories/snapshots/com/what3words/w3w-android-design-library/).
+
 # Design library components
 
 ### [What3wordsAddressListItem](https://github.com/what3words/w3w-android-design-library/blob/main/design-library/src/main/java/com/what3words/design/library/ui/components/What3wordsAddressListItem.kt)
