@@ -2,10 +2,19 @@ package com.what3words.design.library.ui.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Map
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,87 +22,108 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.w3wColorScheme
 import com.what3words.design.library.ui.theme.w3wTypography
 
 /**
- * Object containing default configurations for What3wordsAddress composable.
- * It includes default settings for colors and text styles, which can be customized as needed.
+ * This object contains default configurations for the What3wordsAddress composable function.
+ * It provides default color and text style configurations that can be used when displaying a What3words address.
  */
 object What3wordsAddressDefaults {
+
     /**
-     * Data class to hold color configurations for What3wordsAddress composable.
+     * Data class that holds color configurations for the What3wordsAddress composable function.
      *
-     * @property slashesColor Color for the slashes in the What3words address.
-     * @property wordsTextColor Text color for the words in the What3words address.
+     * @property slashesColor The color to be used for slashes.
+     * @property wordsTextColor The color to be used for words text.
+     * @property secondaryTextColor The color to be used for the secondary text, if provided.
      */
     data class Colors(
         val slashesColor: Color,
         val wordsTextColor: Color,
+        val secondaryTextColor: Color
     )
 
     /**
-     * Data class to hold text style configurations for What3wordsAddress composable.
+     * Data class that holds text style configurations for the What3wordsAddress composable function.
      *
-     * @property wordsTextStyle Text style for the words in the What3words address.
+     * @property wordsTextStyle The text style to be used for words text.
+     * @property secondaryTextTextStyle The text style to be used for the secondary text, if provided.
      */
     data class TextStyles(
-        val wordsTextStyle: TextStyle
+        val wordsTextStyle: TextStyle,
+        val secondaryTextTextStyle: TextStyle
     )
 
     /**
-     * Provides default color settings for What3wordsAddress composable.
+     * Composable function that provides default color configurations for the What3wordsAddress composable function.
      *
-     * @param slashesColor Default color for slashes, defaults to MaterialTheme's primary color.
-     * @param wordsTextColor Default text color for words, defaults to MaterialTheme's onSecondaryContainer color.
-     * @return An instance of [Colors] with the specified or default color settings.
+     * @param slashesColor The color to be used for slashes. Default is set by [MaterialTheme.w3wColorScheme.brand].
+     * @param wordsTextColor The color to be used for words text. Default is set by [MaterialTheme.colorScheme.onSecondaryContainer].
+     * @param secondaryTextColor The color to be used for the secondary text, if provided. Default is set by [MaterialTheme.colorScheme.onSecondaryContainer].
+     * @return A Colors object with the provided color configurations.
      */
     @Composable
     fun defaultColors(
         slashesColor: Color = MaterialTheme.w3wColorScheme.brand,
-        wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
+        wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
+        secondaryTextColor: Color =  MaterialTheme.colorScheme.onSecondaryContainer
     ): Colors {
         return Colors(
             slashesColor = slashesColor,
-            wordsTextColor = wordsTextColor
+            wordsTextColor = wordsTextColor,
+            secondaryTextColor = secondaryTextColor
         )
     }
 
     /**
-     * Provides default text style settings for What3wordsAddress composable.
+     * Composable function that provides default text style configurations for the What3wordsAddress composable function.
      *
-     * @param wordsTextStyle Default text style for words, defaults to What3words typography headlineLargeProminent style.
-     * @return An instance of [TextStyles] with the specified or default text style settings.
+     * @param wordsTextStyle The text style to be used for words text. Default is set by [MaterialTheme.w3wTypography.headlineLargeProminent].
+     * @param secondaryTextTextStyle The text style to be used for the secondary text, if provided. Default is set by [MaterialTheme.typography.titleLarge].
+     * @return A TextStyles object with the provided text style configurations.
      */
     @Composable
     fun defaultTextStyles(
-        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeProminent,
+        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeSemibold,
+        secondaryTextTextStyle: TextStyle = MaterialTheme.typography.titleLarge
     ): TextStyles {
         return TextStyles(
-            wordsTextStyle = wordsTextStyle
+            wordsTextStyle = wordsTextStyle,
+            secondaryTextTextStyle = secondaryTextTextStyle
         )
     }
 }
 
-
 /**
- * Composable function to display a What3words address.
- * It offers customizable styles for text and colors, and utilizes responsive text to adjust to container sizes.
+ * A composable function that displays a What3words address with a secondary text.
  *
- * @param words The What3words address to be displayed.
- * @param modifier Modifier to be applied to the What3words address layout.
- * @param colors Customizable color settings for the component.
- * @param textStyles Customizable text style settings for the component.
+ * @param words The string of words to be displayed.
+ * @param modifier The Modifier to be applied to the layout.
+ * @param colors The Colors object for color configurations. Default is set by [What3wordsAddressDefaults.defaultColors].
+ * @param textStyles The TextStyles object for text style configurations. Default is set by [What3wordsAddressDefaults.defaultTextStyles].
+ * @param secondaryText The secondary text string to be displayed.
+ * @param slashesPadding A lambda function for setting the margin of slashes.
  */
 @Composable
 fun What3wordsAddress(
@@ -101,37 +131,100 @@ fun What3wordsAddress(
     modifier: Modifier = Modifier,
     colors: What3wordsAddressDefaults.Colors = What3wordsAddressDefaults.defaultColors(),
     textStyles: What3wordsAddressDefaults.TextStyles = What3wordsAddressDefaults.defaultTextStyles(),
+    secondaryText: String,
+    slashesPadding: ((Dp) -> Unit)? = null
 ) {
-    Row(
-        modifier = modifier
-    ) {
-        val startFontSize = textStyles.wordsTextStyle.fontSize
-        var textSize by remember { mutableStateOf(startFontSize) }
-        ResponsiveText(
-            text = stringResource(id = R.string.slashes),
-            modifier = Modifier
-                .wrapContentWidth(),
-            style = textStyles.wordsTextStyle,
-            color = colors.slashesColor,
-            targetTextSizeHeight = textSize
-        )
+    What3wordsAddress(
+        words = words,
+        modifier = modifier,
+        colors = colors,
+        textStyles = textStyles,
+        secondaryContent = {
+            AutoSizeText(
+                modifier = Modifier.padding(top = 4.dp),
+                text = secondaryText,
+                //to remove when we update to the latest jetpack compose version
+                style = textStyles.secondaryTextTextStyle.copy(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false,
+                    )
+                ),
+                color = colors.secondaryTextColor,
+                maxTextSize = textStyles.secondaryTextTextStyle.fontSize,
+                maxLines = 1
+            )
+        },
+        slashesMargin = slashesPadding
+    )
+}
 
-        ResponsiveText(
-            modifier = Modifier,
-            text = words,
-            style = textStyles.wordsTextStyle,
-            color = colors.wordsTextColor,
-            targetTextSizeHeight = textSize,
-            resizeFunc = {
-                textSize = textSize.times(TEXT_SCALE_REDUCTION_INTERVAL)
-            },
-            textAlign = TextAlign.Start,
-            maxLines = 1
+/**
+ * A composable function that displays a What3words address with a possible secondary content.
+ *
+ * @param words The string of words to be displayed.
+ * @param modifier The Modifier to be applied to the layout.
+ * @param colors The Colors object for color configurations. Default is set by [What3wordsAddressDefaults.defaultColors].
+ * @param textStyles The TextStyles object for text style configurations. Default is set by [What3wordsAddressDefaults.defaultTextStyles].
+ * @param secondaryContent A composable lambda function for secondary content.
+ * @param slashesMargin A lambda function for setting the margin of slashes.
+ */
+@OptIn(ExperimentalTextApi::class)
+@Composable
+fun What3wordsAddress(
+    words: String,
+    modifier: Modifier = Modifier,
+    colors: What3wordsAddressDefaults.Colors = What3wordsAddressDefaults.defaultColors(),
+    textStyles: What3wordsAddressDefaults.TextStyles = What3wordsAddressDefaults.defaultTextStyles(),
+    secondaryContent: @Composable () -> Unit = {},
+    slashesMargin: ((Dp) -> Unit)? = null
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        var margin by remember { mutableStateOf(0.dp) }
+        val textMeasurer = rememberTextMeasurer()
+        val density = LocalDensity.current
+        val slashes = stringResource(id = R.string.slashes)
+        val buildString = buildAnnotatedString {
+            withStyle(ParagraphStyle()) {
+                withStyle(
+                    style = SpanStyle(color = colors.slashesColor)
+                ) {
+                    append(slashes)
+                }
+                withStyle(
+                    style = SpanStyle(color = colors.wordsTextColor)
+                ) {
+                    append(words)
+                }
+            }
+        }
+        AutoSizeText(
+            text = buildString,
+            maxLines = 1,
+            //to remove when we update to the latest jetpack compose version
+            style = textStyles.wordsTextStyle.copy(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false,
+                )
+            ),
+            maxTextSize = textStyles.wordsTextStyle.fontSize,
+            onTextLayout = {
+                val widthInPixels = textMeasurer.measure(slashes, it.layoutInput.style).size.width
+                val marginDp = with(density) { widthInPixels.toDp() }
+                margin = marginDp
+                if (slashesMargin != null) {
+                    slashesMargin(marginDp)
+                }
+            }
         )
+        Row {
+            Spacer(modifier = Modifier.width(margin))
+            secondaryContent()
+        }
     }
 }
 
-//region Previews with W3WTheme day
 @Preview(
     group = "W3WTheme",
     name = "W3WTheme/Day/LTR",
@@ -168,6 +261,109 @@ private fun A2() {
         }
     }
 }
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR/SecondaryText",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A3() {
+    W3WTheme {
+        Surface {
+            What3wordsAddress(
+                "congratulations.congratulations.congratulations",
+                secondaryText = "congratulations.congratulations.congratulations"
+            )
+        }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    locale = "ar",
+    name = "W3WTheme/Day/RTL/SecondaryText",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A4() {
+    W3WTheme {
+        Surface {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                What3wordsAddress(
+                    "لبن.درجات.عنق",
+                    secondaryText = "index.home.raft"
+                )
+            }
+        }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR/SecondaryContent",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A5() {
+    W3WTheme {
+        Surface {
+            What3wordsAddress(
+                "filled.count.soap",
+                secondaryContent = {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                        Text(
+                            text = "little description",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    locale = "ar",
+    name = "W3WTheme/Day/RTL/SecondaryContent",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A6() {
+    W3WTheme {
+        Surface {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                What3wordsAddress(
+                    "لبن.درجات.عنق",
+                    secondaryContent = {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                            Text(
+                                text = "وصف قصير",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+                )
+            }
+        }
+    }
+}
+
 //endregion
 
 //region Previews with W3WTheme night
@@ -192,7 +388,7 @@ private fun B1() {
     group = "W3WTheme",
     locale = "ar",
     name = "W3WTheme/Night/RTL",
-    uiMode = UI_MODE_NIGHT_NO,
+    uiMode = UI_MODE_NIGHT_YES,
     showBackground = true
 )
 @Composable
@@ -207,6 +403,108 @@ private fun B2() {
         }
     }
 }
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR/SecondaryText",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun B3() {
+    W3WTheme {
+        Surface {
+            What3wordsAddress(
+                "filled.count.soap",
+                secondaryText = "index.home.raft"
+            )
+        }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    locale = "ar",
+    name = "W3WTheme/Night/RTL/SecondaryText",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun B4() {
+    W3WTheme {
+        Surface {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                What3wordsAddress(
+                    "لبن.درجات.عنق",
+                    secondaryText = "index.home.raft"
+                )
+            }
+        }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR/SecondaryContent",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun B5() {
+    W3WTheme {
+        Surface {
+            What3wordsAddress(
+                "filled.count.soap",
+                secondaryContent = {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                        Text(
+                            text = "little description",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    locale = "ar",
+    name = "W3WTheme/Night/RTL/SecondaryContent",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun B6() {
+    W3WTheme {
+        Surface {
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                What3wordsAddress(
+                    "لبن.درجات.عنق",
+                    secondaryContent = {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Map, contentDescription = "Map")
+                            Text(
+                                text = "وصف قصير",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+                )
+            }
+        }
+    }
+}
+
 //endregion
 
 //region Previews with MaterialTheme day

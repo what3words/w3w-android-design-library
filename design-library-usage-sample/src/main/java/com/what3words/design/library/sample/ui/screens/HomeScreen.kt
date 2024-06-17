@@ -1,32 +1,54 @@
 package com.what3words.design.library.sample.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DocumentScanner
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SettingsVoice
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.what3words.design.library.sample.ui.NavScreen
+import com.what3words.design.library.ui.components.VoiceAnimation
+import com.what3words.design.library.ui.components.VoiceAnimationState
+import com.what3words.design.library.ui.components.What3wordsSearchBar
 import com.what3words.design.library.ui.components.What3wordsAddress
 import com.what3words.design.library.ui.components.What3wordsAddressListItem
 import com.what3words.design.library.ui.theme.w3wColorScheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlin.random.Random
 
 @Composable
 fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -155,6 +177,102 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                     Icons.Filled.KeyboardArrowRight,
                     contentDescription = "Localized description",
                 )
+            }
+        )
+        Text(
+            text = "Voice Recognition Component >",
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    navController.navigate(NavScreen.VoiceAnimationScreen.route)
+                },
+            style = MaterialTheme.typography.titleMedium
+        )
+        val context = LocalContext.current
+        val state: MutableState<VoiceAnimationState> =
+            remember { mutableStateOf(VoiceAnimationState.Idle) }
+
+        LaunchedEffect(Unit) {
+            while (this.isActive) {
+                delay(200)
+                state.value =
+                    VoiceAnimationState.Active(Random.nextFloat().coerceIn(0f, 1f))
+            }
+        }
+
+        VoiceAnimation(
+            modifier = Modifier
+                .fillMaxWidth(.5f)
+                .aspectRatio(1f)
+                .align(Alignment.CenterHorizontally),
+            state = state.value,
+            activeOnClick = {
+                Toast.makeText(context, "Active clicked", Toast.LENGTH_SHORT).show()
+            },
+            inactiveOnClick = {
+                Toast.makeText(context, "Inactive clicked", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        Text(
+            text = "Search bar >",
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    navController.navigate(NavScreen.What3WordsSearchBarScreen.route)
+                },
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        What3wordsSearchBar(
+            modifier = Modifier
+                .padding(4.dp),
+            trailingActions = {
+                IconButton(
+                    onClick = {
+                        navController.navigate(NavScreen.What3WordsSearchBarScreen.route)
+                    }) {
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            leadingActions = {
+                IconButton(
+                    onClick = {
+                        navController.navigate(NavScreen.What3WordsSearchBarScreen.route)
+                    }) {
+                    Icon(
+                        imageVector = Icons.Default.SettingsVoice,
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        navController.navigate(NavScreen.What3WordsSearchBarScreen.route)
+                    }) {
+                    Icon(
+                        imageVector = Icons.Default.DocumentScanner,
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                }
+            },
+            content = {
+                Spacer(modifier = Modifier.size(8.dp))
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.size(4.dp))
+                Text(text = "Search")
+            },
+            onContentClick = {
+                navController.navigate(NavScreen.What3WordsSearchBarScreen.route)
             }
         )
     }
