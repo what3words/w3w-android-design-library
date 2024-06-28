@@ -39,7 +39,6 @@ import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
 import com.what3words.design.library.ui.models.formatUnits
 import com.what3words.design.library.ui.theme.W3WTheme
-import com.what3words.design.library.ui.theme.surfaceVariationsColors
 import com.what3words.design.library.ui.theme.w3wColorScheme
 import com.what3words.design.library.ui.theme.w3wTypography
 
@@ -95,8 +94,8 @@ object What3wordsAddressListItemDefaults {
      */
     @Composable
     fun defaultColors(
-        background: Color = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
-        backgroundHighlighted: Color = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
+        background: Color = MaterialTheme.colorScheme.surfaceContainerLowest,
+        backgroundHighlighted: Color = MaterialTheme.colorScheme.surfaceContainerLowest,
         slashesColor: Color = MaterialTheme.w3wColorScheme.brand,
         wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
         iconColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
