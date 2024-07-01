@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        compose_bom_version = '2023.06.01'
+        compose_bom_version = '2024.06.00'
         constraint_layout_version = "1.0.1"
         dependency_analysis_version = "1.20.0"
         navigation_compose_version = "2.6.0"
