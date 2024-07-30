@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.components.W3WSearchBarDefaults.LayoutConfig
 import com.what3words.design.library.ui.theme.W3WTheme
-import com.what3words.design.library.ui.theme.surfaceVariationsColors
 
 /**
  * A composable function that represents a search bar in the What3words design system.
@@ -60,11 +59,11 @@ fun What3wordsSearchBar(
     content: @Composable RowScope.() -> Unit,
     onContentClick: () -> Unit,
     modifier: Modifier = Modifier,
-    layoutConfig: W3WSearchBarDefaults.LayoutConfig = W3WSearchBarDefaults.defaultLayoutConfig(),
+    layoutConfig: LayoutConfig = W3WSearchBarDefaults.defaultLayoutConfig(),
     leadingActions: @Composable RowScope.() -> Unit = {},
     trailingActions: (@Composable RowScope.() -> Unit)? = null,
     cardColors: CardColors = CardDefaults.elevatedCardColors(
-        containerColor = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
     ),
     cardElevation: CardElevation = CardDefaults.elevatedCardElevation()
 ) {

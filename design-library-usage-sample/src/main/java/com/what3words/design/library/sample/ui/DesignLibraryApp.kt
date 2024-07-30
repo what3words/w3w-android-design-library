@@ -29,8 +29,6 @@ import com.what3words.design.library.sample.ui.screens.VoiceAnimationScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressListItemScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsAddressScreen
 import com.what3words.design.library.sample.ui.screens.What3wordsSearchBarScreen
-import com.what3words.design.library.ui.theme.surfaceVariationsColors
-
 
 @ExperimentalMaterial3Api
 @Composable
@@ -94,7 +92,7 @@ fun DesignLibraryApp(
     ) {
         NavHost(
             modifier = Modifier
-                .background(MaterialTheme.surfaceVariationsColors.surfaceContainer)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(it),
             navController = navController,
             startDestination = NavScreen.Home.route
