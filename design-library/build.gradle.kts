@@ -16,7 +16,7 @@ group = "com.what3words"
  */
 val isSnapshotRelease = findProperty("IS_SNAPSHOT_RELEASE") == "true"
 version =
-    if (isSnapshotRelease) "${findProperty("VERSION_NAME")}-SNAPSHOT" else "${findProperty("VERSION_NAME")}"
+    if (isSnapshotRelease) "${findProperty("LIBRARY_VERSION")}-SNAPSHOT" else "${findProperty("LIBRARY_VERSION")}"
 
 
 android {
