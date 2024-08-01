@@ -52,7 +52,6 @@ android {
     publishing {
         singleVariant("release") {
             withSourcesJar()
-            withJavadocJar()
         }
     }
     namespace = "com.what3words.design.library"
@@ -78,66 +77,68 @@ val ossrhPassword = findProperty("OSSRH_PASSWORD") as String?
 val signingKey = findProperty("SIGNING_KEY") as String?
 val signingKeyPwd = findProperty("SIGNING_KEY_PWD") as String?
 
-afterEvaluate {
-    publishing {
-        repositories {
-            publications {
-                withType(MavenPublication::class.java) {
-                    from(components.getByName("release"))
-                    artifactId = "w3w-android-design-library"
-                    groupId = group.toString()
-                    version = this@afterEvaluate.version.toString()
-                    val publicationName = name
-                    val dokkaJar =
-                        project.tasks.register("${publicationName}DokkaJar", Jar::class) {
-                            group = JavaBasePlugin.DOCUMENTATION_GROUP
-                            description = "Assembles Kotlin docs with Dokka into a Javadoc jar"
-                            archiveClassifier.set("javadoc")
-                            from(tasks.named("dokkaHtml"))
+publishing {
+    repositories {
+        maven {
+            name = "sonatype"
+            val releasesRepoUrl =
+                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            val snapshotsRepoUrl =
+                "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = if (version.toString()
+                    .endsWith("SNAPSHOT")
+            ) URI.create(snapshotsRepoUrl) else URI.create(releasesRepoUrl)
 
-                            // Each archive name should be distinct, to avoid implicit dependency issues.
-                            // We use the same format as the sources Jar tasks.
-                            // https://youtrack.jetbrains.com/issue/KT-46466
-                            archiveBaseName.set("${archiveBaseName.get()}-$publicationName")
-                        }
-                    artifact(dokkaJar)
-                    pom {
-                        name.set("w3w-android-design-library")
-                        description.set("Android design library for what3words apps and components with MaterialTheme and W3WTheme")
-                        url.set("https://github.com/what3words/w3w-android-design-library")
-                        licenses {
-                            license {
-                                name.set("The MIT License (MIT)")
-                                url.set("https://github.com/what3words/w3w-android-design-library/blob/master/LICENSE")
-                            }
-                        }
-                        developers {
-                            developer {
-                                id.set("what3words")
-                                name.set("what3words")
-                                email.set("development@what3words.com")
-                            }
-                        }
-                        scm {
-                            connection.set("scm:git:git://github.com/what3words/w3w-android-design-library.git")
-                            developerConnection.set("scm:git:ssh://git@github.com:what3words/w3w-android-design-library.git")
-                            url.set("https://github.com/what3words/w3w-android-design-library/tree/master")
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+        publications {
+            create<MavenPublication>("Maven") {
+                artifactId = "w3w-android-design-library"
+                groupId = "com.what3words"
+                version = project.version.toString()
+                afterEvaluate {
+                    from(components["release"])
+                }
+            }
+            withType(MavenPublication::class.java) {
+                val publicationName = name
+                val dokkaJar =
+                    project.tasks.register("${publicationName}DokkaJar", Jar::class) {
+                        group = JavaBasePlugin.DOCUMENTATION_GROUP
+                        description = "Assembles Kotlin docs with Dokka into a Javadoc jar"
+                        archiveClassifier.set("javadoc")
+                        from(tasks.named("dokkaHtml"))
+
+                        // Each archive name should be distinct, to avoid implicit dependency issues.
+                        // We use the same format as the sources Jar tasks.
+                        // https://youtrack.jetbrains.com/issue/KT-46466
+                        archiveBaseName.set("${archiveBaseName.get()}-$publicationName")
+                    }
+                artifact(dokkaJar)
+                pom {
+                    name.set("w3w-android-design-library")
+                    description.set("Android design library for what3words apps and components with MaterialTheme and W3WTheme")
+                    url.set("https://github.com/what3words/w3w-android-design-library")
+                    licenses {
+                        license {
+                            name.set("The MIT License (MIT)")
+                            url.set("https://github.com/what3words/w3w-android-design-library/blob/master/LICENSE")
                         }
                     }
-                }
-                maven {
-                    name = "sonatype"
-                    val releasesRepoUrl =
-                        "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                    val snapshotsRepoUrl =
-                        "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                    url = if (version.toString()
-                            .endsWith("SNAPSHOT")
-                    ) URI.create(snapshotsRepoUrl) else URI.create(releasesRepoUrl)
-
-                    credentials {
-                        username = ossrhUsername
-                        password = ossrhPassword
+                    developers {
+                        developer {
+                            id.set("what3words")
+                            name.set("what3words")
+                            email.set("development@what3words.com")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:git://github.com/what3words/w3w-android-design-library.git")
+                        developerConnection.set("scm:git:ssh://git@github.com:what3words/w3w-android-design-library.git")
+                        url.set("https://github.com/what3words/w3w-android-design-library/tree/master")
                     }
                 }
             }
