@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
@@ -56,23 +55,19 @@ object What3wordsAddressDefaults {
      *
      * @property slashesColor The color to be used for slashes.
      * @property wordsTextColor The color to be used for words text.
-     * @property secondaryTextColor The color to be used for the secondary text, if provided.
      */
     data class Colors(
         val slashesColor: Color,
         val wordsTextColor: Color,
-        val secondaryTextColor: Color
     )
 
     /**
      * Data class that holds text style configurations for the What3wordsAddress composable function.
      *
      * @property wordsTextStyle The text style to be used for words text.
-     * @property secondaryTextTextStyle The text style to be used for the secondary text, if provided.
      */
     data class TextStyles(
         val wordsTextStyle: TextStyle,
-        val secondaryTextTextStyle: TextStyle
     )
 
     /**
@@ -80,19 +75,16 @@ object What3wordsAddressDefaults {
      *
      * @param slashesColor The color to be used for slashes. Default is set by [MaterialTheme.w3wColorScheme.brand].
      * @param wordsTextColor The color to be used for words text. Default is set by [MaterialTheme.colorScheme.onSecondaryContainer].
-     * @param secondaryTextColor The color to be used for the secondary text, if provided. Default is set by [MaterialTheme.colorScheme.onSecondaryContainer].
      * @return A Colors object with the provided color configurations.
      */
     @Composable
     fun defaultColors(
         slashesColor: Color = MaterialTheme.w3wColorScheme.brand,
-        wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
-        secondaryTextColor: Color =  MaterialTheme.colorScheme.onSecondaryContainer
+        wordsTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
     ): Colors {
         return Colors(
             slashesColor = slashesColor,
-            wordsTextColor = wordsTextColor,
-            secondaryTextColor = secondaryTextColor
+            wordsTextColor = wordsTextColor
         )
     }
 
@@ -100,63 +92,18 @@ object What3wordsAddressDefaults {
      * Composable function that provides default text style configurations for the What3wordsAddress composable function.
      *
      * @param wordsTextStyle The text style to be used for words text. Default is set by [MaterialTheme.w3wTypography.headlineLargeProminent].
-     * @param secondaryTextTextStyle The text style to be used for the secondary text, if provided. Default is set by [MaterialTheme.typography.titleLarge].
      * @return A TextStyles object with the provided text style configurations.
      */
     @Composable
     fun defaultTextStyles(
-        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeSemibold,
-        secondaryTextTextStyle: TextStyle = MaterialTheme.typography.titleLarge
+        wordsTextStyle: TextStyle = MaterialTheme.w3wTypography.headlineLargeSemibold
     ): TextStyles {
         return TextStyles(
-            wordsTextStyle = wordsTextStyle,
-            secondaryTextTextStyle = secondaryTextTextStyle
+            wordsTextStyle = wordsTextStyle
         )
     }
 }
 
-/**
- * A composable function that displays a What3words address with a secondary text.
- *
- * @param words The string of words to be displayed.
- * @param modifier The Modifier to be applied to the layout.
- * @param colors The Colors object for color configurations. Default is set by [What3wordsAddressDefaults.defaultColors].
- * @param textStyles The TextStyles object for text style configurations. Default is set by [What3wordsAddressDefaults.defaultTextStyles].
- * @param secondaryText The secondary text string to be displayed.
- * @param slashesPadding A lambda function for setting the margin of slashes.
- */
-@Composable
-fun What3wordsAddress(
-    words: String,
-    modifier: Modifier = Modifier,
-    colors: What3wordsAddressDefaults.Colors = What3wordsAddressDefaults.defaultColors(),
-    textStyles: What3wordsAddressDefaults.TextStyles = What3wordsAddressDefaults.defaultTextStyles(),
-    secondaryText: String,
-    slashesPadding: ((Dp) -> Unit)? = null
-) {
-    What3wordsAddress(
-        words = words,
-        modifier = modifier,
-        colors = colors,
-        textStyles = textStyles,
-        secondaryContent = {
-            AutoSizeText(
-                modifier = Modifier.padding(top = 4.dp),
-                text = secondaryText,
-                //to remove when we update to the latest jetpack compose version
-                style = textStyles.secondaryTextTextStyle.copy(
-                    platformStyle = PlatformTextStyle(
-                        includeFontPadding = false,
-                    )
-                ),
-                color = colors.secondaryTextColor,
-                maxTextSize = textStyles.secondaryTextTextStyle.fontSize,
-                maxLines = 1
-            )
-        },
-        slashesMargin = slashesPadding
-    )
-}
 
 /**
  * A composable function that displays a What3words address with a possible secondary content.
@@ -264,7 +211,7 @@ private fun A2() {
 
 @Preview(
     group = "W3WTheme",
-    name = "W3WTheme/Day/LTR/SecondaryText",
+    name = "W3WTheme/Day/LTR/Long Text",
     uiMode = UI_MODE_NIGHT_NO,
     showBackground = true
 )
@@ -274,29 +221,7 @@ private fun A3() {
         Surface {
             What3wordsAddress(
                 "congratulations.congratulations.congratulations",
-                secondaryText = "congratulations.congratulations.congratulations"
             )
-        }
-    }
-}
-
-@Preview(
-    group = "W3WTheme",
-    locale = "ar",
-    name = "W3WTheme/Day/RTL/SecondaryText",
-    uiMode = UI_MODE_NIGHT_NO,
-    showBackground = true
-)
-@Composable
-private fun A4() {
-    W3WTheme {
-        Surface {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                What3wordsAddress(
-                    "لبن.درجات.عنق",
-                    secondaryText = "index.home.raft"
-                )
-            }
         }
     }
 }
@@ -308,7 +233,7 @@ private fun A4() {
     showBackground = true
 )
 @Composable
-private fun A5() {
+private fun A4() {
     W3WTheme {
         Surface {
             What3wordsAddress(
@@ -339,7 +264,7 @@ private fun A5() {
     showBackground = true
 )
 @Composable
-private fun A6() {
+private fun A5() {
     W3WTheme {
         Surface {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -405,7 +330,7 @@ private fun B2() {
 }
 @Preview(
     group = "W3WTheme",
-    name = "W3WTheme/Night/LTR/SecondaryText",
+    name = "W3WTheme/Night/LTR/LongText",
     uiMode = UI_MODE_NIGHT_YES,
     showBackground = true
 )
@@ -414,30 +339,8 @@ private fun B3() {
     W3WTheme {
         Surface {
             What3wordsAddress(
-                "filled.count.soap",
-                secondaryText = "index.home.raft"
+                "congratulations.congratulations.congratulations",
             )
-        }
-    }
-}
-
-@Preview(
-    group = "W3WTheme",
-    locale = "ar",
-    name = "W3WTheme/Night/RTL/SecondaryText",
-    uiMode = UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-private fun B4() {
-    W3WTheme {
-        Surface {
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                What3wordsAddress(
-                    "لبن.درجات.عنق",
-                    secondaryText = "index.home.raft"
-                )
-            }
         }
     }
 }
@@ -449,7 +352,7 @@ private fun B4() {
     showBackground = true
 )
 @Composable
-private fun B5() {
+private fun B4() {
     W3WTheme {
         Surface {
             What3wordsAddress(
@@ -480,7 +383,7 @@ private fun B5() {
     showBackground = true
 )
 @Composable
-private fun B6() {
+private fun B5() {
     W3WTheme {
         Surface {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -504,7 +407,6 @@ private fun B6() {
         }
     }
 }
-
 //endregion
 
 //region Previews with MaterialTheme day
