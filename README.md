@@ -28,7 +28,7 @@ through [![Maven Central](https://img.shields.io/maven-central/v/com.what3words/
 ### Gradle
 
 ```
-implementation 'com.what3words:w3w-android-design-library:2.0.0'
+implementation 'com.what3words:w3w-android-design-library:$latest'
 ```
 
 #### Snapshots
@@ -47,7 +47,7 @@ Then, update your dependencies to use the snapshot version:
 
 ```
 dependencies {
-    implementation 'com.what3words:w3w-android-design-library:2.0.0-SNAPSHOT'
+    implementation 'com.what3words:w3w-android-design-library:$latest-SNAPSHOT'
 }
 ```
 The latest snapshot versions are available [here](https://s01.oss.sonatype.org/content/repositories/snapshots/com/what3words/w3w-android-design-library/).

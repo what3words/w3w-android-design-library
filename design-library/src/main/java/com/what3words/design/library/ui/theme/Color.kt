@@ -228,7 +228,14 @@ internal val w3wLightColors = lightColorScheme(
     inverseSurface = surfaces_inverse_surface_light_w3w,
     inversePrimary = colors_primary_core_inverse_primary_light_w3w,
     outlineVariant = outlines_outline_variant_light_w3w,
-    scrim = scrim_scrim_light_w3w
+    scrim = scrim_scrim_light_w3w,
+    surfaceBright = surfaces_surface_bright_light_w3w,
+    surfaceDim = surfaces_surface_dim_light_w3w,
+    surfaceContainer = surfaces_surface_container_light_w3w,
+    surfaceContainerHigh = surfaces_surface_container_high_light_w3w,
+    surfaceContainerLow = surfaces_surface_container_low_light_w3w,
+    surfaceContainerHighest = surfaces_surface_container_highest_light_w3w,
+    surfaceContainerLowest = surfaces_surface_container_lowest_light_w3w
 )
 
 /**
@@ -258,35 +265,7 @@ internal val w3wDarkColors = darkColorScheme(
     inverseSurface = surfaces_inverse_surface_dark_w3w,
     inversePrimary = colors_primary_core_inverse_primary_dark_w3w,
     outlineVariant = outlines_outline_variant_dark_w3w,
-    scrim = scrim_scrim_dark_w3w
-)
-
-/**
- * Data class representing custom surface variation colors, allowing for additional color customization. (to be deleted when updating material3 to 1.2.0)
- */
-@Immutable
-data class SurfaceVariationsColors(
-    val surfaceBright: Color = Color.Unspecified,
-    val surfaceDim: Color = Color.Unspecified,
-    val surfaceContainer: Color = Color.Unspecified,
-    val surfaceContainerHigh: Color = Color.Unspecified,
-    val surfaceContainerLow: Color = Color.Unspecified,
-    val surfaceContainerHighest: Color = Color.Unspecified,
-    val surfaceContainerLowest: Color = Color.Unspecified,
-)
-
-// Success color assignments for light and dark themes.
-val w3wLightSurfaceVariationsColors = SurfaceVariationsColors(
-    surfaceBright = surfaces_surface_bright_light_w3w,
-    surfaceDim = surfaces_surface_dim_light_w3w,
-    surfaceContainer = surfaces_surface_container_light_w3w,
-    surfaceContainerHigh = surfaces_surface_container_high_light_w3w,
-    surfaceContainerLow = surfaces_surface_container_low_light_w3w,
-    surfaceContainerHighest = surfaces_surface_container_highest_light_w3w,
-    surfaceContainerLowest = surfaces_surface_container_lowest_light_w3w
-)
-
-val w3wDarkSurfaceVariationsColors = SurfaceVariationsColors(
+    scrim = scrim_scrim_dark_w3w,
     surfaceBright = surfaces_surface_bright_dark_w3w,
     surfaceDim = surfaces_surface_dim_dark_w3w,
     surfaceContainer = surfaces_surface_container_dark_w3w,
@@ -294,27 +273,6 @@ val w3wDarkSurfaceVariationsColors = SurfaceVariationsColors(
     surfaceContainerLow = surfaces_surface_container_low_dark_w3w,
     surfaceContainerHighest = surfaces_surface_container_highest_dark_w3w,
     surfaceContainerLowest = surfaces_surface_container_lowest_dark_w3w
-)
-
-// Success color assignments for light and dark themes.
-val m3LightSurfaceVariationsColors = SurfaceVariationsColors(
-    surfaceBright = surfaces_surface_bright_light_m3,
-    surfaceDim = surfaces_surface_dim_light_m3,
-    surfaceContainer = surfaces_surface_container_light_m3,
-    surfaceContainerHigh = surfaces_surface_container_high_light_m3,
-    surfaceContainerLow = surfaces_surface_container_low_light_m3,
-    surfaceContainerHighest = surfaces_surface_container_highest_light_m3,
-    surfaceContainerLowest = surfaces_surface_container_lowest_light_m3
-)
-
-val m3DarkSurfaceVariationsColors = SurfaceVariationsColors(
-    surfaceBright = surfaces_surface_bright_dark_m3,
-    surfaceDim = surfaces_surface_dim_dark_m3,
-    surfaceContainer = surfaces_surface_container_dark_m3,
-    surfaceContainerHigh = surfaces_surface_container_high_dark_m3,
-    surfaceContainerLow = surfaces_surface_container_low_dark_m3,
-    surfaceContainerHighest = surfaces_surface_container_highest_dark_m3,
-    surfaceContainerLowest = surfaces_surface_container_lowest_dark_m3
 )
 
 /**
@@ -402,7 +360,6 @@ val m3DarkW3WSchemeColors = W3WColorScheme(
  * Composition locals for custom success and warning colors.
  */
 val LocalW3WColorScheme = staticCompositionLocalOf<W3WColorScheme?> { null }
-val LocalSurfaceVariationsColors = staticCompositionLocalOf<SurfaceVariationsColors?> { null }
 
 /**
  * Extension properties on [MaterialTheme] to provide easy access to custom warning and success colors.
@@ -413,10 +370,3 @@ val MaterialTheme.w3wColorScheme: W3WColorScheme
     @ReadOnlyComposable
     get() = LocalW3WColorScheme.current
         ?: (if (isSystemInDarkTheme()) m3DarkW3WSchemeColors else m3LightW3WSchemeColors)
-
-//to be removed when updating material3 library
-val MaterialTheme.surfaceVariationsColors: SurfaceVariationsColors
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalSurfaceVariationsColors.current
-        ?: (if (isSystemInDarkTheme()) m3DarkSurfaceVariationsColors else m3LightSurfaceVariationsColors)

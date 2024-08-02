@@ -20,12 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.what3words.design.library.sample.ui.DesignLibraryApp
-import com.what3words.design.library.ui.theme.LocalSurfaceVariationsColors
 import com.what3words.design.library.ui.theme.LocalW3WColorScheme
 import com.what3words.design.library.ui.theme.W3WTheme
-import com.what3words.design.library.ui.theme.m3DarkSurfaceVariationsColors
 import com.what3words.design.library.ui.theme.m3DarkW3WSchemeColors
-import com.what3words.design.library.ui.theme.m3LightSurfaceVariationsColors
 import com.what3words.design.library.ui.theme.m3LightW3WSchemeColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,7 +55,6 @@ class MainActivity : ComponentActivity() {
             when {
                 selectedTheme == MainActivityViewModel.Theme.Material && selectedColours == MainActivityViewModel.Colours.Day -> {
                     CompositionLocalProvider(
-                        LocalSurfaceVariationsColors provides m3LightSurfaceVariationsColors,
                         LocalW3WColorScheme provides m3LightW3WSchemeColors
                     ) {
                         MaterialTheme(colorScheme = lightColorScheme()) {
@@ -69,7 +65,6 @@ class MainActivity : ComponentActivity() {
 
                 selectedTheme == MainActivityViewModel.Theme.Material && selectedColours == MainActivityViewModel.Colours.Night -> {
                     CompositionLocalProvider(
-                        LocalSurfaceVariationsColors provides m3DarkSurfaceVariationsColors,
                         LocalW3WColorScheme provides m3DarkW3WSchemeColors
                     ) {
                         MaterialTheme(colorScheme = darkColorScheme()) {

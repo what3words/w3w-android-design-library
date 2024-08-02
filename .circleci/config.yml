@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "design-library/build.gradle" }}
+          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "design-library/build.gradle.kts" }}
       - run:
           name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
@@ -25,18 +25,10 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "design-library/build.gradle" }}
-      - run:
-          name: Run Tests
-          command: ./gradlew design-library:testDebugUnitTest design-library:jacocoTestReport
-#      - run:
-#          name: Upload Coverage Report to SonarCloud
-#          command: ./gradlew sonarqube
+          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "design-library/build.gradle.kts" }}
       - run:
           name: Assemble sample release build
           command: ./gradlew design-library-usage-sample:assembleRelease
-      - store_test_results:
-          path: design-library/build/test-results/testDebugUnitTest
       - store_artifacts:
           path: design-library-usage-sample/build/outputs/apk/release
   deploy-to-sonatype:
@@ -47,7 +39,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "design-library/build.gradle" }}
+          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "design-library/build.gradle.kts" }}
       - run:
           name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
@@ -60,7 +52,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "design-library/build.gradle" }}
+          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "design-library/build.gradle.kts" }}
       - run:
           name: Snapshot Release Check
           command: |

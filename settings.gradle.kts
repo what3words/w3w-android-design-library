@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "android-design-library"
-include ':design-library-usage-sample'
-include ':design-library'
+include(":design-library-usage-sample")
+include(":design-library")

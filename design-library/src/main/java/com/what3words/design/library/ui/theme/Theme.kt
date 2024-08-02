@@ -20,7 +20,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
  * @param useDarkTheme A boolean value to specify if the dark theme should be used.
  *                     By default, it's set based on the system's theme preference.
  * @param colorScheme The color scheme to be used. Default is set based on the theme preference.
- * @param surfaceVariationsColors The surface variations colors to be used. Default is set based on the theme preference.
  * @param w3WColorScheme The What3words color scheme to be used. Default is set based on the theme preference.
  * @param typography The typography to be used. Default is set by [MaterialTheme.typography].
  * @param w3wTypography The What3words typography to be used. Default is set with custom configurations.
@@ -33,7 +32,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun W3WTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     colorScheme: ColorScheme = if (useDarkTheme) w3wDarkColors else w3wLightColors,
-    surfaceVariationsColors: SurfaceVariationsColors = if (useDarkTheme) w3wDarkSurfaceVariationsColors else w3wLightSurfaceVariationsColors,
     w3WColorScheme: W3WColorScheme = if (useDarkTheme) w3wDarkW3WSchemeColors else w3wLightW3WSchemeColors,
     typography: Typography = MaterialTheme.typography,
     w3wTypography: W3wTypography = W3wTypography(
@@ -66,7 +64,6 @@ fun W3WTheme(
     // Provide the What3words typography to the MaterialTheme.
     CompositionLocalProvider(
         LocalW3wTypography provides w3wTypography,
-        LocalSurfaceVariationsColors provides surfaceVariationsColors,
         LocalW3WColorScheme provides w3WColorScheme,
     ) {
         MaterialTheme(
@@ -83,7 +80,7 @@ fun W3WTheme(
             }
             if (setNavigationBarColor != null) setNavigationBarColor()
             else {
-                systemUiController.setNavigationBarColor(MaterialTheme.surfaceVariationsColors.surfaceContainerLow)
+                systemUiController.setNavigationBarColor(MaterialTheme.colorScheme.surfaceContainerLow)
             }
             content()
         }
