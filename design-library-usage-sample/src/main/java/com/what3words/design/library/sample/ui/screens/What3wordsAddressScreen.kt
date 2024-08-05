@@ -40,21 +40,6 @@ fun What3wordsAddressScreen(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(start = 16.dp)
         )
-        What3wordsAddress(
-            "props.rest.power",
-            secondaryText = "long.live.fever",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-
-        What3wordsAddress(
-            "index.home.raft",
-            secondaryText = "congratulations.congratulations.congratulations",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
 
         CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
             What3wordsAddress(
