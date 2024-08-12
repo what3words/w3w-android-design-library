@@ -58,7 +58,7 @@ object VoiceAnimationDefaults {
      */
     data class Colors(
         val orbColors: Color,
-        val idleOrbColors: Color,
+        val idleOrbColor: Color,
         val loadingIconColor: Color,
         val idleIconColor: Color,
     )
@@ -71,12 +71,12 @@ object VoiceAnimationDefaults {
     @Composable
     fun defaultColors(
         orbColors: Color = MaterialTheme.w3wColorScheme.brand,
-        idleOrbColors: Color = MaterialTheme.colorScheme.errorContainer,
+        idleOrbColor: Color = MaterialTheme.w3wColorScheme.brand,
         loadingIconColor: Color = MaterialTheme.w3wColorScheme.brand,
         idleIconColor: Color = Color.White
     ): Colors = Colors(
         orbColors = orbColors,
-        idleOrbColors = idleOrbColors,
+        idleOrbColor = idleOrbColor,
         loadingIconColor = loadingIconColor,
         idleIconColor = idleIconColor
     )
@@ -164,7 +164,7 @@ private fun IdleVoiceAnimation(
                 .aspectRatio(1f)
                 .clip(CircleShape)
                 .align(Alignment.Center)
-                .background(color.idleOrbColors)
+                .background(color.idleOrbColor)
                 .clickable(enabled = onClick != null, onClick = { onClick?.invoke() })
         ) {
             Image(
