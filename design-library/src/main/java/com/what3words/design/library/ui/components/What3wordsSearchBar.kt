@@ -76,7 +76,9 @@ fun What3wordsSearchBar(
         elevation = cardElevation
     ) {
         Row(
-            modifier = Modifier
+            modifier = Modifier.clickable {
+                onContentClick()
+            }
                 .padding(
                     horizontal = layoutConfig.paddingHorizontal,
                     vertical = layoutConfig.paddingVertical
@@ -96,8 +98,7 @@ fun What3wordsSearchBar(
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight()
-                    .clickable { onContentClick() }, verticalAlignment = Alignment.CenterVertically
+                    .fillMaxHeight(), verticalAlignment = Alignment.CenterVertically
             ) {
                 content()
             }

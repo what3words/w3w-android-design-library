@@ -204,13 +204,10 @@ fun What3wordsAddressListItem(
     onClick: (() -> Unit)? = null
 ) {
     val localContext = LocalContext.current
+    val clickModifier = if (onClick != null) Modifier.clickable { onClick() } else Modifier
     Box(
         modifier = modifier
-            .clickable(
-                onClick = {
-                    onClick?.invoke()
-                }
-            )
+            .then(clickModifier)
             .background(if (isHighlighted) colors.backgroundHighlighted else colors.background)
             .padding(
                 top = paddings.top,
