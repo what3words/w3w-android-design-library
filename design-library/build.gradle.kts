@@ -58,8 +58,8 @@ android {
 }
 
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation(platform("androidx.compose:compose-bom:2025.01.01"))
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
