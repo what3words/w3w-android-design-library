@@ -3,6 +3,7 @@
 package com.what3words.design.library.sample
 
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -61,7 +62,7 @@ class MainActivity : ComponentActivity() {
                         LocalW3WColorScheme provides m3LightW3WSchemeColors
                     ) {
                         MaterialTheme(colorScheme = lightColorScheme()) {
-                            enableEdgeToEdge()
+                            edgeToEdgeMaterial(false)
                             mainScreen()
                         }
                     }
@@ -72,7 +73,7 @@ class MainActivity : ComponentActivity() {
                         LocalW3WColorScheme provides m3DarkW3WSchemeColors
                     ) {
                         MaterialTheme(colorScheme = darkColorScheme()) {
-                            enableEdgeToEdge()
+                            edgeToEdgeMaterial(true)
                             mainScreen()
                         }
                     }
@@ -80,14 +81,14 @@ class MainActivity : ComponentActivity() {
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Day -> {
                     W3WTheme(false) {
-                        SetEdgeToEdge(false)
+                        EdgeToEdgeW3W(false)
                         mainScreen()
                     }
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Night -> {
                     W3WTheme(true) {
-                        SetEdgeToEdge(true)
+                        EdgeToEdgeW3W(true)
                         mainScreen()
                     }
                 }
@@ -96,12 +97,12 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun SetEdgeToEdge(isDarkMode: Boolean) {
+    private fun EdgeToEdgeW3W(isDarkMode: Boolean) {
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(
                 lightScrim = MaterialTheme.colorScheme.secondaryContainer.toArgb(),
                 darkScrim = MaterialTheme.colorScheme.secondaryContainer.toArgb()
-            ){
+            ) {
                 isDarkMode
             },
             navigationBarStyle = SystemBarStyle.auto(
@@ -113,6 +114,18 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+    private fun edgeToEdgeMaterial(isDarkMode: Boolean) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                lightScrim = Color.TRANSPARENT,
+                darkScrim = Color.TRANSPARENT
+            ) { isDarkMode },
+            navigationBarStyle = SystemBarStyle.auto(
+                lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF),
+                darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)
+            ) { isDarkMode })
+    }
+
     private fun isDarkMode(): Boolean {
         return when (resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
             Configuration.UI_MODE_NIGHT_YES -> true
@@ -120,4 +133,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
