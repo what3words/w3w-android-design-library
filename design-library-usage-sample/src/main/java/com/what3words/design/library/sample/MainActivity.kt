@@ -3,9 +3,12 @@
 package com.what3words.design.library.sample
 
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.compose.rememberNavController
 import com.what3words.design.library.sample.ui.DesignLibraryApp
 import com.what3words.design.library.ui.theme.LocalW3WColorScheme
@@ -33,7 +37,7 @@ class MainActivity : ComponentActivity() {
         val viewModel: MainActivityViewModel by viewModels()
         viewModel.selectedColours.value =
             if (isDarkMode()) MainActivityViewModel.Colours.Night else MainActivityViewModel.Colours.Day
-
+        enableEdgeToEdge()
         setContent {
             val selectedTheme by viewModel.selectedTheme.collectAsState()
             val selectedColours by viewModel.selectedColours.collectAsState()
@@ -58,6 +62,7 @@ class MainActivity : ComponentActivity() {
                         LocalW3WColorScheme provides m3LightW3WSchemeColors
                     ) {
                         MaterialTheme(colorScheme = lightColorScheme()) {
+                            edgeToEdgeMaterial(false)
                             mainScreen()
                         }
                     }
@@ -68,24 +73,57 @@ class MainActivity : ComponentActivity() {
                         LocalW3WColorScheme provides m3DarkW3WSchemeColors
                     ) {
                         MaterialTheme(colorScheme = darkColorScheme()) {
+                            edgeToEdgeMaterial(true)
                             mainScreen()
                         }
                     }
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Day -> {
-                    W3WTheme(false, setStatusBarColor = {}, setNavigationBarColor = {}) {
+                    W3WTheme(false) {
+                        EdgeToEdgeW3W(false)
                         mainScreen()
                     }
                 }
 
                 selectedTheme == MainActivityViewModel.Theme.What3words && selectedColours == MainActivityViewModel.Colours.Night -> {
-                    W3WTheme(true, setStatusBarColor = {}, setNavigationBarColor = {}) {
+                    W3WTheme(true) {
+                        EdgeToEdgeW3W(true)
                         mainScreen()
                     }
                 }
             }
         }
+    }
+
+    @Composable
+    private fun EdgeToEdgeW3W(isDarkMode: Boolean) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                lightScrim = MaterialTheme.colorScheme.secondaryContainer.toArgb(),
+                darkScrim = MaterialTheme.colorScheme.secondaryContainer.toArgb()
+            ) {
+                isDarkMode
+            },
+            navigationBarStyle = SystemBarStyle.auto(
+                lightScrim = MaterialTheme.colorScheme.surfaceContainerLow.toArgb(),
+                darkScrim = MaterialTheme.colorScheme.surfaceContainerLow.toArgb()
+            ) {
+                isDarkMode
+            }
+        )
+    }
+
+    private fun edgeToEdgeMaterial(isDarkMode: Boolean) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                lightScrim = Color.TRANSPARENT,
+                darkScrim = Color.TRANSPARENT
+            ) { isDarkMode },
+            navigationBarStyle = SystemBarStyle.auto(
+                lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF),
+                darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)
+            ) { isDarkMode })
     }
 
     private fun isDarkMode(): Boolean {
@@ -95,4 +133,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
