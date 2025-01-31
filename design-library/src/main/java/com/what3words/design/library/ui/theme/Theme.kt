@@ -9,8 +9,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
 
 /**
  * A composable function that applies the What3words theme to its content.
@@ -23,8 +21,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
  * @param w3WColorScheme The What3words color scheme to be used. Default is set based on the theme preference.
  * @param typography The typography to be used. Default is set by [MaterialTheme.typography].
  * @param w3wTypography The What3words typography to be used. Default is set with custom configurations.
- * @param setStatusBarColor A composable lambda function to set the status bar color. If null, the status bar color is set by [MaterialTheme.colorScheme.secondaryContainer].
- * @param setNavigationBarColor A composable lambda function to set the navigation bar color. If null, the navigation bar color is set by [MaterialTheme.surfaceVariationsColors.surfaceContainerLow].
  * @param content A composable lambda which will be the content of this theme. All composable
  *                functions inside this lambda will inherit the What3words theme.
  */
@@ -57,8 +53,6 @@ fun W3WTheme(
             fontWeight = FontWeight.Bold
         )
     ),
-    setStatusBarColor: (@Composable () -> Unit)? = null,
-    setNavigationBarColor: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     // Provide the What3words typography to the MaterialTheme.
@@ -70,18 +64,6 @@ fun W3WTheme(
             colorScheme = colorScheme,
             typography = typography,
         ) {
-            //to be removed and use non-accompanist way to do this when updated to SDK 34
-            val systemUiController = rememberSystemUiController()
-            if (setStatusBarColor != null) setStatusBarColor()
-            else {
-                systemUiController.setStatusBarColor(
-                    color = MaterialTheme.colorScheme.secondaryContainer
-                )
-            }
-            if (setNavigationBarColor != null) setNavigationBarColor()
-            else {
-                systemUiController.setNavigationBarColor(MaterialTheme.colorScheme.surfaceContainerLow)
-            }
             content()
         }
     }
