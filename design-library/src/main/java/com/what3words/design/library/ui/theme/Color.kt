@@ -271,7 +271,7 @@ val colors_primary_core_on_primary_container_dark_w3w = colors_blue_99
 val colors_primary_core_inverse_primary_light_m3 = M3_colors_purple_80
 val colors_primary_core_inverse_primary_dark_m3 = M3_colors_purple_40
 val colors_primary_core_inverse_primary_light_w3w = colors_blue_80
-val colors_primary_core_inverse_primary_dark_w3w = colors_blue_40
+val colors_primary_core_inverse_primary_dark_w3w = colors_blue_30
 
 // Secondary semantic colors
 val colors_secondary_core_secondary_light_m3 = M3_colors_slate_40
