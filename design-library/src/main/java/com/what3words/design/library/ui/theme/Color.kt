@@ -488,7 +488,7 @@ val outlines_outline_variant_dark_w3w = colors_grey_32
 // backgrounds
 val backgrounds_background_light_m3 = M3_colors_purple_99
 val backgrounds_background_dark_m3 = M3_colors_neutral_core_10
-val backgrounds_background_light_w3w = colors_red_99
+val backgrounds_background_light_w3w = colors_grey_99
 val backgrounds_background_dark_w3w = colors_grey_0
 val backgrounds_on_background_light_m3 = M3_colors_neutral_core_10
 val backgrounds_on_background_dark_m3 = M3_colors_neutral_core_90
