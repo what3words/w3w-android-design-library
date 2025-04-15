@@ -49,5 +49,12 @@ fun What3wordsAddressScreen(modifier: Modifier = Modifier) {
                     .padding(start = 16.dp)
             )
         }
+
+        What3wordsAddress(
+            "congratulations.congratulations.congratulations",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp)
+        )
     }
 }
