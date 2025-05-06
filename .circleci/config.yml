@@ -8,7 +8,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: 2023.05.1
+      tag: 2024.11.1
     steps:
       - checkout
       - restore_cache:
@@ -35,7 +35,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: 2023.05.1
+      tag: 2024.11.1
     steps:
       - checkout
       - restore_cache:
