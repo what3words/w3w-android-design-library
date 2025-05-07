@@ -3,7 +3,7 @@ import java.net.URI
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.dokka") version "1.5.0"
+    id("org.jetbrains.dokka") version "1.9.10"
     id("maven-publish")
     id("signing")
     id("org.jetbrains.kotlin.plugin.compose")
