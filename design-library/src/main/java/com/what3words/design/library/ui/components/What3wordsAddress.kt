@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material3.Icon
@@ -146,7 +148,8 @@ fun What3wordsAddress(
                 }
             }
         }
-        AutoSizeText(
+        BasicText(
+            autoSize = TextAutoSize.StepBased(maxFontSize = textStyles.wordsTextStyle.fontSize),
             text = buildString,
             maxLines = 1,
             //to remove when we update to the latest jetpack compose version
@@ -155,7 +158,6 @@ fun What3wordsAddress(
                     includeFontPadding = false,
                 )
             ),
-            maxTextSize = textStyles.wordsTextStyle.fontSize,
             onTextLayout = {
                 val widthInPixels = textMeasurer.measure(slashes, it.layoutInput.style).size.width
                 val marginDp = with(density) { widthInPixels.toDp() }
