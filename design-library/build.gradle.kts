@@ -1,4 +1,5 @@
 import java.net.URI
+import java.util.Base64
 
 plugins {
     id("com.android.library")
@@ -154,8 +155,8 @@ jreleaser {
     signing {
         active.set(org.jreleaser.model.Active.ALWAYS)
         armored.set(true)
-        publicKey.set(findProperty("W3W_GPG_PUBLIC_KEY")?.toString())
-        secretKey.set(findProperty("W3W_GPG_SECRET_KEY")?.toString())
+        publicKey.set(String(Base64.getDecoder().decode(findProperty("W3W_GPG_PUBLIC_KEY")?.toString())))
+        secretKey.set(String(Base64.getDecoder().decode(findProperty("W3W_GPG_SECRET_KEY")?.toString())))
         passphrase.set(findProperty("W3W_GPG_PASSPHRASE")?.toString())
     }
     deploy {
