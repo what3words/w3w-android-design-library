@@ -39,6 +39,7 @@ jobs:
           echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
           echo "MAVEN_CENTRAL_USERNAME=${MAVEN_CENTRAL_USERNAME}" >> ~/.gradle/gradle.properties
           echo "MAVEN_CENTRAL_PASSWORD=${MAVEN_CENTRAL_PASSWORD}" >> ~/.gradle/gradle.properties
+          echo "W3W_GITHUB_TOKEN=${W3W_GITHUB_TOKEN}" >> ~/.gradle/gradle.properties
           echo "W3W_GPG_SECRET_KEY=${W3W_GPG_SECRET_KEY}" >> ~/.gradle/gradle.properties
           echo "W3W_GPG_PUBLIC_KEY=${W3W_GPG_PUBLIC_KEY}" >> ~/.gradle/gradle.properties
           echo "W3W_GPG_PASSPHRASE=${W3W_GPG_PASSPHRASE}" >> ~/.gradle/gradle.properties
@@ -52,6 +53,9 @@ jobs:
 
       - name: Release with JReleaser
         run: ./gradlew :design-library:jreleaserFullRelease
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JRELEASER_GIT_ROOT_SEARCH: true
 
       - name: JReleaser output
         if: always()
