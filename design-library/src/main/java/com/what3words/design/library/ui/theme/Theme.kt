@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -59,6 +60,7 @@ fun W3WTheme(
     CompositionLocalProvider(
         LocalW3wTypography provides w3wTypography,
         LocalW3WColorScheme provides w3WColorScheme,
+        LocalAppDarkMode provides useDarkTheme
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
@@ -68,3 +70,5 @@ fun W3WTheme(
         }
     }
 }
+
+val LocalAppDarkMode = compositionLocalOf { false }
