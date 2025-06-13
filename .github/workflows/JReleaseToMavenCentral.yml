@@ -36,6 +36,7 @@ jobs:
           W3W_GPG_SECRET_KEY: ${{ secrets.W3W_GPG_SECRET_KEY }}
           W3W_GPG_PUBLIC_KEY: ${{ secrets.W3W_GPG_PUBLIC_KEY }}
           W3W_GPG_PASSPHRASE: ${{ secrets.W3W_GPG_PASSPHRASE }}
+          W3W_GITHUB_TOKEN: ${{ secrets.W3W_GITHUB_TOKEN }}
         shell: bash
         run: |
           mkdir -p ~/.gradle/
@@ -66,11 +67,11 @@ jobs:
         with:
           name: jreleaser-release
           path: |
-            lib/build/jreleaser/trace.log
-            lib/build/jreleaser/output.properties
+            design-library/build/jreleaser/trace.log
+            design-library/build/jreleaser/output.properties
 
       - name: Upload staging directory
         uses: actions/upload-artifact@v4
         with:
           name: staging-deploy
-          path: lib/build/staging-deploy/
+          path: design-library/build/staging-deploy/
