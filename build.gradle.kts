@@ -1,7 +1,6 @@
 buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.8.2")
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:10.1.0")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -15,7 +14,6 @@ plugins {
 }
 
 allprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "org.sonarqube")
 }
 
