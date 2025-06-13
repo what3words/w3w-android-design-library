@@ -80,6 +80,7 @@ jobs:
           echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
           echo "MAVEN_CENTRAL_USERNAME=${MAVEN_CENTRAL_USERNAME}">> ~/.gradle/gradle.properties
           echo "MAVEN_CENTRAL_PASSWORD=${MAVEN_CENTRAL_PASSWORD}">> ~/.gradle/gradle.properties
+          echo "IS_SNAPSHOT_RELEASE=true">> ~/.gradle/gradle.properties
           cat ~/.gradle/gradle.properties
 
       - name: Setup Gradle with caching
