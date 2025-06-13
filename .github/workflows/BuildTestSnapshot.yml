@@ -3,10 +3,13 @@ name: Build, test and snapshot
 on:
   push:
     branches:
-      - 'staging'
+      - 'task/**'
+      - 'bug/**'
+      - 'fix/**'
+      - 'epic/**'
   pull_request:
     branches:
-      - 'staging'
+      - 'epic/**'
     types: [ closed ]
 
 jobs:
