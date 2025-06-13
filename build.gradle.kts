@@ -11,6 +11,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "2.0.21" apply false
     id("com.autonomousapps.dependency-analysis") version "1.20.0" apply true
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.21" apply false
+    id("org.jreleaser") version "1.17.0" apply false
 }
 
 allprojects {
