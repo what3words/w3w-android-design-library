@@ -43,7 +43,10 @@ jobs:
       - name: Accept licenses
         run: yes | sdkmanager --licenses || true
 
-      - name: Run Lib Unit Test
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build Lib
         run: ./gradlew design-library:build
 
   snapshot:
