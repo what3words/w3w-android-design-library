@@ -1,11 +1,14 @@
 import java.net.URI
+import java.util.Base64
 
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.dokka") version "1.5.0"
+    id("org.jetbrains.dokka") version "1.9.10"
     id("maven-publish")
     id("signing")
+    id("org.jreleaser")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 group = "com.what3words"
@@ -20,7 +23,7 @@ version =
 
 
 android {
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -46,8 +49,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+    lint {
+        abortOnError = false
+        warningsAsErrors = false
     }
     publishing {
         singleVariant("release") {
@@ -58,50 +62,29 @@ android {
 }
 
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2025.01.01"))
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation(platform("androidx.compose:compose-bom:2025.05.00"))
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("com.airbnb.android:lottie-compose:6.1.0")
-    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("com.airbnb.android:lottie-compose:6.4.1")
+    implementation("androidx.core:core-ktx:1.16.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
     api("androidx.compose.material:material-icons-extended")
 }
 
 //region publishing
-
-val ossrhUsername = findProperty("OSSRH_USERNAME") as String?
-val ossrhPassword = findProperty("OSSRH_PASSWORD") as String?
-val signingKey = findProperty("SIGNING_KEY") as String?
-val signingKeyPwd = findProperty("SIGNING_KEY_PWD") as String?
-
 publishing {
-    repositories {
-        maven {
-            name = "sonatype"
-            val releasesRepoUrl =
-                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            val snapshotsRepoUrl =
-                "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = if (version.toString()
-                    .endsWith("SNAPSHOT")
-            ) URI.create(snapshotsRepoUrl) else URI.create(releasesRepoUrl)
+    publications {
+        create<MavenPublication>("maven") {
+            afterEvaluate {
+                from(components["release"])
+            }
 
-            credentials {
-                username = ossrhUsername
-                password = ossrhPassword
-            }
-        }
-        publications {
-            create<MavenPublication>("Maven") {
-                artifactId = "w3w-android-design-library"
-                groupId = "com.what3words"
-                version = project.version.toString()
-                afterEvaluate {
-                    from(components["release"])
-                }
-            }
+            groupId = "com.what3words"
+            artifactId = "w3w-android-design-library"
+            version = project.version.toString()
+
             withType(MavenPublication::class.java) {
                 val publicationName = name
                 val dokkaJar =
@@ -141,13 +124,59 @@ publishing {
                     }
                 }
             }
+            // POM metadata
+        }
+    }
+
+    repositories {
+        maven {
+            name = "sonatypeSnapshots"
+            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+            credentials {
+                username = findProperty("MAVEN_CENTRAL_USERNAME") as? String
+                password = findProperty("MAVEN_CENTRAL_PASSWORD") as? String
+            }
+        }
+        maven {
+            name = "stagingLocal"
+            url = uri(layout.buildDirectory.dir("staging-deploy").get().asFile.absolutePath)
         }
     }
 }
 
-signing {
-    useInMemoryPgpKeys(signingKey, signingKeyPwd)
-    sign(publishing.publications)
-}
+jreleaser {
+    release {
+        github {
+            repoOwner = "what3words"
+            overwrite = true
+        }
+    }
 
+    signing {
+        active.set(org.jreleaser.model.Active.ALWAYS)
+        armored.set(true)
+        publicKey.set(
+            findProperty("W3W_GPG_PUBLIC_KEY")?.toString()
+                ?.let { String(Base64.getDecoder().decode(it)) } ?: "")
+        secretKey.set(
+            findProperty("W3W_GPG_SECRET_KEY")?.toString()
+                ?.let { String(Base64.getDecoder().decode(it)) } ?: "")
+        passphrase.set(findProperty("W3W_GPG_PASSPHRASE")?.toString())
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                create("sonatype") {
+                    active.set(org.jreleaser.model.Active.ALWAYS)
+                    url.set("https://central.sonatype.com/api/v1/publisher")
+                    stagingRepository(layout.buildDirectory.dir("staging-deploy").get().asFile.absolutePath)
+                    username.set(findProperty("MAVEN_CENTRAL_USERNAME")?.toString())
+                    password.set(findProperty("MAVEN_CENTRAL_PASSWORD")?.toString())
+                    verifyPom.set(false)
+                    setStage(org.jreleaser.model.api.deploy.maven.MavenCentralMavenDeployer.Stage.UPLOAD.toString())
+                }
+            }
+        }
+    }
+}
 //endregion
