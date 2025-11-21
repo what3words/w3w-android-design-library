@@ -35,6 +35,17 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
         What3wordsAddressListItem("filled.count.soap")
 
         What3wordsAddressListItem(
+            "filled.count.soap",
+            nearestPlace = "Bayswater, London",
+            onClick = {})
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            nearestPlace = "Bayswater, London",
+            onClick = {},
+            nearestPlacePrefix = null
+        )
+
+        What3wordsAddressListItem(
             words = "filled.count.soap",
             nearestPlace = "Bayswater, London",
             distance = 0,
@@ -45,7 +56,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
 
         What3wordsAddressListItem(
             words = "filled.count.soap",
-            nearestPlacePrefix = "",
+            nearestPlacePrefix = null,
             nearestPlace = "有些.明细.火星",
             onClick = {}
         )
@@ -81,7 +92,6 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
 
             What3wordsAddressListItem(
                 words = "لبن.درجات.عنق",
-                nearestPlacePrefix = "",
                 nearestPlace = "有些.明细.火星",
                 onClick = {}
             )
