@@ -191,7 +191,7 @@ fun What3wordsAddressListItem(
     words: String,
     modifier: Modifier = Modifier,
     nearestPlace: String? = null,
-    nearestPlacePrefix: String? = stringResource(id = com.what3words.design.library.R.string.near),
+    nearestPlacePrefix: String? = stringResource(id = R.string.near),
     isLand: Boolean = true,
     distance: Int? = null,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
@@ -249,7 +249,7 @@ fun What3wordsAddressListItem(
                                 modifier = Modifier
                                     .weight(1f)
                                     .align(Alignment.CenterVertically),
-                                text = "${nearestPlacePrefix ?: ""} ${nearestPlace ?: ""}",
+                                text = "${if (!nearestPlacePrefix.isNullOrEmpty()) "$nearestPlacePrefix " else ""}$nearestPlace",
                                 style = textStyles.nearestPlaceTextStyle,
                                 color = colors.nearestPlaceTextColor,
                                 textAlign = TextAlign.Start,
@@ -270,7 +270,7 @@ fun What3wordsAddressListItem(
                             )
                         }
                     }
-                    if (label != null) {
+                    if (label?.isNotEmpty() == true) {
                         Text(
                             text = label,
                             modifier = Modifier

@@ -3,11 +3,8 @@ package com.what3words.design.library.ui.components
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
@@ -19,14 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -127,49 +120,68 @@ fun What3wordsAddress(
     secondaryContent: @Composable () -> Unit = {},
     slashesMargin: ((Dp) -> Unit)? = null
 ) {
-    Column(
-        modifier = modifier,
-    ) {
-        var margin by remember { mutableStateOf(0.dp) }
-        val textMeasurer = rememberTextMeasurer()
-        val density = LocalDensity.current
-        val slashes = stringResource(id = R.string.slashes)
-        val buildString = buildAnnotatedString {
-            withStyle(ParagraphStyle()) {
-                withStyle(
-                    style = SpanStyle(color = colors.slashesColor)
-                ) {
-                    append(slashes)
-                }
-                withStyle(
-                    style = SpanStyle(color = colors.wordsTextColor)
-                ) {
-                    append(words)
-                }
+    val textMeasurer = rememberTextMeasurer()
+    val slashes = stringResource(id = R.string.slashes)
+    val buildString = buildAnnotatedString {
+        withStyle(ParagraphStyle()) {
+            withStyle(
+                style = SpanStyle(color = colors.slashesColor)
+            ) {
+                append(slashes)
+            }
+            withStyle(
+                style = SpanStyle(color = colors.wordsTextColor)
+            ) {
+                append(words)
             }
         }
-        BasicText(
-            autoSize = TextAutoSize.StepBased(maxFontSize = textStyles.wordsTextStyle.fontSize),
-            text = buildString,
-            maxLines = 1,
-            //to remove when we update to the latest jetpack compose version
-            style = textStyles.wordsTextStyle.copy(
-                platformStyle = PlatformTextStyle(
-                    includeFontPadding = false,
-                )
-            ),
-            onTextLayout = {
-                val widthInPixels = textMeasurer.measure(slashes, it.layoutInput.style).size.width
-                val marginDp = with(density) { widthInPixels.toDp() }
-                margin = marginDp
-                if (slashesMargin != null) {
-                    slashesMargin(marginDp)
+    }
+
+    SubcomposeLayout(modifier = modifier) { constraints ->
+        var slashesWidthPixel = 0
+
+        val textPlaceables = subcompose("text") {
+            BasicText(
+                autoSize = TextAutoSize.StepBased(maxFontSize = textStyles.wordsTextStyle.fontSize),
+                text = buildString,
+                maxLines = 1,
+                style = textStyles.wordsTextStyle.copy(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false,
+                    )
+                ),
+                onTextLayout = {
+                    val widthInPixels =
+                        textMeasurer.measure(slashes, it.layoutInput.style).size.width
+                    slashesWidthPixel = widthInPixels
                 }
-            }
-        )
-        Row {
-            Spacer(modifier = Modifier.width(margin))
-            secondaryContent()
+            )
+        }.map { it.measure(constraints) }
+
+        val textWidth = textPlaceables.maxOf { it.width }
+        val textHeight = textPlaceables.maxOf { it.height }
+        val slashesWidthDp = slashesWidthPixel.toDp()
+
+        val secondaryPlaceables = subcompose("secondary", secondaryContent).map {
+            val remainingWidth = constraints.maxWidth - slashesWidthPixel
+            it.measure(
+                constraints.copy(
+                    minWidth = 0,
+                    maxWidth = if (remainingWidth < 0) 0 else remainingWidth
+                )
+            )
+        }
+
+        val secondaryHeight = secondaryPlaceables.maxOfOrNull { it.height } ?: 0
+        val secondaryWidth = secondaryPlaceables.maxOfOrNull { it.width } ?: 0
+
+        val totalWidth = maxOf(textWidth, slashesWidthPixel + secondaryWidth)
+        val totalHeight = textHeight + secondaryHeight
+
+        layout(totalWidth, totalHeight) {
+            textPlaceables.forEach { it.place(0, 0) }
+            secondaryPlaceables.forEach { it.place(slashesWidthPixel, textHeight) }
+            slashesMargin?.invoke(slashesWidthDp)
         }
     }
 }
