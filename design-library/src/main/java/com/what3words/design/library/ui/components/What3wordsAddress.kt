@@ -179,8 +179,8 @@ fun What3wordsAddress(
         val totalHeight = textHeight + secondaryHeight
 
         layout(totalWidth, totalHeight) {
-            textPlaceables.forEach { it.place(0, 0) }
-            secondaryPlaceables.forEach { it.place(slashesWidthPixel, textHeight) }
+            textPlaceables.forEach { it.placeRelative(0, 0) }
+            secondaryPlaceables.forEach { it.placeRelative(slashesWidthPixel, textHeight) }
             slashesMargin?.invoke(slashesWidthDp)
         }
     }
