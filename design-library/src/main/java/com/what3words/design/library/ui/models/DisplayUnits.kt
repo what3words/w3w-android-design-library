@@ -57,19 +57,25 @@ fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: Context): 
 }
 
 fun getAccuracyString(accuracyInMeters: Float, displayUnits: DisplayUnits): String {
-    val accuracyInKm = accuracyInMeters / KM_TO_METERS_FACTOR
+    val fmtFr = MeasureFormat.getInstance(Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
     return if (isMetricDisplayUnitEnabled(displayUnits)) {
-        if (accuracyInKm < 1) {
-            "${accuracyInMeters.roundToInt()} m"
+        if (accuracyInMeters < KM_TO_METERS_FACTOR) {
+            fmtFr.format(Measure(accuracyInMeters.roundToInt(), MeasureUnit.METER))
         } else {
-            "${accuracyInKm.roundToInt()} km"
+            fmtFr.format(
+                Measure(
+                    (accuracyInMeters / KM_TO_METERS_FACTOR).roundToInt(),
+                    MeasureUnit.KILOMETER
+                )
+            )
         }
     } else {
-        val accuracyInMiles = accuracyInKm * KM_TO_MILES_FACTOR
+        val accuracyInKm = accuracyInMeters / KM_TO_METERS_FACTOR
+        val accuracyInMiles = accuracyInKm / KM_TO_MILES_FACTOR
         if (accuracyInMiles < 1) {
-            "${(accuracyInMiles * MILES_TO_FT_FACTOR).roundToInt()} ft"
+            fmtFr.format(Measure((accuracyInMiles * MILES_TO_FT_FACTOR).roundToInt(), MeasureUnit.FOOT))
         } else {
-            "${accuracyInMiles.roundToInt()} mi"
+            fmtFr.format(Measure(accuracyInMiles.roundToInt(), MeasureUnit.MILE))
         }
     }
 }
