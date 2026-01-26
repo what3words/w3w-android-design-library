@@ -18,6 +18,8 @@ enum class DisplayUnits {
 }
 
 private const val KM_TO_MILES_FACTOR = 1.609
+private const val MILES_TO_FT_FACTOR = 5280
+private const val KM_TO_METERS_FACTOR = 1000
 private val imperialCountries = hashSetOf("US", "LR", "MM", "BS", "BZ", "KY", "PW", "GB", "UK")
 
 /**
@@ -28,7 +30,7 @@ private val imperialCountries = hashSetOf("US", "LR", "MM", "BS", "BZ", "KY", "P
  * @param context The Android context.
  * @return A formatted string representing the distance.
  */
-internal fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: Context): String {
+fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: Context): String {
     if (isDistanceBelowThresholdInPreferredUnits(distanceKm, displayUnits)) {
         if (isMetricDisplayUnitEnabled(displayUnits)) {
             val fmtFr =
@@ -50,6 +52,30 @@ internal fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: C
         } else {
             val measureF = Measure((distanceKm / KM_TO_MILES_FACTOR).roundToInt(), MeasureUnit.MILE)
             fmtFr.format(measureF)
+        }
+    }
+}
+
+fun getAccuracyString(accuracyInMeters: Float, displayUnits: DisplayUnits): String {
+    val fmtFr = MeasureFormat.getInstance(Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
+    return if (isMetricDisplayUnitEnabled(displayUnits)) {
+        if (accuracyInMeters < KM_TO_METERS_FACTOR) {
+            fmtFr.format(Measure(accuracyInMeters.roundToInt(), MeasureUnit.METER))
+        } else {
+            fmtFr.format(
+                Measure(
+                    (accuracyInMeters / KM_TO_METERS_FACTOR).roundToInt(),
+                    MeasureUnit.KILOMETER
+                )
+            )
+        }
+    } else {
+        val accuracyInKm = accuracyInMeters / KM_TO_METERS_FACTOR
+        val accuracyInMiles = accuracyInKm / KM_TO_MILES_FACTOR
+        if (accuracyInMiles < 1) {
+            fmtFr.format(Measure((accuracyInMiles * MILES_TO_FT_FACTOR).roundToInt(), MeasureUnit.FOOT))
+        } else {
+            fmtFr.format(Measure(accuracyInMiles.roundToInt(), MeasureUnit.MILE))
         }
     }
 }
@@ -89,6 +115,6 @@ private fun isMetricDisplayUnitEnabled(displayUnits: DisplayUnits): Boolean {
  *
  * @return `true` if the locale uses the metric system, `false` if it uses the imperial system.
  */
-internal fun Locale.isMetric(): Boolean {
+fun Locale.isMetric(): Boolean {
     return !imperialCountries.contains(country.uppercase(this))
 }
