@@ -181,6 +181,7 @@ object What3wordsAddressListItemDefaults {
  * @param displayUnits Units for displaying the distance. Default is [DisplayUnits.SYSTEM].
  * @param isHighlighted If true, highlights the address. Default is false.
  * @param label Optional. A label to display alongside the address. Null if not specified.
+ * @param labelMaxLines Optional. Max lines for the label text. Defaults to 1; use [Int.MAX_VALUE] for unlimited lines.
  * @param colors Color scheme for various elements of the address view. Default is defined by [What3wordsAddressListItemDefaults.defaultColors].
  * @param textStyles Text style customization for different elements of the address view. Default is defined by [What3wordsAddressListItemDefaults.defaultTextStyles].
  * @param showDivider Boolean to control the visibility of a divider line below the address. Default is true.
@@ -197,6 +198,7 @@ fun What3wordsAddressListItem(
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     isHighlighted: Boolean = false,
     label: String? = null,
+    labelMaxLines: Int = 1,
     colors: What3wordsAddressListItemDefaults.Colors = What3wordsAddressListItemDefaults.defaultColors(),
     textStyles: What3wordsAddressListItemDefaults.TextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(),
     paddings: What3wordsAddressListItemDefaults.Paddings = What3wordsAddressListItemDefaults.defaultPaddings(),
@@ -276,11 +278,11 @@ fun What3wordsAddressListItem(
                             modifier = Modifier
                                 .padding(top = paddings.item)
                                 .background(colors.labelBackground)
-                                .padding(paddings.item),
+                                .padding(horizontal = maxOf(paddings.item, 8.dp), vertical = paddings.item),
                             style = textStyles.labelTextStyle,
                             color = colors.labelTextColor,
-                            textAlign = TextAlign.Center,
-                            maxLines = 1,
+                            textAlign = TextAlign.Start,
+                            maxLines = labelMaxLines,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
@@ -742,6 +744,25 @@ private fun C9() {
         }
     }
 }
+
+@Preview(
+    group = "MaterialTheme",
+    locale = "ar",
+    name = "MaterialTheme/Day/RTL with long label",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun C10() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            label = "Label name".repeat(10),
+            labelMaxLines = Int.MAX_VALUE
+        )
+    }
+}
+
 //endregion
 
 //region Previews with MaterialTheme night
@@ -890,4 +911,22 @@ private fun D9() {
         }
     }
 }
+
+@Preview(
+    group = "MaterialTheme",
+    name = "MaterialTheme/Night/LTR with long label",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun D10() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            label = "Label name".repeat(10),
+            labelMaxLines = Int.MAX_VALUE
+        )
+    }
+}
+
 //endregion
