@@ -449,6 +449,23 @@ private fun A9() {
     }
 }
 
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with long label",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A10() {
+    W3WTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            label = "Label".repeat(20),
+            labelMaxLines = Int.MAX_VALUE
+        )
+    }
+}
+
 //endregion
 
 //region Previews with W3WTheme night
@@ -596,6 +613,23 @@ private fun B9() {
         }
     }
 }
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR with long label",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun B10() {
+    W3WTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            label = "Label".repeat(20),
+            labelMaxLines = Int.MAX_VALUE
+        )
+    }
+}
 //endregion
 
 //region Previews with MaterialTheme day
@@ -741,24 +775,6 @@ private fun C9() {
                 distance = 20
             )
         }
-    }
-}
-
-@Preview(
-    group = "MaterialTheme",
-    locale = "ar",
-    name = "MaterialTheme/Day/RTL with long label",
-    uiMode = UI_MODE_NIGHT_NO,
-    showBackground = true
-)
-@Composable
-private fun C10() {
-    MaterialTheme(colorScheme = darkColorScheme()) {
-        What3wordsAddressListItem(
-            "filled.count.soap",
-            label = "Label name".repeat(10),
-            labelMaxLines = Int.MAX_VALUE
-        )
     }
 }
 
@@ -910,22 +926,3 @@ private fun D9() {
         }
     }
 }
-
-@Preview(
-    group = "MaterialTheme",
-    name = "MaterialTheme/Night/LTR with long label",
-    uiMode = UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-private fun D10() {
-    MaterialTheme(colorScheme = darkColorScheme()) {
-        What3wordsAddressListItem(
-            "filled.count.soap",
-            label = "Label name".repeat(10),
-            labelMaxLines = Int.MAX_VALUE
-        )
-    }
-}
-
-//endregion
