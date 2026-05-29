@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -290,7 +290,7 @@ fun What3wordsAddressListItem(
         )
 
         if (showDivider) {
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = slashesMargin)
@@ -460,7 +460,7 @@ private fun A10() {
     W3WTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            label = "Label".repeat(20),
+            label = "Label name ".repeat(20),
             labelMaxLines = Int.MAX_VALUE
         )
     }
@@ -625,7 +625,7 @@ private fun B10() {
     W3WTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            label = "Label".repeat(20),
+            label = "Label name ".repeat(20),
             labelMaxLines = Int.MAX_VALUE
         )
     }
