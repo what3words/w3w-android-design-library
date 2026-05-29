@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -192,7 +191,7 @@ fun What3wordsAddressListItem(
     words: String,
     modifier: Modifier = Modifier,
     nearestPlace: String? = null,
-    nearestPlacePrefix: String? = stringResource(id = R.string.near),
+    nearestPlacePrefix: String? = null,
     isLand: Boolean = true,
     distance: Int? = null,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
