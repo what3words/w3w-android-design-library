@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
@@ -277,7 +278,7 @@ fun What3wordsAddressListItem(
                             modifier = Modifier
                                 .padding(top = paddings.item)
                                 .background(colors.labelBackground)
-                                .padding(horizontal = maxOf(paddings.item, 8.dp), vertical = paddings.item),
+                                .padding(horizontal = paddings.item.coerceAtLeast(8.dp), vertical = paddings.item),
                             style = textStyles.labelTextStyle,
                             color = colors.labelTextColor,
                             textAlign = TextAlign.Start,
