@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
@@ -181,6 +182,7 @@ object What3wordsAddressListItemDefaults {
  * @param displayUnits Units for displaying the distance. Default is [DisplayUnits.SYSTEM].
  * @param isHighlighted If true, highlights the address. Default is false.
  * @param label Optional. A label to display alongside the address. Null if not specified.
+ * @param labelMaxLines Optional. Max lines for the label text. Defaults to 1; use [Int.MAX_VALUE] for unlimited lines.
  * @param colors Color scheme for various elements of the address view. Default is defined by [What3wordsAddressListItemDefaults.defaultColors].
  * @param textStyles Text style customization for different elements of the address view. Default is defined by [What3wordsAddressListItemDefaults.defaultTextStyles].
  * @param showDivider Boolean to control the visibility of a divider line below the address. Default is true.
@@ -197,6 +199,7 @@ fun What3wordsAddressListItem(
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     isHighlighted: Boolean = false,
     label: String? = null,
+    labelMaxLines: Int = 1,
     colors: What3wordsAddressListItemDefaults.Colors = What3wordsAddressListItemDefaults.defaultColors(),
     textStyles: What3wordsAddressListItemDefaults.TextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(),
     paddings: What3wordsAddressListItemDefaults.Paddings = What3wordsAddressListItemDefaults.defaultPaddings(),
@@ -276,11 +279,11 @@ fun What3wordsAddressListItem(
                             modifier = Modifier
                                 .padding(top = paddings.item)
                                 .background(colors.labelBackground)
-                                .padding(paddings.item),
+                                .padding(horizontal = paddings.item.coerceAtLeast(8.dp), vertical = paddings.item),
                             style = textStyles.labelTextStyle,
                             color = colors.labelTextColor,
-                            textAlign = TextAlign.Center,
-                            maxLines = 1,
+                            textAlign = TextAlign.Start,
+                            maxLines = labelMaxLines,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
@@ -289,7 +292,7 @@ fun What3wordsAddressListItem(
         )
 
         if (showDivider) {
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = slashesMargin)
@@ -448,6 +451,23 @@ private fun A9() {
     }
 }
 
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with long label",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A10() {
+    W3WTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            label = "Label name ".repeat(20),
+            labelMaxLines = Int.MAX_VALUE
+        )
+    }
+}
+
 //endregion
 
 //region Previews with W3WTheme night
@@ -593,6 +613,23 @@ private fun B9() {
                 distance = 20
             )
         }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Night/LTR with long label",
+    uiMode = UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun B10() {
+    W3WTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            label = "Label name ".repeat(20),
+            labelMaxLines = Int.MAX_VALUE
+        )
     }
 }
 //endregion
@@ -742,6 +779,7 @@ private fun C9() {
         }
     }
 }
+
 //endregion
 
 //region Previews with MaterialTheme night
