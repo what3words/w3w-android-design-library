@@ -46,7 +46,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Lib
-        run: ./gradlew design-library:build
+        run: ./gradlew design-library:build --refresh-dependencies
 
   snapshot:
     # This job must explicitly depend on build_test
@@ -91,4 +91,4 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Publish SNAPSHOT
-        run: ./gradlew design-library:publishMavenPublicationToSonatypeSnapshotsRepository
+        run: ./gradlew design-library:publishMavenPublicationToSonatypeSnapshotsRepository --refresh-dependencies

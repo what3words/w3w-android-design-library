@@ -18,7 +18,9 @@ plugins {
 }
 
 allprojects {
-    apply(plugin = "org.sonarqube")
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+    }
 }
 
 tasks.register<Delete>("clean").configure {
