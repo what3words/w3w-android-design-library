@@ -1,16 +1,20 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.8.2")
-        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
+        // jReleaser pulls in jaxb-runtime whose com.sun.xml.bind classes reference
+        // javax.activation.DataSource, which is absent on JDK 17+. Provide it so AGP's
+        // SDK XML parsing keeps working.
+        classpath("com.sun.activation:javax.activation:1.2.0")
     }
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+}
 plugins {
-    id("com.android.application") version "8.8.2" apply false
-    id("com.android.library") version "8.8.2" apply false
-    id("org.jetbrains.kotlin.android") version "2.0.21" apply false
-    id("com.autonomousapps.dependency-analysis") version "1.20.0" apply true
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.21" apply false
-    id("org.jreleaser") version "1.17.0" apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.dokka) apply false
+    alias(libs.plugins.jreleaser) apply false
+    alias(libs.plugins.sonarqube) apply false
+    alias(libs.plugins.autonomousapps.dependency.analysis)
 }
 
 allprojects {
@@ -19,4 +23,4 @@ allprojects {
 
 tasks.register<Delete>("clean").configure {
     delete(rootProject.layout.buildDirectory)
- }
+}
