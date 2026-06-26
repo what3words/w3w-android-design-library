@@ -2,13 +2,12 @@ import java.net.URI
 import java.util.Base64
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.dokka") version "1.9.10"
-    id("maven-publish")
-    id("signing")
-    id("org.jreleaser")
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.jreleaser)
+    `maven-publish`
+    signing
 }
 
 group = "com.what3words"
@@ -23,10 +22,10 @@ version =
 
 
 android {
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -43,11 +42,8 @@ android {
         compose = true
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.jvmToolchain.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.jvmToolchain.get())
     }
     lint {
         abortOnError = false
@@ -62,15 +58,15 @@ android {
 }
 
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2025.11.01"))
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("com.airbnb.android:lottie-compose:6.7.1")
-    implementation("androidx.core:core-ktx:1.16.0")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    api("androidx.compose.material:material-icons-extended")
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.lottie.compose)
+    implementation(libs.androidx.core.ktx)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    api(libs.compose.material.icons)
 }
 
 //region publishing
@@ -92,7 +88,7 @@ publishing {
                         group = JavaBasePlugin.DOCUMENTATION_GROUP
                         description = "Assembles Kotlin docs with Dokka into a Javadoc jar"
                         archiveClassifier.set("javadoc")
-                        from(tasks.named("dokkaHtml"))
+                        from(tasks.named("dokkaGeneratePublicationHtml"))
 
                         // Each archive name should be distinct, to avoid implicit dependency issues.
                         // We use the same format as the sources Jar tasks.
