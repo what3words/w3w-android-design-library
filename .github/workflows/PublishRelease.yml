@@ -1,0 +1,54 @@
+name: Publish Release
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+    types: [closed]
+  workflow_dispatch:    # Allow manual triggering
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper versioning
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Prepare signing key
+        env:
+          W3W_GPG_SECRET_KEY: ${{ secrets.W3W_GPG_SECRET_KEY }}
+        shell: bash
+        run: |
+          mkdir -p ~/.gradle/
+          echo "GRADLE_USER_HOME=${HOME}/.gradle" >> "$GITHUB_ENV"
+          # The stored secret is the base64-encoded, ASCII-armored private key.
+          {
+            echo "ORG_GRADLE_PROJECT_signingInMemoryKey<<__EOF__"
+            echo "${W3W_GPG_SECRET_KEY}" | base64 --decode
+            echo "__EOF__"
+          } >> "$GITHUB_ENV"
+
+      - name: Publish to Maven Central
+        run: ./gradlew :design-library:publishToMavenCentral --no-daemon
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.W3W_GPG_PASSPHRASE }}

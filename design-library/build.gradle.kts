@@ -1,13 +1,12 @@
-import java.net.URI
-import java.util.Base64
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.dokka)
-    alias(libs.plugins.jreleaser)
-    `maven-publish`
-    signing
+    alias(libs.plugins.vanniktech.maven.publish)
 }
 
 group = "com.what3words"
@@ -49,11 +48,6 @@ android {
         abortOnError = false
         warningsAsErrors = false
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-        }
-    }
     namespace = "com.what3words.design.library"
 }
 
@@ -70,108 +64,42 @@ dependencies {
 }
 
 //region publishing
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            afterEvaluate {
-                from(components["release"])
-            }
+mavenPublishing {
+    publishToMavenCentral()
 
-            groupId = "com.what3words"
-            artifactId = "w3w-android-design-library"
-            version = project.version.toString()
+    signAllPublications()
 
-            withType(MavenPublication::class.java) {
-                val publicationName = name
-                val dokkaJar =
-                    project.tasks.register("${publicationName}DokkaJar", Jar::class) {
-                        group = JavaBasePlugin.DOCUMENTATION_GROUP
-                        description = "Assembles Kotlin docs with Dokka into a Javadoc jar"
-                        archiveClassifier.set("javadoc")
-                        from(tasks.named("dokkaGeneratePublicationHtml"))
+    coordinates("com.what3words", "w3w-android-design-library", version.toString())
 
-                        // Each archive name should be distinct, to avoid implicit dependency issues.
-                        // We use the same format as the sources Jar tasks.
-                        // https://youtrack.jetbrains.com/issue/KT-46466
-                        archiveBaseName.set("${archiveBaseName.get()}-$publicationName")
-                    }
-                artifact(dokkaJar)
-                pom {
-                    name.set("w3w-android-design-library")
-                    description.set("Android design library for what3words apps and components with MaterialTheme and W3WTheme")
-                    url.set("https://github.com/what3words/w3w-android-design-library")
-                    licenses {
-                        license {
-                            name.set("The MIT License (MIT)")
-                            url.set("https://github.com/what3words/w3w-android-design-library/blob/master/LICENSE")
-                        }
-                    }
-                    developers {
-                        developer {
-                            id.set("what3words")
-                            name.set("what3words")
-                            email.set("development@what3words.com")
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:git://github.com/what3words/w3w-android-design-library.git")
-                        developerConnection.set("scm:git:ssh://git@github.com:what3words/w3w-android-design-library.git")
-                        url.set("https://github.com/what3words/w3w-android-design-library/tree/master")
-                    }
-                }
-            }
-            // POM metadata
-        }
-    }
+    configure(
+        AndroidSingleVariantLibrary(
+            variant = "release",
+            sourcesJar = SourcesJar.Sources(),
+            javadocJar = JavadocJar.Dokka("dokkaGeneratePublicationHtml"),
+        )
+    )
 
-    repositories {
-        maven {
-            name = "sonatypeSnapshots"
-            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-            credentials {
-                username = findProperty("MAVEN_CENTRAL_USERNAME") as? String
-                password = findProperty("MAVEN_CENTRAL_PASSWORD") as? String
+    pom {
+        name.set("w3w-android-design-library")
+        description.set("Android design library for what3words apps and components with MaterialTheme and W3WTheme")
+        url.set("https://github.com/what3words/w3w-android-design-library")
+        licenses {
+            license {
+                name.set("The MIT License (MIT)")
+                url.set("https://github.com/what3words/w3w-android-design-library/blob/master/LICENSE")
             }
         }
-        maven {
-            name = "stagingLocal"
-            url = uri(layout.buildDirectory.dir("staging-deploy").get().asFile.absolutePath)
-        }
-    }
-}
-
-jreleaser {
-    release {
-        github {
-            repoOwner = "what3words"
-            overwrite = true
-        }
-    }
-
-    signing {
-        active.set(org.jreleaser.model.Active.ALWAYS)
-        armored.set(true)
-        publicKey.set(
-            findProperty("W3W_GPG_PUBLIC_KEY")?.toString()
-                ?.let { String(Base64.getDecoder().decode(it)) } ?: "")
-        secretKey.set(
-            findProperty("W3W_GPG_SECRET_KEY")?.toString()
-                ?.let { String(Base64.getDecoder().decode(it)) } ?: "")
-        passphrase.set(findProperty("W3W_GPG_PASSPHRASE")?.toString())
-    }
-    deploy {
-        maven {
-            mavenCentral {
-                create("sonatype") {
-                    active.set(org.jreleaser.model.Active.ALWAYS)
-                    url.set("https://central.sonatype.com/api/v1/publisher")
-                    stagingRepository(layout.buildDirectory.dir("staging-deploy").get().asFile.absolutePath)
-                    username.set(findProperty("MAVEN_CENTRAL_USERNAME")?.toString())
-                    password.set(findProperty("MAVEN_CENTRAL_PASSWORD")?.toString())
-                    verifyPom.set(false)
-                    setStage(org.jreleaser.model.api.deploy.maven.MavenCentralMavenDeployer.Stage.UPLOAD.toString())
-                }
+        developers {
+            developer {
+                id.set("what3words")
+                name.set("what3words")
+                email.set("development@what3words.com")
             }
+        }
+        scm {
+            connection.set("scm:git:git://github.com/what3words/w3w-android-design-library.git")
+            developerConnection.set("scm:git:ssh://git@github.com:what3words/w3w-android-design-library.git")
+            url.set("https://github.com/what3words/w3w-android-design-library/tree/master")
         }
     }
 }
