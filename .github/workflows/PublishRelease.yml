@@ -7,8 +7,12 @@ on:
   pull_request:
     branches:
       - 'main'
-    types: [closed]
+    types: [opened, synchronize, reopened]
   workflow_dispatch:    # Allow manual triggering
+
+concurrency:
+  group: publish-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   publish:
@@ -40,13 +44,36 @@ jobs:
           mkdir -p ~/.gradle/
           echo "GRADLE_USER_HOME=${HOME}/.gradle" >> "$GITHUB_ENV"
           # The stored secret is the base64-encoded, ASCII-armored private key.
+          encoded_key="${W3W_GPG_SECRET_KEY//$'\r'/}"
+          remainder=$(( ${#encoded_key} % 4 ))
+          if (( remainder == 1 )); then
+            echo "::error::W3W_GPG_SECRET_KEY is not valid base64"
+            exit 1
+          elif (( remainder > 1 )); then
+            printf -v padding '%*s' "$((4 - remainder))" ''
+            encoded_key+="${padding// /=}"
+          fi
+
+          signing_key="$(printf '%s' "$encoded_key" | base64 --decode)"
+          if [[ "$signing_key" != *"-----BEGIN PGP PRIVATE KEY BLOCK-----"* ]]; then
+            echo "::error::W3W_GPG_SECRET_KEY did not decode to an ASCII-armored private key"
+            exit 1
+          fi
+
           {
             echo "ORG_GRADLE_PROJECT_signingInMemoryKey<<__EOF__"
-            echo "${W3W_GPG_SECRET_KEY}" | base64 --decode
+            printf '%s\n' "$signing_key"
             echo "__EOF__"
           } >> "$GITHUB_ENV"
 
+      - name: Validate signed publication
+        if: github.event_name == 'pull_request'
+        run: ./gradlew :design-library:publishToMavenLocal --no-daemon
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.W3W_GPG_PASSPHRASE }}
+
       - name: Publish to Maven Central
+        if: github.event_name != 'pull_request'
         run: ./gradlew :design-library:publishToMavenCentral --no-daemon
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
