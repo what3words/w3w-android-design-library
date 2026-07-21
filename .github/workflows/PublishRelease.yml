@@ -4,11 +4,15 @@ on:
   push:
     branches:
       - 'main'
+  pull_request:
+    branches:
+      - 'main'
+    types: [opened, synchronize, reopened]
   workflow_dispatch:    # Allow manual triggering
 
 concurrency:
-  group: publish-maven-central
-  cancel-in-progress: false
+  group: publish-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   publish:
@@ -62,7 +66,14 @@ jobs:
             echo "__EOF__"
           } >> "$GITHUB_ENV"
 
+      - name: Validate signed publication
+        if: github.event_name == 'pull_request'
+        run: ./gradlew :design-library:publishToMavenLocal --no-daemon
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.W3W_GPG_PASSPHRASE }}
+
       - name: Publish to Maven Central
+        if: github.event_name != 'pull_request'
         run: ./gradlew :design-library:publishToMavenCentral --no-daemon
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
