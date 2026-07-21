@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 dependencyResolutionManagement {
@@ -10,6 +11,15 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
+        maven(url = "https://central.sonatype.com/repository/maven-snapshots/")
+    }
+    versionCatalogs {
+        create("libs") {
+            from("com.what3words:android-version-catalog:2026.06.01")
+
+            version("minSdk", "24")
+        }
     }
 }
 rootProject.name = "android-design-library"
