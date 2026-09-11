@@ -27,7 +27,7 @@ private const val METERS_PER_KILOMETER = 1000.0
 private const val METERS_PER_MILE = 1609.344
 private const val METERS_PER_FOOT = 0.3048
 
-/** Maximum number of decimals ever shown, mirroring iOS `W3WDistance.asString`. */
+/** Maximum number of decimals ever shown; iOS clamps to the same two. */
 private const val MAX_FRACTION_DIGITS = 2
 
 private val imperialCountries = hashSetOf("US", "LR", "MM", "BS", "BZ", "KY", "PW", "GB", "UK")
@@ -48,9 +48,16 @@ data class DistanceSeparators(val grouping: Char?, val decimal: Char)
  * | `< 100`         | 1        |
  * | `>= 100`        | 0        |
  *
- * Rounding is half-away-from-zero, trailing zeros are stripped and thousands are grouped
- * according to [locale]. There is deliberately no lower threshold: short distances render their
- * real value (e.g. `0.34 km`) rather than `<1 km`.
+ * That table is iOS's rule restated: iOS rounds to 3 significant digits and then clamps to 2
+ * decimals, which for every value at or above 1 yields exactly these decimal counts, and below 1
+ * yields 2. Rounding is half-away-from-zero and trailing zeros are stripped, as on iOS. There is
+ * deliberately no lower threshold: short distances render their real value (e.g. `0.34 km`)
+ * rather than `<1 km`.
+ *
+ * Two presentational details deliberately diverge from iOS, which concatenates a bare `"km"`/
+ * `"mi"` onto Western digits: the unit is separated by [locale]'s pattern (`0.34 km`, not
+ * `0.34km`) and both the unit name and the numerals are localised. Keeping ICU here is what makes
+ * RTL and per-app languages render correctly on Android; the numeric value itself is identical.
  *
  * @param distanceMeters The distance in metres, e.g. `W3WDistance.m().roundToInt()`.
  * @param displayUnits The display units to use (SYSTEM, IMPERIAL, METRIC).
@@ -118,7 +125,7 @@ internal fun roundForDisplay(valueInDisplayUnit: Double): Pair<Double, Int> {
 
     // Swift's `Double.rounded()` is half-away-from-zero, applied to the scaled value. Replicating
     // that arithmetic — rather than going via BigDecimal — is what reproduces iOS exactly at
-    // decimal ties such as 0.145 km.
+    // decimal ties such as 0.145 km, where iOS's own `(n * 100).rounded() / 100` lands.
     val scale = 10.0.pow(fractionDigits)
     val scaled = valueInDisplayUnit * scale
     val rounded = (if (scaled >= 0) floor(scaled + 0.5) else ceil(scaled - 0.5)) / scale
