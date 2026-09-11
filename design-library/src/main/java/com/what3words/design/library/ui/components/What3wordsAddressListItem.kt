@@ -184,11 +184,9 @@ object What3wordsAddressListItemDefaults {
  * @param distance Optional. The distance to the location, in whole kilometres. Null if not
  *   specified. Deprecated: use [distanceMeters], which can represent sub-kilometre distances.
  *   Ignored when [distanceMeters] is set.
- * @param distanceMeters Optional. The distance to the location, in metres. Null if not specified. Rendered in kilometres or miles
- *   according to [displayUnits], with numerals and separators following the composition locale.
+ * @param distanceMeters Optional. The distance to the location, in metres. Null if not specified.
  * @param displayUnits Units for displaying the distance. Default is [DisplayUnits.SYSTEM].
- * @param distanceSeparators Optional. Overrides the grouping and decimal separators the locale
- *   would supply, for apps with a user-selectable separator preference. Null follows the locale.
+ * @param distanceSeparators Optional. Overrides the grouping and decimal separators the locale would supply.
  * @param isHighlighted If true, highlights the address. Default is false.
  * @param label Optional. A label to display alongside the address. Null if not specified.
  * @param labelMaxLines Optional. Max lines for the label text. Defaults to 1; use [Int.MAX_VALUE] for unlimited lines.
