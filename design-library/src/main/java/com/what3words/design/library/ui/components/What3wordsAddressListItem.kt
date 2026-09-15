@@ -181,9 +181,6 @@ object What3wordsAddressListItemDefaults {
  * @param nearestPlace Optional. The nearest significant place to the 3-word address. Null if not specified.
  * @param nearestPlacePrefix Optional. The prefix text for the nearest place. Default is a string resource.
  * @param isLand Boolean indicating if the location is on land (true) or water (false). Default is true.
- * @param distance Optional. The distance to the location, in whole kilometres. Null if not
- *   specified. Deprecated: use [distanceMeters], which can represent sub-kilometre distances.
- *   Ignored when [distanceMeters] is set.
  * @param distanceMeters Optional. The distance to the location, in metres. Null if not specified.
  * @param displayUnits Units for displaying the distance. Default is [DisplayUnits.SYSTEM].
  * @param distanceSeparators Optional. Overrides the grouping and decimal separators the locale would supply.
@@ -195,6 +192,14 @@ object What3wordsAddressListItemDefaults {
  * @param showDivider Boolean to control the visibility of a divider line below the address. Default is true.
  * @param onClick Optional. Lambda function to handle click events. Null if no action is specified.
  */
+@Deprecated(
+    message = "Distances are now expressed in metres, which can represent sub-kilometre values.",
+    replaceWith = ReplaceWith(
+        "What3wordsAddressListItem(words, modifier, nearestPlace, nearestPlacePrefix, isLand, " +
+            "distance?.times(1000), displayUnits, null, isHighlighted, label, labelMaxLines, " +
+            "colors, textStyles, paddings, showDivider, onClick)"
+    )
+)
 @Composable
 fun What3wordsAddressListItem(
     words: String,
@@ -202,7 +207,43 @@ fun What3wordsAddressListItem(
     nearestPlace: String? = null,
     nearestPlacePrefix: String? = stringResource(id = R.string.near),
     isLand: Boolean = true,
-    distance: Int? = null,
+    distance: Int?,
+    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
+    isHighlighted: Boolean = false,
+    label: String? = null,
+    labelMaxLines: Int = 1,
+    colors: What3wordsAddressListItemDefaults.Colors = What3wordsAddressListItemDefaults.defaultColors(),
+    textStyles: What3wordsAddressListItemDefaults.TextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(),
+    paddings: What3wordsAddressListItemDefaults.Paddings = What3wordsAddressListItemDefaults.defaultPaddings(),
+    showDivider: Boolean = true,
+    onClick: (() -> Unit)? = null
+) {
+    What3wordsAddressListItem(
+        words = words,
+        modifier = modifier,
+        nearestPlace = nearestPlace,
+        nearestPlacePrefix = nearestPlacePrefix,
+        isLand = isLand,
+        distanceMeters = distance?.times(1000),
+        displayUnits = displayUnits,
+        isHighlighted = isHighlighted,
+        label = label,
+        labelMaxLines = labelMaxLines,
+        colors = colors,
+        textStyles = textStyles,
+        paddings = paddings,
+        showDivider = showDivider,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun What3wordsAddressListItem(
+    words: String,
+    modifier: Modifier = Modifier,
+    nearestPlace: String? = null,
+    nearestPlacePrefix: String? = stringResource(id = R.string.near),
+    isLand: Boolean = true,
     distanceMeters: Int? = null,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     distanceSeparators: DistanceSeparators? = null,
@@ -270,15 +311,14 @@ fun What3wordsAddressListItem(
                         } else {
                             Spacer(modifier = Modifier.weight(1f))
                         }
-                        val meters = distanceMeters ?: distance?.times(1000)
-                        if (meters != null) {
+                        if (distanceMeters != null) {
                             val locale = configurationLocale()
                             // A custom NumberFormat bypasses ICU's MeasureFormat cache, so memoise
                             // the result rather than paying for two factory calls per recomposition.
                             val distanceText =
-                                remember(meters, displayUnits, distanceSeparators, locale) {
+                                remember(distanceMeters, displayUnits, distanceSeparators, locale) {
                                     formatDistance(
-                                        meters,
+                                        distanceMeters,
                                         displayUnits,
                                         distanceSeparators,
                                         locale
