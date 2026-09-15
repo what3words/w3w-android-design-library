@@ -24,7 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,10 +38,13 @@ import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
-import com.what3words.design.library.ui.models.formatUnits
+import com.what3words.design.library.ui.models.DistanceSeparators
+import com.what3words.design.library.ui.models.formatDistance
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.w3wColorScheme
 import com.what3words.design.library.ui.theme.w3wTypography
+import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
 
 object What3wordsAddressListItemDefaults {
     data class Colors(
@@ -178,8 +181,9 @@ object What3wordsAddressListItemDefaults {
  * @param nearestPlace Optional. The nearest significant place to the 3-word address. Null if not specified.
  * @param nearestPlacePrefix Optional. The prefix text for the nearest place. Default is a string resource.
  * @param isLand Boolean indicating if the location is on land (true) or water (false). Default is true.
- * @param distance Optional. The distance to the location. Null if not specified.
+ * @param distanceMeters Optional. The distance to the location, in metres. Null if not specified.
  * @param displayUnits Units for displaying the distance. Default is [DisplayUnits.SYSTEM].
+ * @param distanceSeparators Optional. Overrides the grouping and decimal separators the locale would supply.
  * @param isHighlighted If true, highlights the address. Default is false.
  * @param label Optional. A label to display alongside the address. Null if not specified.
  * @param labelMaxLines Optional. Max lines for the label text. Defaults to 1; use [Int.MAX_VALUE] for unlimited lines.
@@ -188,6 +192,14 @@ object What3wordsAddressListItemDefaults {
  * @param showDivider Boolean to control the visibility of a divider line below the address. Default is true.
  * @param onClick Optional. Lambda function to handle click events. Null if no action is specified.
  */
+@Deprecated(
+    message = "Distances are now expressed in metres, which can represent sub-kilometre values.",
+    replaceWith = ReplaceWith(
+        "What3wordsAddressListItem(words, modifier, nearestPlace, nearestPlacePrefix, isLand, " +
+            "distance?.times(1000), displayUnits, null, isHighlighted, label, labelMaxLines, " +
+            "colors, textStyles, paddings, showDivider, onClick)"
+    )
+)
 @Composable
 fun What3wordsAddressListItem(
     words: String,
@@ -195,7 +207,7 @@ fun What3wordsAddressListItem(
     nearestPlace: String? = null,
     nearestPlacePrefix: String? = stringResource(id = R.string.near),
     isLand: Boolean = true,
-    distance: Int? = null,
+    distance: Int?,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     isHighlighted: Boolean = false,
     label: String? = null,
@@ -206,7 +218,44 @@ fun What3wordsAddressListItem(
     showDivider: Boolean = true,
     onClick: (() -> Unit)? = null
 ) {
-    val localContext = LocalContext.current
+    What3wordsAddressListItem(
+        words = words,
+        modifier = modifier,
+        nearestPlace = nearestPlace,
+        nearestPlacePrefix = nearestPlacePrefix,
+        isLand = isLand,
+        distanceMeters = distance?.times(1000),
+        displayUnits = displayUnits,
+        isHighlighted = isHighlighted,
+        label = label,
+        labelMaxLines = labelMaxLines,
+        colors = colors,
+        textStyles = textStyles,
+        paddings = paddings,
+        showDivider = showDivider,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun What3wordsAddressListItem(
+    words: String,
+    modifier: Modifier = Modifier,
+    nearestPlace: String? = null,
+    nearestPlacePrefix: String? = stringResource(id = R.string.near),
+    isLand: Boolean = true,
+    distanceMeters: Int? = null,
+    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
+    distanceSeparators: DistanceSeparators? = null,
+    isHighlighted: Boolean = false,
+    label: String? = null,
+    labelMaxLines: Int = 1,
+    colors: What3wordsAddressListItemDefaults.Colors = What3wordsAddressListItemDefaults.defaultColors(),
+    textStyles: What3wordsAddressListItemDefaults.TextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(),
+    paddings: What3wordsAddressListItemDefaults.Paddings = What3wordsAddressListItemDefaults.defaultPaddings(),
+    showDivider: Boolean = true,
+    onClick: (() -> Unit)? = null
+) {
     val clickModifier = if (onClick != null) Modifier.clickable { onClick() } else Modifier
     Box(
         modifier = modifier
@@ -262,11 +311,23 @@ fun What3wordsAddressListItem(
                         } else {
                             Spacer(modifier = Modifier.weight(1f))
                         }
-                        if (distance != null) {
+                        if (distanceMeters != null) {
+                            val locale = configurationLocale()
+                            // A custom NumberFormat bypasses ICU's MeasureFormat cache, so memoise
+                            // the result rather than paying for two factory calls per recomposition.
+                            val distanceText =
+                                remember(distanceMeters, displayUnits, distanceSeparators, locale) {
+                                    formatDistance(
+                                        distanceMeters,
+                                        displayUnits,
+                                        distanceSeparators,
+                                        locale
+                                    )
+                                }
                             Text(
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically),
-                                text = formatUnits(distance, displayUnits, localContext),
+                                text = distanceText,
                                 style = textStyles.distanceTextStyle,
                                 color = colors.distanceTextColor,
                                 textAlign = TextAlign.Start
@@ -302,6 +363,16 @@ fun What3wordsAddressListItem(
             )
         }
     }
+}
+
+/**
+ * The locale of the current composition, so distances honour per-app languages and
+ * `@Preview(locale = ...)` rather than the process-wide default.
+ */
+@Composable
+private fun configurationLocale(): Locale {
+    val locales = LocalConfiguration.current.locales
+    return if (locales.isEmpty) LocalLocale.current.platformLocale else locales[0]
 }
 
 //region Previews with W3WTheme day
@@ -340,7 +411,56 @@ private fun A2() {
 @Composable
 private fun A3() {
     W3WTheme {
-        What3wordsAddressListItem("filled.count.soap", distance = 20)
+        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with an explicit separator preference",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A3c() {
+    W3WTheme {
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            distanceMeters = 1_234_000,
+            distanceSeparators = DistanceSeparators(grouping = ' ', decimal = ',')
+        )
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with sub-kilometre distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A3a() {
+    W3WTheme {
+        // MT-9374: renders "0.34 km"; this used to render "<1 km".
+        What3wordsAddressListItem("filled.count.soap", distanceMeters = 340)
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with sub-mile distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A3b() {
+    W3WTheme {
+        // Renders "0.21 mi"; this used to render "<1 mi".
+        What3wordsAddressListItem(
+            "filled.count.soap",
+            distanceMeters = 340,
+            displayUnits = DisplayUnits.IMPERIAL
+        )
     }
 }
 
@@ -373,7 +493,7 @@ private fun A5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20
+            distanceMeters = 20_000
         )
     }
 }
@@ -407,7 +527,7 @@ private fun A7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -424,7 +544,7 @@ private fun A8() {
     W3WTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -445,7 +565,7 @@ private fun A9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distance = 20
+                distanceMeters = 20_000
             )
         }
     }
@@ -506,7 +626,7 @@ private fun B2() {
 @Composable
 private fun B3() {
     W3WTheme {
-        What3wordsAddressListItem("filled.count.soap", distance = 20)
+        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
     }
 }
 
@@ -539,7 +659,7 @@ private fun B5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20
+            distanceMeters = 20_000
         )
     }
 }
@@ -573,7 +693,7 @@ private fun B7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -590,7 +710,7 @@ private fun B8() {
     W3WTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -610,7 +730,7 @@ private fun B9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distance = 20
+                distanceMeters = 20_000
             )
         }
     }
@@ -670,7 +790,7 @@ private fun C2() {
 @Composable
 private fun C3() {
     MaterialTheme {
-        What3wordsAddressListItem("filled.count.soap", distance = 20)
+        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
     }
 }
 
@@ -703,7 +823,7 @@ private fun C5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20
+            distanceMeters = 20_000
         )
     }
 }
@@ -737,7 +857,7 @@ private fun C7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -754,7 +874,7 @@ private fun C8() {
     MaterialTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -774,7 +894,7 @@ private fun C9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distance = 20
+                distanceMeters = 20_000
             )
         }
     }
@@ -818,7 +938,7 @@ private fun D2() {
 @Composable
 private fun D3() {
     MaterialTheme(colorScheme = darkColorScheme()) {
-        What3wordsAddressListItem("filled.count.soap", distance = 20)
+        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
     }
 }
 
@@ -851,7 +971,7 @@ private fun D5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20
+            distanceMeters = 20_000
         )
     }
 }
@@ -885,7 +1005,7 @@ private fun D7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -902,7 +1022,7 @@ private fun D8() {
     MaterialTheme(colorScheme = darkColorScheme()) {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name"
         )
     }
@@ -923,7 +1043,7 @@ private fun D9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distance = 20
+                distanceMeters = 20_000
             )
         }
     }

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import com.what3words.design.library.ui.components.What3wordsAddressListItem
+import com.what3words.design.library.ui.models.DisplayUnits
 
 /**
  * A screen showcasing various implementations of the What3words address list item component.
@@ -48,7 +49,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
         What3wordsAddressListItem(
             words = "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 0,
+            distanceMeters = 137,
             isLand = false,
             label = "Label name",
             onClick = {}
@@ -64,7 +65,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
         What3wordsAddressListItem(
             words = "congratulations.congratulations.congratulations",
             nearestPlace = "Bayswater, London",
-            distance = 0,
+            distanceMeters = 137,
             isLand = false,
             label = "Label name",
             onClick = {}
@@ -72,8 +73,23 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
 
         What3wordsAddressListItem(
             words = "filled.count.soap",
-            distance = 20,
+            distanceMeters = 20_000,
             label = "Label name",
+            onClick = {}
+        )
+
+        What3wordsAddressListItem(
+            words = "filled.count.soap",
+            nearestPlace = "Bayswater, London",
+            distanceMeters = 0,
+            onClick = {}
+        )
+
+        What3wordsAddressListItem(
+            words = "filled.count.soap",
+            nearestPlace = "Bayswater, London",
+            distanceMeters = 137,
+            displayUnits = DisplayUnits.IMPERIAL,
             onClick = {}
         )
 
@@ -84,7 +100,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
                 words = "لبن.درجات.عنق",
                 nearestPlacePrefix = "الرياض",
                 nearestPlace = "Bayswater, London",
-                distance = 0,
+                distanceMeters = 137,
                 isLand = false,
                 label = "اسم الطابع",
                 onClick = {}
