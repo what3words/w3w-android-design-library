@@ -39,6 +39,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
+        with:
+          packages: "platform-tools"
 
       - name: Accept licenses
         run: yes | sdkmanager --licenses || true
@@ -83,6 +85,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
+        with:
+          packages: "platform-tools"
 
       - name: Publish SNAPSHOT
         run: ./gradlew design-library:publishToMavenCentral -PIS_SNAPSHOT_RELEASE=true --refresh-dependencies
