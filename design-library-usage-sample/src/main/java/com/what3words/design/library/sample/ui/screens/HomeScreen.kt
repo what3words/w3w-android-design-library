@@ -88,7 +88,7 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
         What3wordsAddressListItem(
             words = "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distance = 0,
+            distanceMeters = 137,
             isLand = false,
             label = "Label name",
             onClick = { navController.navigate("What3wordsAddressListItemScreen") }
