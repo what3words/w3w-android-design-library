@@ -494,20 +494,34 @@ private fun A2() {
 @Composable
 private fun A3() {
     W3WTheme {
-        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
+        What3wordsAddressListItem("filled.count.soap", distanceKm = 20.0)
     }
 }
 
 @Preview(
     group = "W3WTheme",
-    name = "W3WTheme/Day/LTR with distance in kilometres",
+    name = "W3WTheme/Day/LTR with distance in metres",
     uiMode = UI_MODE_NIGHT_NO,
     showBackground = true
 )
 @Composable
 private fun A3d() {
     W3WTheme {
-        What3wordsAddressListItem("filled.count.soap", distanceKm = 0.34)
+        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with the deprecated kilometre distance of zero",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Suppress("DEPRECATION")
+@Composable
+private fun A3e() {
+    W3WTheme {
+        What3wordsAddressListItem("filled.count.soap", distance = 0)
     }
 }
 
@@ -522,7 +536,7 @@ private fun A3c() {
     W3WTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distanceMeters = 1_234_000,
+            distanceKm = 1234.0,
             distanceSeparators = DistanceSeparators(grouping = ' ', decimal = ',')
         )
     }
@@ -537,8 +551,7 @@ private fun A3c() {
 @Composable
 private fun A3a() {
     W3WTheme {
-        // MT-9374: renders "0.34 km"; this used to render "<1 km".
-        What3wordsAddressListItem("filled.count.soap", distanceMeters = 340)
+        What3wordsAddressListItem("filled.count.soap", distanceKm = 0.34)
     }
 }
 
@@ -551,10 +564,9 @@ private fun A3a() {
 @Composable
 private fun A3b() {
     W3WTheme {
-        // Renders "0.21 mi"; this used to render "<1 mi".
         What3wordsAddressListItem(
             "filled.count.soap",
-            distanceMeters = 340,
+            distanceKm = 0.34,
             displayUnits = DisplayUnits.IMPERIAL
         )
     }
@@ -589,7 +601,7 @@ private fun A5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000
+            distanceKm = 20.0
         )
     }
 }
@@ -623,7 +635,7 @@ private fun A7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -640,7 +652,7 @@ private fun A8() {
     W3WTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -661,7 +673,7 @@ private fun A9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distanceMeters = 20_000
+                distanceKm = 20.0
             )
         }
     }
@@ -722,7 +734,7 @@ private fun B2() {
 @Composable
 private fun B3() {
     W3WTheme {
-        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
+        What3wordsAddressListItem("filled.count.soap", distanceKm = 20.0)
     }
 }
 
@@ -755,7 +767,7 @@ private fun B5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000
+            distanceKm = 20.0
         )
     }
 }
@@ -789,7 +801,7 @@ private fun B7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -806,7 +818,7 @@ private fun B8() {
     W3WTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -826,7 +838,7 @@ private fun B9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distanceMeters = 20_000
+                distanceKm = 20.0
             )
         }
     }
@@ -886,7 +898,7 @@ private fun C2() {
 @Composable
 private fun C3() {
     MaterialTheme {
-        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
+        What3wordsAddressListItem("filled.count.soap", distanceKm = 20.0)
     }
 }
 
@@ -919,7 +931,7 @@ private fun C5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000
+            distanceKm = 20.0
         )
     }
 }
@@ -953,7 +965,7 @@ private fun C7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -970,7 +982,7 @@ private fun C8() {
     MaterialTheme {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -990,7 +1002,7 @@ private fun C9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distanceMeters = 20_000
+                distanceKm = 20.0
             )
         }
     }
@@ -1034,7 +1046,7 @@ private fun D2() {
 @Composable
 private fun D3() {
     MaterialTheme(colorScheme = darkColorScheme()) {
-        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
+        What3wordsAddressListItem("filled.count.soap", distanceKm = 20.0)
     }
 }
 
@@ -1067,7 +1079,7 @@ private fun D5() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000
+            distanceKm = 20.0
         )
     }
 }
@@ -1101,7 +1113,7 @@ private fun D7() {
         What3wordsAddressListItem(
             "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -1118,7 +1130,7 @@ private fun D8() {
     MaterialTheme(colorScheme = darkColorScheme()) {
         What3wordsAddressListItem(
             "filled.count.soap",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name"
         )
     }
@@ -1139,7 +1151,7 @@ private fun D9() {
             What3wordsAddressListItem(
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
-                distanceMeters = 20_000
+                distanceKm = 20.0
             )
         }
     }
