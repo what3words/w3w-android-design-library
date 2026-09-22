@@ -183,7 +183,6 @@ object What3wordsAddressListItemDefaults {
  * @param nearestPlace Optional. The nearest significant place to the 3-word address. Null if not specified.
  * @param nearestPlacePrefix Optional. The prefix text for the nearest place. Default is a string resource.
  * @param isLand Boolean indicating if the location is on land (true) or water (false). Default is true.
- * @param distanceMeters Optional. The distance to the location, in metres. Null if not specified.
  * @param displayUnits Units for displaying the distance. Default is [DisplayUnits.SYSTEM].
  * @param distanceSeparators Optional. Overrides the grouping and decimal separators the locale would supply.
  * @param isHighlighted If true, highlights the address. Default is false.
@@ -244,45 +243,6 @@ fun What3wordsAddressListItem(
     )
 }
 
-@Composable
-fun What3wordsAddressListItem(
-    words: String,
-    modifier: Modifier = Modifier,
-    nearestPlace: String? = null,
-    nearestPlacePrefix: String? = stringResource(id = R.string.near),
-    isLand: Boolean = true,
-    distanceMeters: Int? = null,
-    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
-    distanceSeparators: DistanceSeparators? = null,
-    isHighlighted: Boolean = false,
-    label: String? = null,
-    labelMaxLines: Int = 1,
-    colors: What3wordsAddressListItemDefaults.Colors = What3wordsAddressListItemDefaults.defaultColors(),
-    textStyles: What3wordsAddressListItemDefaults.TextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(),
-    paddings: What3wordsAddressListItemDefaults.Paddings = What3wordsAddressListItemDefaults.defaultPaddings(),
-    showDivider: Boolean = true,
-    onClick: (() -> Unit)? = null
-) {
-    What3wordsAddressListItem(
-        words = words,
-        distanceKm = distanceMeters?.div(1000.0),
-        modifier = modifier,
-        nearestPlace = nearestPlace,
-        nearestPlacePrefix = nearestPlacePrefix,
-        isLand = isLand,
-        displayUnits = displayUnits,
-        distanceSeparators = distanceSeparators,
-        isHighlighted = isHighlighted,
-        label = label,
-        labelMaxLines = labelMaxLines,
-        colors = colors,
-        textStyles = textStyles,
-        paddings = paddings,
-        showDivider = showDivider,
-        onClick = onClick
-    )
-}
-
 /**
  * The locale of the current composition, so distances honour per-app languages and
  * `@Preview(locale = ...)` rather than the process-wide default.
@@ -296,7 +256,7 @@ fun What3wordsAddressListItem(
 @Composable
 fun What3wordsAddressListItem(
     words: String,
-    distanceKm: Double?,
+    distanceKm: Double? = null,
     modifier: Modifier = Modifier,
     nearestPlace: String? = null,
     nearestPlacePrefix: String? = stringResource(id = R.string.near),
@@ -495,19 +455,6 @@ private fun A2() {
 private fun A3() {
     W3WTheme {
         What3wordsAddressListItem("filled.count.soap", distanceKm = 20.0)
-    }
-}
-
-@Preview(
-    group = "W3WTheme",
-    name = "W3WTheme/Day/LTR with distance in metres",
-    uiMode = UI_MODE_NIGHT_NO,
-    showBackground = true
-)
-@Composable
-private fun A3d() {
-    W3WTheme {
-        What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
     }
 }
 

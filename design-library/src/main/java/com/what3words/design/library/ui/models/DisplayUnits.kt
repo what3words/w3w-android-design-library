@@ -34,17 +34,16 @@ private val imperialCountries = hashSetOf("US", "LR", "MM", "BS", "BZ", "KY", "P
 data class DistanceSeparators(val grouping: Char?, val decimal: Char)
 
 private fun renderDistance(
-    distanceMeters: Double,
+    distanceKm: Double,
     displayUnits: DisplayUnits,
     separators: DistanceSeparators?,
     locale: Locale
 ): String {
-    if (!distanceMeters.isFinite()) return ""
+    if (!distanceKm.isFinite()) return ""
 
     val metric = isMetricDisplayUnitEnabled(displayUnits, locale)
     val unit = if (metric) MeasureUnit.KILOMETER else MeasureUnit.MILE
-    val km = distanceMeters / KM_TO_METERS_FACTOR
-    val converted = if (metric) km else km / KM_TO_MILES_FACTOR
+    val converted = if (metric) distanceKm else distanceKm / KM_TO_MILES_FACTOR
 
     val (rounded, fractionDigits) = roundForDisplay(converted)
 
@@ -69,22 +68,6 @@ private fun renderDistance(
 /**
  * Formats a distance for display
  *
- * @param distanceMeters The distance in whole metres.
- * @param displayUnits The display units to use (SYSTEM, IMPERIAL, METRIC).
- * @param locale The locale used for the numerals, decimal/grouping separators and unit name.
- *   Defaults to [Locale.getDefault].
- * @return A formatted string such as `0.34 km`, `12.6 km`, `1,234 km` or `0.21 mi`.
- */
-fun formatDistance(
-    distanceMeters: Int,
-    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
-    separators: DistanceSeparators? = null,
-    locale: Locale = Locale.getDefault()
-): String = renderDistance(distanceMeters.toDouble(), displayUnits, separators, locale)
-
-/**
- * Formats a distance for display
- *
  * @param distanceKm The distance in kilometres, e.g. `W3WDistance.km()`. Non-finite values
  *   produce an empty string.
  * @param displayUnits The display units to use (SYSTEM, IMPERIAL, METRIC).
@@ -97,7 +80,7 @@ fun formatDistanceKm(
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     separators: DistanceSeparators? = null,
     locale: Locale = Locale.getDefault()
-): String = renderDistance(distanceKm * KM_TO_METERS_FACTOR, displayUnits, separators, locale)
+): String = renderDistance(distanceKm, displayUnits, separators, locale)
 
 /**
  * Applies the rounding rule to a value already expressed in the display unit.

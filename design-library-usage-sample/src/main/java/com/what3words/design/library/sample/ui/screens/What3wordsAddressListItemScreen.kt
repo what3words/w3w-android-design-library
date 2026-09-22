@@ -49,7 +49,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
         What3wordsAddressListItem(
             words = "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 137,
+            distanceKm = 0.137,
             isLand = false,
             label = "Label name",
             onClick = {}
@@ -65,7 +65,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
         What3wordsAddressListItem(
             words = "congratulations.congratulations.congratulations",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 137,
+            distanceKm = 0.137,
             isLand = false,
             label = "Label name",
             onClick = {}
@@ -73,7 +73,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
 
         What3wordsAddressListItem(
             words = "filled.count.soap",
-            distanceMeters = 20_000,
+            distanceKm = 20.0,
             label = "Label name",
             onClick = {}
         )
@@ -81,14 +81,14 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
         What3wordsAddressListItem(
             words = "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 0,
+            distanceKm = 0.0,
             onClick = {}
         )
 
         What3wordsAddressListItem(
             words = "filled.count.soap",
             nearestPlace = "Bayswater, London",
-            distanceMeters = 137,
+            distanceKm = 0.137,
             displayUnits = DisplayUnits.IMPERIAL,
             onClick = {}
         )
@@ -100,7 +100,7 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
                 words = "لبن.درجات.عنق",
                 nearestPlacePrefix = "الرياض",
                 nearestPlace = "Bayswater, London",
-                distanceMeters = 137,
+                distanceKm = 0.137,
                 isLand = false,
                 label = "اسم الطابع",
                 onClick = {}

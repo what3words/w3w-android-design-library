@@ -32,7 +32,6 @@ class FormatUnitsDeprecatedTest {
 
     @Test
     fun `the metre and kilometre entry points never emit the legacy form`() {
-        assertThat(formatDistance(0, DisplayUnits.METRIC, locale = Locale.ENGLISH)).isEqualTo("0 km")
         assertThat(formatDistanceKm(0.0, DisplayUnits.METRIC, locale = Locale.ENGLISH))
             .isEqualTo("0 km")
         assertThat(formatDistanceKm(0.34, DisplayUnits.METRIC, locale = Locale.ENGLISH))

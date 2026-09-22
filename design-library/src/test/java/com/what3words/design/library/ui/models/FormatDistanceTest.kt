@@ -22,7 +22,7 @@ class FormatDistanceTest {
         locale: Locale,
         expected: String
     ) {
-        assertThat(formatDistance(meters, displayUnits, locale = locale).normalized())
+        assertThat(formatDistanceKm(meters / 1000.0, displayUnits, locale = locale).normalized())
             .isEqualTo(expected)
     }
 
@@ -98,7 +98,7 @@ class FormatDistanceTest {
     fun `unit name is localised`() {
         // ar uses Arabic-Indic numerals and a localised unit name; assert against ICU itself rather
         // than a literal so the test does not pin one ICU version's exact glyphs.
-        val arabic = formatDistance(500, DisplayUnits.METRIC, locale = Locale.forLanguageTag("ar-EG"))
+        val arabic = formatDistanceKm(0.5, DisplayUnits.METRIC, locale = Locale.forLanguageTag("ar-EG"))
         val expectedNumber =
             android.icu.text.NumberFormat.getInstance(Locale.forLanguageTag("ar-EG")).format(0.5)
         assertThat(arabic).contains(expectedNumber)

@@ -25,8 +25,8 @@ class FormatDistanceSeparatorsTest {
         decimal: Char,
         displayUnits: DisplayUnits = DisplayUnits.METRIC,
         locale: Locale = Locale.ENGLISH
-    ) = formatDistance(
-        meters,
+    ) = formatDistanceKm(
+        meters / 1000.0,
         displayUnits,
         DistanceSeparators(grouping, decimal),
         locale = locale
@@ -121,15 +121,15 @@ class FormatDistanceSeparatorsTest {
         // must replace only the separator, leaving the digits and the unit name localised.
         val ar = Locale("ar", "EG")
         assertThat(format(fractional, ',', '.', locale = ar)).isEqualTo("\u0660.\u0663\u0664 \u0643\u0645")
-        assertThat(formatDistance(fractional, DisplayUnits.METRIC, locale = ar).normalized())
+        assertThat(formatDistanceKm(fractional / 1000.0, DisplayUnits.METRIC, locale = ar).normalized())
             .isEqualTo("\u0660\u066b\u0663\u0664 \u0643\u0645")
     }
 
     @Test
     fun `the locale-driven overload is unchanged`() {
-        assertThat(formatDistance(grouped, DisplayUnits.METRIC, locale = Locale.ENGLISH).normalized())
+        assertThat(formatDistanceKm(grouped / 1000.0, DisplayUnits.METRIC, locale = Locale.ENGLISH).normalized())
             .isEqualTo("1,234 km")
-        assertThat(formatDistance(grouped, DisplayUnits.METRIC, locale = Locale.GERMANY).normalized())
+        assertThat(formatDistanceKm(grouped / 1000.0, DisplayUnits.METRIC, locale = Locale.GERMANY).normalized())
             .isEqualTo("1.234 km")
     }
 }

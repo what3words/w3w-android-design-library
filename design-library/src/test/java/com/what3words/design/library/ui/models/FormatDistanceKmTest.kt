@@ -18,14 +18,6 @@ class FormatDistanceKmTest {
     ) = formatDistanceKm(km, displayUnits, locale = locale).normalized()
 
     @Test
-    fun `agrees with the metres overload for the same distance`() {
-        listOf(0, 4, 10, 340, 999, 1_400, 12_600, 123_400, 1_234_000).forEach { meters ->
-            assertThat(formatDistanceKm(meters / 1000.0, DisplayUnits.METRIC, locale = Locale.ENGLISH))
-                .isEqualTo(formatDistance(meters, DisplayUnits.METRIC, locale = Locale.ENGLISH))
-        }
-    }
-
-    @Test
     fun `the decimals rule applies to the kilometre value`() {
         assertThat(format(0.0)).isEqualTo("0 km")
         assertThat(format(0.004)).isEqualTo("0 km")
