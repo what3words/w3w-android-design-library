@@ -6,6 +6,7 @@ import android.icu.text.MeasureFormat
 import android.icu.text.NumberFormat
 import android.icu.util.Measure
 import android.icu.util.MeasureUnit
+import com.what3words.design.library.R
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -127,13 +128,24 @@ internal fun roundForDisplay(valueInDisplayUnit: Double): Pair<Double, Int> {
  * @return A formatted string representing the distance.
  */
 @Deprecated(
-    message = "Distances are now expressed in metres. This function takes whole kilometres and " +
-        "so cannot represent sub-kilometre distances; use formatDistance instead.",
-    replaceWith = ReplaceWith("formatDistance(distanceKm * 1000, displayUnits)")
+    message = "Distances are now expressed in kilometres as a Double. This function takes whole " +
+        "kilometres, so it renders 0 as \"<1 km\" rather than the real value; use " +
+        "formatDistanceKm instead.",
+    replaceWith = ReplaceWith("formatDistanceKm(distanceKm.toDouble(), displayUnits)")
 )
-@Suppress("UNUSED_PARAMETER")
 fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: Context): String =
-    formatDistance(distanceKm * 1000, displayUnits)
+    if (distanceKm == 0) belowOneUnit(displayUnits, context)
+    else formatDistanceKm(distanceKm.toDouble(), displayUnits)
+
+private fun belowOneUnit(displayUnits: DisplayUnits, context: Context): String {
+    val locale = Locale.getDefault()
+    val unit =
+        if (isMetricDisplayUnitEnabled(displayUnits, locale)) MeasureUnit.KILOMETER
+        else MeasureUnit.MILE
+    val oneUnit = MeasureFormat.getInstance(locale, MeasureFormat.FormatWidth.SHORT)
+        .format(Measure(1, unit))
+    return context.getString(R.string.distance_low, oneUnit)
+}
 
 // Signature frozen: consumed externally by w3w-android-map-components (MyLocationButton.kt).
 fun getAccuracyString(accuracyInMeters: Float, displayUnits: DisplayUnits): String {

@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,6 +41,7 @@ import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
 import com.what3words.design.library.ui.models.DistanceSeparators
 import com.what3words.design.library.ui.models.formatDistanceKm
+import com.what3words.design.library.ui.models.formatUnits
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.w3wColorScheme
 import com.what3words.design.library.ui.theme.w3wTypography
@@ -221,14 +223,16 @@ fun What3wordsAddressListItem(
     showDivider: Boolean = true,
     onClick: (() -> Unit)? = null
 ) {
-    What3wordsAddressListItem(
+    val context = LocalContext.current
+    @Suppress("DEPRECATION")
+    val distanceText = distance?.let { formatUnits(it, displayUnits, context) }
+    What3wordsAddressListItemContent(
         words = words,
-        distanceKm = distance?.toDouble(),
+        distanceText = distanceText,
         modifier = modifier,
         nearestPlace = nearestPlace,
         nearestPlacePrefix = nearestPlacePrefix,
         isLand = isLand,
-        displayUnits = displayUnits,
         isHighlighted = isHighlighted,
         label = label,
         labelMaxLines = labelMaxLines,
@@ -308,6 +312,49 @@ fun What3wordsAddressListItem(
     showDivider: Boolean = true,
     onClick: (() -> Unit)? = null
 ) {
+    val locale = configurationLocale()
+    // A custom NumberFormat bypasses ICU's MeasureFormat cache, so memoise the result rather
+    // than paying for two factory calls per recomposition.
+    val distanceText = distanceKm?.let {
+        remember(it, displayUnits, distanceSeparators, locale) {
+            formatDistanceKm(it, displayUnits, distanceSeparators, locale)
+        }
+    }
+    What3wordsAddressListItemContent(
+        words = words,
+        distanceText = distanceText,
+        modifier = modifier,
+        nearestPlace = nearestPlace,
+        nearestPlacePrefix = nearestPlacePrefix,
+        isLand = isLand,
+        isHighlighted = isHighlighted,
+        label = label,
+        labelMaxLines = labelMaxLines,
+        colors = colors,
+        textStyles = textStyles,
+        paddings = paddings,
+        showDivider = showDivider,
+        onClick = onClick
+    )
+}
+
+@Composable
+private fun What3wordsAddressListItemContent(
+    words: String,
+    distanceText: String?,
+    modifier: Modifier,
+    nearestPlace: String?,
+    nearestPlacePrefix: String?,
+    isLand: Boolean,
+    isHighlighted: Boolean,
+    label: String?,
+    labelMaxLines: Int,
+    colors: What3wordsAddressListItemDefaults.Colors,
+    textStyles: What3wordsAddressListItemDefaults.TextStyles,
+    paddings: What3wordsAddressListItemDefaults.Paddings,
+    showDivider: Boolean,
+    onClick: (() -> Unit)?
+) {
     val clickModifier = if (onClick != null) Modifier.clickable { onClick() } else Modifier
     Box(
         modifier = modifier
@@ -363,19 +410,7 @@ fun What3wordsAddressListItem(
                         } else {
                             Spacer(modifier = Modifier.weight(1f))
                         }
-                        if (distanceKm != null) {
-                            val locale = configurationLocale()
-                            // A custom NumberFormat bypasses ICU's MeasureFormat cache, so memoise
-                            // the result rather than paying for two factory calls per recomposition.
-                            val distanceText =
-                                remember(distanceKm, displayUnits, distanceSeparators, locale) {
-                                    formatDistanceKm(
-                                        distanceKm,
-                                        displayUnits,
-                                        distanceSeparators,
-                                        locale
-                                    )
-                                }
+                        if (distanceText != null) {
                             Text(
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically),
