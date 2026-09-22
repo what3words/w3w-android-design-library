@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.what3words.design.library.R
 import com.what3words.design.library.ui.models.DisplayUnits
 import com.what3words.design.library.ui.models.DistanceSeparators
-import com.what3words.design.library.ui.models.formatDistance
+import com.what3words.design.library.ui.models.formatDistanceKm
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.design.library.ui.theme.w3wColorScheme
 import com.what3words.design.library.ui.theme.w3wTypography
@@ -193,11 +193,14 @@ object What3wordsAddressListItemDefaults {
  * @param onClick Optional. Lambda function to handle click events. Null if no action is specified.
  */
 @Deprecated(
-    message = "Distances are now expressed in metres, which can represent sub-kilometre values.",
+    message = "Use distanceKm, which can represent sub-kilometre values.",
     replaceWith = ReplaceWith(
-        "What3wordsAddressListItem(words, modifier, nearestPlace, nearestPlacePrefix, isLand, " +
-            "distance?.times(1000), displayUnits, null, isHighlighted, label, labelMaxLines, " +
-            "colors, textStyles, paddings, showDivider, onClick)"
+        "What3wordsAddressListItem(words = words, distanceKm = distance?.toDouble(), " +
+            "modifier = modifier, nearestPlace = nearestPlace, " +
+            "nearestPlacePrefix = nearestPlacePrefix, isLand = isLand, " +
+            "displayUnits = displayUnits, isHighlighted = isHighlighted, label = label, " +
+            "labelMaxLines = labelMaxLines, colors = colors, textStyles = textStyles, " +
+            "paddings = paddings, showDivider = showDivider, onClick = onClick)"
     )
 )
 @Composable
@@ -220,11 +223,11 @@ fun What3wordsAddressListItem(
 ) {
     What3wordsAddressListItem(
         words = words,
+        distanceKm = distance?.toDouble(),
         modifier = modifier,
         nearestPlace = nearestPlace,
         nearestPlacePrefix = nearestPlacePrefix,
         isLand = isLand,
-        distanceMeters = distance?.times(1000),
         displayUnits = displayUnits,
         isHighlighted = isHighlighted,
         label = label,
@@ -245,6 +248,55 @@ fun What3wordsAddressListItem(
     nearestPlacePrefix: String? = stringResource(id = R.string.near),
     isLand: Boolean = true,
     distanceMeters: Int? = null,
+    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
+    distanceSeparators: DistanceSeparators? = null,
+    isHighlighted: Boolean = false,
+    label: String? = null,
+    labelMaxLines: Int = 1,
+    colors: What3wordsAddressListItemDefaults.Colors = What3wordsAddressListItemDefaults.defaultColors(),
+    textStyles: What3wordsAddressListItemDefaults.TextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(),
+    paddings: What3wordsAddressListItemDefaults.Paddings = What3wordsAddressListItemDefaults.defaultPaddings(),
+    showDivider: Boolean = true,
+    onClick: (() -> Unit)? = null
+) {
+    What3wordsAddressListItem(
+        words = words,
+        distanceKm = distanceMeters?.div(1000.0),
+        modifier = modifier,
+        nearestPlace = nearestPlace,
+        nearestPlacePrefix = nearestPlacePrefix,
+        isLand = isLand,
+        displayUnits = displayUnits,
+        distanceSeparators = distanceSeparators,
+        isHighlighted = isHighlighted,
+        label = label,
+        labelMaxLines = labelMaxLines,
+        colors = colors,
+        textStyles = textStyles,
+        paddings = paddings,
+        showDivider = showDivider,
+        onClick = onClick
+    )
+}
+
+/**
+ * The locale of the current composition, so distances honour per-app languages and
+ * `@Preview(locale = ...)` rather than the process-wide default.
+ */
+/**
+ * [What3wordsAddressListItem] taking the distance in kilometres.
+ *
+ * @param distanceKm The distance to the location, in kilometres (for example `W3WDistance.km()`).
+ *   Null hides the distance.
+ */
+@Composable
+fun What3wordsAddressListItem(
+    words: String,
+    distanceKm: Double?,
+    modifier: Modifier = Modifier,
+    nearestPlace: String? = null,
+    nearestPlacePrefix: String? = stringResource(id = R.string.near),
+    isLand: Boolean = true,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     distanceSeparators: DistanceSeparators? = null,
     isHighlighted: Boolean = false,
@@ -311,14 +363,14 @@ fun What3wordsAddressListItem(
                         } else {
                             Spacer(modifier = Modifier.weight(1f))
                         }
-                        if (distanceMeters != null) {
+                        if (distanceKm != null) {
                             val locale = configurationLocale()
                             // A custom NumberFormat bypasses ICU's MeasureFormat cache, so memoise
                             // the result rather than paying for two factory calls per recomposition.
                             val distanceText =
-                                remember(distanceMeters, displayUnits, distanceSeparators, locale) {
-                                    formatDistance(
-                                        distanceMeters,
+                                remember(distanceKm, displayUnits, distanceSeparators, locale) {
+                                    formatDistanceKm(
+                                        distanceKm,
                                         displayUnits,
                                         distanceSeparators,
                                         locale
@@ -365,10 +417,6 @@ fun What3wordsAddressListItem(
     }
 }
 
-/**
- * The locale of the current composition, so distances honour per-app languages and
- * `@Preview(locale = ...)` rather than the process-wide default.
- */
 @Composable
 private fun configurationLocale(): Locale {
     val locales = LocalConfiguration.current.locales
@@ -412,6 +460,19 @@ private fun A2() {
 private fun A3() {
     W3WTheme {
         What3wordsAddressListItem("filled.count.soap", distanceMeters = 20_000)
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/LTR with distance in kilometres",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A3d() {
+    W3WTheme {
+        What3wordsAddressListItem("filled.count.soap", distanceKm = 0.34)
     }
 }
 

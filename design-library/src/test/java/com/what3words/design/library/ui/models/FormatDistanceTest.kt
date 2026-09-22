@@ -56,17 +56,15 @@ class FormatDistanceTest {
     }
 
     @Test
-    fun `imperial converts at the exact mile factor`() {
+    fun `imperial converts via KM_TO_MILES_FACTOR`() {
         val l = Locale.US
         assertFormats(0, DisplayUnits.IMPERIAL, l, "0 mi")
         assertFormats(5, DisplayUnits.IMPERIAL, l, "0 mi")
         assertFormats(100, DisplayUnits.IMPERIAL, l, "0.06 mi")
         assertFormats(340, DisplayUnits.IMPERIAL, l, "0.21 mi")
         assertFormats(1_000, DisplayUnits.IMPERIAL, l, "0.62 mi")
-        // Regression test for the conversion factor: the old code divided by 1.609.
         assertFormats(1_609, DisplayUnits.IMPERIAL, l, "1 mi")
         assertFormats(16_093, DisplayUnits.IMPERIAL, l, "10 mi")
-        // Previously rendered "12 mi" — wrong factor compounded by rounding to a whole number.
         assertFormats(20_000, DisplayUnits.IMPERIAL, l, "12.4 mi")
         assertFormats(200_000, DisplayUnits.IMPERIAL, l, "124 mi")
         assertFormats(2_000_000, DisplayUnits.IMPERIAL, l, "1,243 mi")

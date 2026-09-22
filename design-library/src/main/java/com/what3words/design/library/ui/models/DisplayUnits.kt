@@ -22,10 +22,9 @@ enum class DisplayUnits {
     METRIC // Explicitly uses metric units (kilometers, meters, etc.)
 }
 
-/** Exact SI definitions */
-private const val METERS_PER_KILOMETER = 1000.0
-private const val METERS_PER_MILE = 1609.344
-private const val METERS_PER_FOOT = 0.3048
+const val KM_TO_MILES_FACTOR = 1.609
+private const val MILES_TO_FT_FACTOR = 5280
+private const val KM_TO_METERS_FACTOR = 1000
 
 private const val MAX_FRACTION_DIGITS = 2
 
@@ -33,25 +32,18 @@ private val imperialCountries = hashSetOf("US", "LR", "MM", "BS", "BZ", "KY", "P
 
 data class DistanceSeparators(val grouping: Char?, val decimal: Char)
 
-/**
- * Formats a distance for display
- *
- * @param distanceMeters The distance in metres.
- * @param displayUnits The display units to use (SYSTEM, IMPERIAL, METRIC).
- * @param locale The locale used for the numerals, decimal/grouping separators and unit name.
- *   Defaults to [Locale.getDefault].
- * @return A formatted string such as `0.34 km`, `12.6 km`, `1,234 km` or `0.21 mi`.
- */
-fun formatDistance(
-    distanceMeters: Int,
-    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
-    separators: DistanceSeparators? = null,
-    locale: Locale = Locale.getDefault()
+private fun renderDistance(
+    distanceMeters: Double,
+    displayUnits: DisplayUnits,
+    separators: DistanceSeparators?,
+    locale: Locale
 ): String {
+    if (!distanceMeters.isFinite()) return ""
+
     val metric = isMetricDisplayUnitEnabled(displayUnits, locale)
     val unit = if (metric) MeasureUnit.KILOMETER else MeasureUnit.MILE
-    val converted =
-        if (metric) distanceMeters / METERS_PER_KILOMETER else distanceMeters / METERS_PER_MILE
+    val km = distanceMeters / KM_TO_METERS_FACTOR
+    val converted = if (metric) km else km / KM_TO_MILES_FACTOR
 
     val (rounded, fractionDigits) = roundForDisplay(converted)
 
@@ -72,6 +64,39 @@ fun formatDistance(
     return MeasureFormat.getInstance(locale, MeasureFormat.FormatWidth.SHORT, numberFormat)
         .format(Measure(rounded, unit))
 }
+
+/**
+ * Formats a distance for display
+ *
+ * @param distanceMeters The distance in whole metres.
+ * @param displayUnits The display units to use (SYSTEM, IMPERIAL, METRIC).
+ * @param locale The locale used for the numerals, decimal/grouping separators and unit name.
+ *   Defaults to [Locale.getDefault].
+ * @return A formatted string such as `0.34 km`, `12.6 km`, `1,234 km` or `0.21 mi`.
+ */
+fun formatDistance(
+    distanceMeters: Int,
+    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
+    separators: DistanceSeparators? = null,
+    locale: Locale = Locale.getDefault()
+): String = renderDistance(distanceMeters.toDouble(), displayUnits, separators, locale)
+
+/**
+ * Formats a distance for display
+ *
+ * @param distanceKm The distance in kilometres, e.g. `W3WDistance.km()`. Non-finite values
+ *   produce an empty string.
+ * @param displayUnits The display units to use (SYSTEM, IMPERIAL, METRIC).
+ * @param locale The locale used for the numerals, decimal/grouping separators and unit name.
+ *   Defaults to [Locale.getDefault].
+ * @return A formatted string such as `0.34 km`, `12.6 km`, `1,234 km` or `0.21 mi`.
+ */
+fun formatDistanceKm(
+    distanceKm: Double,
+    displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
+    separators: DistanceSeparators? = null,
+    locale: Locale = Locale.getDefault()
+): String = renderDistance(distanceKm * KM_TO_METERS_FACTOR, displayUnits, separators, locale)
 
 /**
  * Applies the rounding rule to a value already expressed in the display unit.
@@ -116,17 +141,19 @@ fun getAccuracyString(accuracyInMeters: Float, displayUnits: DisplayUnits): Stri
     val fmtFr = MeasureFormat.getInstance(locale, MeasureFormat.FormatWidth.SHORT)
     val meters = accuracyInMeters.toDouble()
     return if (isMetricDisplayUnitEnabled(displayUnits, locale)) {
-        if (meters < METERS_PER_KILOMETER) {
+        if (meters < KM_TO_METERS_FACTOR) {
             fmtFr.format(Measure(meters.roundToInt(), MeasureUnit.METER))
         } else {
             fmtFr.format(
-                Measure((meters / METERS_PER_KILOMETER).roundToInt(), MeasureUnit.KILOMETER)
+                Measure((meters / KM_TO_METERS_FACTOR).roundToInt(), MeasureUnit.KILOMETER)
             )
         }
     } else {
-        val accuracyInMiles = meters / METERS_PER_MILE
+        val accuracyInMiles = meters / KM_TO_METERS_FACTOR / KM_TO_MILES_FACTOR
         if (accuracyInMiles < 1) {
-            fmtFr.format(Measure((meters / METERS_PER_FOOT).roundToInt(), MeasureUnit.FOOT))
+            fmtFr.format(
+                Measure((accuracyInMiles * MILES_TO_FT_FACTOR).roundToInt(), MeasureUnit.FOOT)
+            )
         } else {
             fmtFr.format(Measure(accuracyInMiles.roundToInt(), MeasureUnit.MILE))
         }

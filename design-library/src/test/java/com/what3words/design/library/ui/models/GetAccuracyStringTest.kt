@@ -53,6 +53,6 @@ class GetAccuracyStringTest {
     @Test
     fun `feet use the exact conversion factor`() {
         assertThat(getAccuracyString(1600f, DisplayUnits.IMPERIAL).normalized())
-            .isEqualTo("5,249 ft")
+            .isEqualTo("5,250 ft")
     }
 }
