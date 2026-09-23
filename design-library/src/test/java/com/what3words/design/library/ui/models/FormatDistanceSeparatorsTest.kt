@@ -20,21 +20,21 @@ class FormatDistanceSeparatorsTest {
     private fun String.normalized() = replace('\u00A0', ' ').replace('\u202F', ' ')
 
     private fun format(
-        meters: Int,
+        km: Double,
         grouping: Char?,
         decimal: Char,
         displayUnits: DisplayUnits = DisplayUnits.METRIC,
         locale: Locale = Locale.ENGLISH
     ) = formatDistance(
-        meters,
+        km,
         displayUnits,
         DistanceSeparators(grouping, decimal),
         locale = locale
     ).normalized()
 
     // A value that groups (>= 1000, so 0 decimals) and one that shows decimals (< 10).
-    private val grouped = 1_234_000
-    private val fractional = 340
+    private val grouped = 1234.0
+    private val fractional = 0.34
 
     @Test
     fun `option 1 - comma grouping, dot decimal`() {
@@ -87,21 +87,21 @@ class FormatDistanceSeparatorsTest {
 
     @Test
     fun `imperial honours the separators after conversion`() {
-        assertThat(format(2_000_000, ' ', ',', DisplayUnits.IMPERIAL, Locale.US))
+        assertThat(format(2000.0, ' ', ',', DisplayUnits.IMPERIAL, Locale.US))
             .isEqualTo("1 243 mi")
-        assertThat(format(340, ' ', ',', DisplayUnits.IMPERIAL, Locale.US))
+        assertThat(format(0.34, ' ', ',', DisplayUnits.IMPERIAL, Locale.US))
             .isEqualTo("0,21 mi")
     }
 
     @Test
     fun `the decimals rule is unaffected by the separators`() {
-        assertThat(format(0, ',', '.')).isEqualTo("0 km")
-        assertThat(format(4, ',', '.')).isEqualTo("0 km")
-        assertThat(format(10, ',', '.')).isEqualTo("0.01 km")
-        assertThat(format(999, ',', '.')).isEqualTo("1 km")
-        assertThat(format(1_400, ',', '.')).isEqualTo("1.4 km")
-        assertThat(format(12_600, ',', '.')).isEqualTo("12.6 km")
-        assertThat(format(123_400, ',', '.')).isEqualTo("123 km")
+        assertThat(format(0.0, ',', '.')).isEqualTo("0 km")
+        assertThat(format(0.004, ',', '.')).isEqualTo("0 km")
+        assertThat(format(0.01, ',', '.')).isEqualTo("0.01 km")
+        assertThat(format(0.999, ',', '.')).isEqualTo("1 km")
+        assertThat(format(1.4, ',', '.')).isEqualTo("1.4 km")
+        assertThat(format(12.6, ',', '.')).isEqualTo("12.6 km")
+        assertThat(format(123.4, ',', '.')).isEqualTo("123 km")
     }
 
     @Test
@@ -111,7 +111,7 @@ class FormatDistanceSeparatorsTest {
         // unconditionally. Pinned here because it is the behaviour parity depends on.
         val es = Locale("es", "ES")
         assertThat(format(grouped, ',', '.', locale = es)).isEqualTo("1,234 km")
-        assertThat(format(12_345_000, ',', '.', locale = es)).isEqualTo("12,345 km")
+        assertThat(format(12345.0, ',', '.', locale = es)).isEqualTo("12,345 km")
         assertThat(format(grouped, ' ', ',', locale = Locale("pl", "PL"))).isEqualTo("1 234 km")
     }
 
