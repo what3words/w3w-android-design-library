@@ -33,7 +33,6 @@ private const val MAX_FRACTION_DIGITS = 2
 
 private val imperialCountries = hashSetOf("US", "LR", "MM", "BS", "BZ", "KY", "PW", "GB", "UK")
 
-/** [grouping] of `null` renders no thousands separator at all: `1234 km`. */
 data class DistanceSeparators(val grouping: Char?, val decimal: Char)
 
 /**
@@ -64,7 +63,6 @@ fun formatDistance(
         minimumFractionDigits = 0
         maximumFractionDigits = fractionDigits
         if (separators != null) {
-            // Only DecimalFormat exposes symbols; algorithmic numbering gives RuleBasedNumberFormat.
             (this as? DecimalFormat)?.let { df ->
                 df.decimalFormatSymbols = df.decimalFormatSymbols.also { symbols ->
                     symbols.decimalSeparator = separators.decimal
@@ -105,7 +103,7 @@ internal fun roundForDisplay(valueInDisplayUnit: Double): Pair<Double, Int> {
  *
  * @param distanceKm The distance in kilometers.
  * @param displayUnits The display units to use (SYSTEM, IMPERIAL, METRIC).
- * @param context The Android context.
+ * @param context Unused; retained for binary compatibility.
  * @return A formatted string representing the distance.
  */
 fun formatUnits(distanceKm: Int, displayUnits: DisplayUnits, context: Context): String {
