@@ -251,8 +251,6 @@ fun What3wordsAddressListItem(
     onClick: (() -> Unit)? = null
 ) {
     val locale = configurationLocale()
-    // A custom NumberFormat bypasses ICU's MeasureFormat cache, so memoise the result rather
-    // than paying for two factory calls per recomposition.
     val distanceText = distanceKm?.let {
         remember(it, displayUnits, distanceSeparators, locale) {
             formatDistance(it, displayUnits, distanceSeparators, locale)
