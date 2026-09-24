@@ -193,6 +193,15 @@ object What3wordsAddressListItemDefaults {
  * @param showDivider Boolean to control the visibility of a divider line below the address. Default is true.
  * @param onClick Optional. Lambda function to handle click events. Null if no action is specified.
  */
+@Deprecated(
+    message = "Whole kilometres cannot express a sub-kilometre distance, so 0 renders \"<1 km\" " +
+        "instead of the real value. Take the distance in kilometres and use the distanceKm overload.",
+    replaceWith = ReplaceWith(
+        "What3wordsAddressListItem(words, modifier, nearestPlace, nearestPlacePrefix, isLand, " +
+            "distance?.toDouble(), displayUnits, null, isHighlighted, label, labelMaxLines, " +
+            "colors, textStyles, paddings, showDivider, onClick)"
+    )
+)
 @Composable
 fun What3wordsAddressListItem(
     words: String,
@@ -200,7 +209,7 @@ fun What3wordsAddressListItem(
     nearestPlace: String? = null,
     nearestPlacePrefix: String? = stringResource(id = R.string.near),
     isLand: Boolean = true,
-    distance: Int? = null,
+    distance: Int?,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     isHighlighted: Boolean = false,
     label: String? = null,
@@ -234,11 +243,11 @@ fun What3wordsAddressListItem(
 @Composable
 fun What3wordsAddressListItem(
     words: String,
-    distanceKm: Double?,
     modifier: Modifier = Modifier,
     nearestPlace: String? = null,
     nearestPlacePrefix: String? = stringResource(id = R.string.near),
     isLand: Boolean = true,
+    distanceKm: Double? = null,
     displayUnits: DisplayUnits = DisplayUnits.SYSTEM,
     distanceSeparators: DistanceSeparators? = null,
     isHighlighted: Boolean = false,
@@ -475,6 +484,7 @@ private fun A3a() {
     uiMode = UI_MODE_NIGHT_NO,
     showBackground = true
 )
+@Suppress("DEPRECATION")
 @Composable
 private fun A3d() {
     W3WTheme {

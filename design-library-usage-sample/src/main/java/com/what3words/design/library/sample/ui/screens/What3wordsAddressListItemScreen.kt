@@ -93,13 +93,6 @@ fun What3wordsAddressListItemScreen(modifier: Modifier = Modifier) {
             onClick = {}
         )
 
-        What3wordsAddressListItem(
-            words = "filled.count.soap",
-            nearestPlace = "Bayswater, London",
-            distance = 0,
-            onClick = {}
-        )
-
         CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
             What3wordsAddressListItem("لبن.درجات.عنق")
 
