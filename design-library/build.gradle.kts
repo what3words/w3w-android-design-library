@@ -48,6 +48,11 @@ android {
         abortOnError = false
         warningsAsErrors = false
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
     namespace = "com.what3words.design.library"
 }
 
@@ -61,6 +66,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     debugImplementation(libs.androidx.compose.ui.tooling)
     api(libs.compose.material.icons)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
 }
 
 //region publishing
