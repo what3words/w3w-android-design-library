@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -300,6 +301,7 @@ private fun What3wordsAddressListItemContent(
     showDivider: Boolean,
     onClick: (() -> Unit)?
 ) {
+    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val clickModifier = if (onClick != null) Modifier.clickable { onClick() } else Modifier
     Box(
         modifier = modifier
@@ -346,9 +348,10 @@ private fun What3wordsAddressListItemContent(
                                     .weight(1f)
                                     .align(Alignment.CenterVertically),
                                 text = "${if (!nearestPlacePrefix.isNullOrEmpty()) "$nearestPlacePrefix " else ""}$nearestPlace",
-                                style = textStyles.nearestPlaceTextStyle,
+                                // Direction from the text, alignment from the row, so a Latin place stays on an RTL row's start.
+                                style = textStyles.nearestPlaceTextStyle.copy(textDirection = TextDirection.Content),
                                 color = colors.nearestPlaceTextColor,
-                                textAlign = TextAlign.Start,
+                                textAlign = if (isRtl) TextAlign.Right else TextAlign.Left,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -360,7 +363,8 @@ private fun What3wordsAddressListItemContent(
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically),
                                 text = distanceText,
-                                style = textStyles.distanceTextStyle,
+                                // A Latin "20 km" in an RTL row would otherwise read "km 20".
+                                style = textStyles.distanceTextStyle.copy(textDirection = TextDirection.Content),
                                 color = colors.distanceTextColor,
                                 textAlign = TextAlign.Start
                             )
@@ -613,6 +617,25 @@ private fun A9() {
                 "القطار.مسعف.شخصيات",
                 nearestPlace = "لندن, London",
                 distanceKm = 20.0
+            )
+        }
+    }
+}
+
+@Preview(
+    group = "W3WTheme",
+    name = "W3WTheme/Day/RTL with a Latin place and distance",
+    uiMode = UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+@Composable
+private fun A9Latin() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        W3WTheme {
+            What3wordsAddressListItem(
+                "القطار.مسعف.شخصيات",
+                nearestPlace = "Route 66, Kingman",
+                distanceKm = 11_705.0
             )
         }
     }
